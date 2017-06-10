@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import com.actualize.loanestimate.domainmodels.ConversionError;
-
 public enum OutputFormatter {
 
     AMOUNT,                 // Converts a string into a number with two decimal places
@@ -61,91 +59,6 @@ public enum OutputFormatter {
     
     public static String ToMismoDateTime(LocalDateTime dateTime) {
     	return DATE_TIME_FORMAT.format(dateTime) + 'Z';
-    }
-
-    public ConversionError formatString(String inStr) {
-        ConversionError conversionError = new ConversionError();
-        switch (this) {
-	        case AMOUNT:
-	        	String amount = inStr.replaceAll("\\$|\\,", "");
-	        	try {
-	                conversionError.setInputValue(AMOUNT_FORMAT.format(Double.valueOf(amount)));
-	            } catch (Exception e) {
-	                conversionError.setErrorCode(e.getMessage());
-	                conversionError.setErrorMsg("Can't convert '" + inStr + "' to amount");
-	            }
-	            break;
-	        case BOOLEAN:
-	            if ("Yes".equalsIgnoreCase(inStr) || "True".equalsIgnoreCase(inStr) || "T".equals(inStr))
-	            	conversionError.setInputValue("true");
-	            else if ("No".equalsIgnoreCase(inStr) || "False".equalsIgnoreCase(inStr) || "F".equals(inStr))
-	            	conversionError.setInputValue("false");
-	            else {
-	                conversionError.setErrorCode("Boolean conversion error");
-	                conversionError.setErrorMsg("Can't convert '" + inStr + "' to boolean");
-	            }
-	            break;
-            case DATE:
-                try {
-                	LocalDate date = getDate(inStr);
-                    conversionError.setInputValue(ToMismoDate(date));
-                } catch (Exception e) {
-                    conversionError.setErrorCode(e.getMessage());
-                    conversionError.setErrorMsg("Can't convert '" + inStr + "' to date");
-                }
-                break;
-            case DATETIME:
-                try {
-                    LocalDateTime dateTime = LocalDateTime.parse(inStr, DATETIME_INPUT_FORMAT);
-                    conversionError.setInputValue(ToMismoDateTime(dateTime));
-                } catch (Exception e) {
-                    conversionError.setErrorCode(e.getMessage());
-                    conversionError.setErrorMsg("Can't convert '" + inStr + "' to datetime");
-                }
-                break;
-            case INTEGER:
-            	String integer = inStr.replaceAll("\\$|\\,", "");
-                try {
-                	Integer.valueOf(integer);
-                    conversionError.setInputValue(integer);
-                } catch (Exception e) {
-                    conversionError.setErrorCode(e.getMessage());
-                    conversionError.setErrorMsg("Can't convert '" + inStr + "' to number");
-                }
-                break;
-            case NUMBER:
-            	String number = inStr.replaceAll("\\$|\\,|%", "");
-                try {
-                	Double.valueOf(number);
-                    conversionError.setInputValue(number);
-                } catch (Exception e) {
-                    conversionError.setErrorCode(e.getMessage());
-                    conversionError.setErrorMsg("Can't convert '" + inStr + "' to number");
-                }
-                break;
-            case TELEPHONE:
-            	String phone = inStr.replaceAll("\\(|\\)|-|/|\\s", "");
-                try {
-                	Long.valueOf(phone);
-                    conversionError.setInputValue(phone);
-                } catch (Exception e) {
-                    conversionError.setErrorCode(e.getMessage());
-                    conversionError.setErrorMsg("Can't convert '" + inStr + "' to number");
-                }
-                break;
-	        case RATE:
-	        	String rate = inStr.replaceAll("\\,|%", "");
-	        	try {
-	                conversionError.setInputValue(RATE_FORMAT.format(Double.valueOf(rate)));
-	            } catch (Exception e) {
-	                conversionError.setErrorCode(e.getMessage());
-	                conversionError.setErrorMsg("Can't convert '" + inStr + "' to amount");
-	            }
-	            break;
-            default:
-                break;
-        }
-        return conversionError;
     }
 
 	public LocalDate getDate(String str) throws Exception {
