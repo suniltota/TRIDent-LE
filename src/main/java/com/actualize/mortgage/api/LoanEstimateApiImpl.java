@@ -6,12 +6,14 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.actualize.mortgage.domainmodels.LoanEstimate;
 import com.actualize.mortgage.domainmodels.LoanEstimateDocument;
 import com.actualize.mortgage.services.impl.LoanEstimateServicesImpl;
 /**
@@ -36,7 +38,7 @@ public class LoanEstimateApiImpl {
      * @throws Exception
      */
     @RequestMapping(value = "/{version}/letojson", method = { RequestMethod.POST })
-    public LoanEstimateDocument generateresponse(@RequestParam String version, @RequestBody String xmldoc) throws Exception {
+    public LoanEstimate generateresponse(@PathVariable String version, @RequestBody String xmldoc) throws Exception {
         InputStream inputStream = new ByteArrayInputStream(xmldoc.getBytes(StandardCharsets.UTF_8));
         LoanEstimateServicesImpl loanEstimateServicesImpl = new LoanEstimateServicesImpl();
         return loanEstimateServicesImpl.createLoanEstimateDocumentObjectfromXMLDoc(inputStream);
@@ -50,7 +52,7 @@ public class LoanEstimateApiImpl {
      * @throws Exception
      */
     @RequestMapping(value = "/{version}/jsontole", method = { RequestMethod.POST })
-    public String generateMISMOxml(@RequestParam String version, @RequestBody LoanEstimateDocument loanEstimateJSON) throws Exception {
+    public String generateMISMOxml(@PathVariable String version, @RequestBody LoanEstimate loanEstimateJSON) throws Exception {
 		return "TODO";
     }
     

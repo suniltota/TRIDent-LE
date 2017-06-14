@@ -11,7 +11,7 @@ import java.io.Serializable;
  * version : 1.0
  *
  */
-public class ClosingDisclosureDocumentDetails implements Serializable {
+public class LoanEstimateDocumentDetails implements Serializable {
 
     private static final long serialVersionUID = 1957140105029843535L;
 

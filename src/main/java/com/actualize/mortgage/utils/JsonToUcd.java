@@ -26,8 +26,8 @@ import com.actualize.mortgage.domainmodels.CashToCloseModel;
 import com.actualize.mortgage.domainmodels.ClosingAdjustmentItemModel;
 import com.actualize.mortgage.domainmodels.ClosingCostFundModel;
 import com.actualize.mortgage.domainmodels.ClosingCostProperties;
-import com.actualize.mortgage.domainmodels.ClosingDisclosure;
-import com.actualize.mortgage.domainmodels.ClosingDisclosureDocumentDetails;
+import com.actualize.mortgage.domainmodels.LoanEstimate;
+import com.actualize.mortgage.domainmodels.LoanEstimateDocumentDetails;
 import com.actualize.mortgage.domainmodels.ClosingInformationDetailModel;
 import com.actualize.mortgage.domainmodels.ConstructionModel;
 import com.actualize.mortgage.domainmodels.ContactInformationDetailModel;
@@ -102,7 +102,7 @@ public class JsonToUcd {
 	 * @throws TransformerFactoryConfigurationError 
 	 * @throws TransformerConfigurationException 
 	 */
-    public String transform(ClosingDisclosure jsonDocument) throws Exception {
+    public String transform(LoanEstimate jsonDocument) throws Exception {
 		Document document = null;
 		try {
 			document = dbf.newDocumentBuilder().newDocument();
@@ -179,7 +179,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertAboutVersion(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertAboutVersion(Document document, Element element, LoanEstimate jsonDocument) {
 		// TODO: set correct version number and created date time
 		insertData(document, element, "AboutVersionIdentifier", "TRIDent Web Toolkit, v0.1"); //TODO: This datapoint is not found in UCD Spec. 
 		insertData(document, element, "CreatedDatetime", Convertor.getUTCDate());
@@ -208,7 +208,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertDeal(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDeal(Document document, Element element, LoanEstimate jsonDocument) {
 		insertSubjectProperty(document, insertLevels(document, element, "COLLATERALS/COLLATERAL/SUBJECT_PROPERTY"), jsonDocument);
 		insertLoan(document, insertLevels(document, element, "LOANS/LOAN"), jsonDocument);
 		   insertParties(document, insertLevels(document, element, "PARTIES"), jsonDocument);
@@ -291,7 +291,7 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertDealSet(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDealSet(Document document, Element element, LoanEstimate jsonDocument) {
 		insertDeal(document, insertLevels(document, element, "DEALS/DEAL"), jsonDocument);
 	}
 	
@@ -301,7 +301,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertDealSets(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDealSets(Document document, Element element, LoanEstimate jsonDocument) {
 		insertDealSet(document, insertLevels(document, element, "DEAL_SET"), jsonDocument);
 	}
 	/**
@@ -310,7 +310,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertDocumentSet(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDocumentSet(Document document, Element element, LoanEstimate jsonDocument) {
 		insertDocuments(document, insertLevels(document, element, "DOCUMENTS"), jsonDocument);
 	}
 	/**
@@ -319,7 +319,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertDocuments(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDocuments(Document document, Element element, LoanEstimate jsonDocument) {
 		insertDocument(document, insertLevels(document, element, "DOCUMENT"), jsonDocument);
 	}
 	/**
@@ -328,7 +328,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */	
-	private void insertDocument(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDocument(Document document, Element element, LoanEstimate jsonDocument) {
 		element.setAttribute("MISMOReferenceModelIdentifier", "3.3.0299");
 		insertDealSets(document, insertLevels(document, element, "DEAL_SETS"), jsonDocument);
 	/*	insertAuditTrail(document, insertLevels(document, element, "AUDIT_TRAIL"), jsonDocument);
@@ -417,7 +417,7 @@ public class JsonToUcd {
         element.appendChild(document.createElement(addNamespace("ObjectEncodingType")))
                .appendChild(document.createTextNode("Base64"));
         element.appendChild(document.createElement(addNamespace("ObjectName")))
-               .appendChild(document.createTextNode("ClosingDisclosure.pdf"));
+               .appendChild(document.createTextNode("LoanEstimate.pdf"));
 	}
 	*//**
      * Inserts System Signatories from JSON Object
@@ -539,7 +539,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */	
-	private void insertAboutVersions(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertAboutVersions(Document document, Element element, LoanEstimate jsonDocument) {
 		// TODO Auto-generated method stub
 		//for (String group : groupings)
 		insertAboutVersionsInDocument(document, insertLevels(document, element, "ABOUT_VERSION"), jsonDocument);
@@ -551,7 +551,7 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertAboutVersionsInDocument(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertAboutVersionsInDocument(Document document, Element element, LoanEstimate jsonDocument) {
 		// TODO Auto-generated method stub
 		//for (String group : groupings)
 		insertData(document, element, "AboutVersionIdentifier", "Retrievable"); //TODO: This datapoint is not found in UCD Spec. 
@@ -578,7 +578,7 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertLoan(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertLoan(Document document, Element element, LoanEstimate jsonDocument) {
 		
 		insertAdjustment(document, insertLevels(document, element, "ADJUSTMENT"), jsonDocument);
 		insertAmortizationRule(document, insertLevels(document, element, "AMORTIZATION/AMORTIZATION_RULE"), jsonDocument.getLoanInformation());
@@ -620,7 +620,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertUnderwriting(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertUnderwriting(Document document, Element element, LoanEstimate jsonDocument) {
 		insertAutomatedUnderwritings(document, insertLevels(document, element, "AUTOMATED_UNDERWRITINGS"), jsonDocument.getLoanInformation().getAutomatedUnderwritings());
 		insertUnderwritingDetail(document, insertLevels(document, element, "UNDERWRITING_DETAIL"), Boolean.toString(jsonDocument.getLoanInformation().isLoanManualUnderwritingIndicator()));
 	}
@@ -1124,7 +1124,7 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertFeeInformation(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertFeeInformation(Document document, Element element, LoanEstimate jsonDocument) {
 		insertFees(document, insertLevels(document, element, "FEES"), jsonDocument);
 		insertFeeSummaryDetail(document, insertLevels(document, element, "FEES_SUMMARY/FEE_SUMMARY_DETAIL"), jsonDocument.getLoanCalculationsQualifiedMortgage().getLoanCalculationModel());
 	}
@@ -1150,7 +1150,7 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertFees(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertFees(Document document, Element element, LoanEstimate jsonDocument) {
 		 
 		if(null != jsonDocument.getClosingCostDetailsLoanCosts().getOriginationCharges())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsLoanCosts().getOriginationCharges())
@@ -1260,7 +1260,7 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertEscrow(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertEscrow(Document document, Element element, LoanEstimate jsonDocument) {
 			insertEscrowDetail(document, insertLevels(document, element, "ESCROW_DETAIL"), jsonDocument.getClosingDisclosureDocDetails());
 		if(jsonDocument.getClosingCostDetailsOtherCosts().getEscrowItemsList().size() > 0)
 			insertEscrowItems(document, insertLevels(document, element, "ESCROW_ITEMS"), jsonDocument.getClosingCostDetailsOtherCosts().getEscrowItemsList());
@@ -1349,26 +1349,26 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertEscrowDetail(Document document, Element element, ClosingDisclosureDocumentDetails  closingDisclosureDocumentDetails) {
+	private void insertEscrowDetail(Document document, Element element, LoanEstimateDocumentDetails  loanEstimateDocumentDetails) {
 		
-		if(!"".equals(closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid()) && null != closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid())
+		if(!"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid()) && null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid())
 		{
 			OtherModel other = new OtherModel();
 				other.setEscrowAggregateAccountingAdjustmentPaidByType("Seller");
 				other.setEscrowAggregateAccountingAdjustmentPaymentTimingType("AtClosing");
-			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid());
+			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid());
 			insertExtension(document, insertLevels(document, element, "EXTENSION"), other);	
 		}
-		else if(!"".equals(closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid()) && null != closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid())
+		else if(!"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid()) && null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid())
 		{
 			OtherModel other = new OtherModel();
 				other.setEscrowAggregateAccountingAdjustmentPaidByType("ThirdParty");
 				other.setEscrowAggregateAccountingAdjustmentPaymentTimingType("AtClosing");
-				insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid());
+				insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid());
 			insertExtension(document, insertLevels(document, element, "EXTENSION"), other);
 		}	
-		else if(!"".equals(closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount()) && null != closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount())	
-			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", closingDisclosureDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount());
+		else if(!"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount()) && null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount())	
+			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount());
 	}
 	/**
      * Inserts Document Specific DataSet to MISMO XML
@@ -1376,7 +1376,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertDocumentSpecificDataSet(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertDocumentSpecificDataSet(Document document, Element element, LoanEstimate jsonDocument) {
 		// TODO Auto-generated method stub
 		//insertExecution(document, insertLevels(document, element, "EXECUTION"), jsonDocument);
 		insertIntegratedDisclosure(document, insertLevels(document, element, "INTEGRATED_DISCLOSURE"), jsonDocument);
@@ -1409,7 +1409,7 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertIntegratedDisclosure(Document document, Element element,
-			ClosingDisclosure jsonDocument) {
+			LoanEstimate jsonDocument) {
 		insertCashToCloseItems(document, insertLevels(document, element, "CASH_TO_CLOSE_ITEMS"), jsonDocument.getCashToCloses());
 		insertEstimatedPropertyCost(document, insertLevels(document, element, "ESTIMATED_PROPERTY_COST"), jsonDocument.getEtiaSection());
 		insertIntegratedDisclosureDetail(document, insertLevels(document, element, "INTEGRATED_DISCLOSURE_DETAIL"), jsonDocument.getIntegratedDisclosureDetail());
@@ -1458,7 +1458,7 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertIntegratedDisclosureSectionSummaries(Document document, Element element,
-			ClosingDisclosure jsonDocument) {
+			LoanEstimate jsonDocument) {
 		for (IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummary : Convertor.createIntegratedDisclosureSectionSummaryModels(jsonDocument)) //TODO Not Implemented
 			insertIntegratedDisclosureSectionSummary(document, insertLevels(document, element, "INTEGRATED_DISCLOSURE_SECTION_SUMMARY"), integratedDisclosureSectionSummary);
 	}
@@ -1692,7 +1692,7 @@ public class JsonToUcd {
      * @param element
      * @param jsonDocument
      */
-	private void insertClosingInformation(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertClosingInformation(Document document, Element element, LoanEstimate jsonDocument) {
 		insertClosingAdjustmentItems(document ,insertLevels(document, element, "CLOSING_ADJUSTMENT_ITEMS"), jsonDocument.getClosingAdjustmentItemList());
 		if(jsonDocument.getClosingCostFundList().size() > 0)
 			insertClosingCostFunds(document ,insertLevels(document, element, "CLOSING_COST_FUNDS"), jsonDocument.getClosingCostFundList());
@@ -2011,7 +2011,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertAdjustment(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertAdjustment(Document document, Element element, LoanEstimate jsonDocument) {
 		insertInterestRateAdjustment(document ,insertLevels(document, element, "INTEREST_RATE_ADJUSTMENT"), jsonDocument.getInterestRateAdjustment());
 		insertPrincipalAndInterestPaymentAdjustment(document ,insertLevels(document, element, "PRINCIPAL_AND_INTEREST_PAYMENT_ADJUSTMENT"), jsonDocument.getPrincipalAndInterestPaymentAdjustment());
 	}
@@ -2237,7 +2237,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertMessage(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertMessage(Document document, Element element, LoanEstimate jsonDocument) {
 		element.setAttribute(XMLNS_ALIAS + ":xsi", XSI_URI);
 		element.setAttribute("xsi:schemaLocation", "http://www.mismo.org/residential/2009/schemas ../../../MISMO/V3.3.0_CR_2014-02/ReferenceModel_v3.3.0_B299/MISMO_3.3.0_B299.xsd");
 		element.setAttribute(XMLNS_ALIAS + ":" + MISMO_ALIAS, MISMO_URI);
@@ -2253,7 +2253,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertParties(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertParties(Document document, Element element, LoanEstimate jsonDocument) {
 		List<Borrower> borrowers = jsonDocument.getTransactionInformation().getBorrower();
 			insertPartys(document, element, borrowers);
 		List<Borrower> sellers = jsonDocument.getTransactionInformation().getSeller();
@@ -2409,7 +2409,7 @@ public class JsonToUcd {
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
      */
-	private void insertSubjectProperty(Document document, Element element, ClosingDisclosure jsonDocument) {
+	private void insertSubjectProperty(Document document, Element element, LoanEstimate jsonDocument) {
 
 		insertAddress(document, insertLevels(document, element, "ADDRESS"), jsonDocument.getClosingInformation().getProperty());
 		//insertUnparsedLegalDescription(document, 
@@ -2494,7 +2494,7 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	/*private void insertLocationIdentifier(Document document, Element element,
-			ClosingDisclosure jsonDocument) {
+			LoanEstimate jsonDocument) {
 		insertCensusInformation(document, insertLevels(document, element, "CENSUS_INFORMATION"), "TODO");
 		insertFipsInformation(document, insertLevels(document, element, "FIPS_INFORMATION"), "TODO");
 	}*/

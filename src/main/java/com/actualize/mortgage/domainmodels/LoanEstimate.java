@@ -1,5 +1,5 @@
 /*
- * @(#)ClosingDisclosure.java 1.0 04/10/2017
+ * @(#)LoanEstimate.java 1.0 04/10/2017
  * 
  */
 
@@ -15,11 +15,11 @@ import java.util.List;
  * @version 1.0
  * 
  */
-public class ClosingDisclosure implements Serializable {
+public class LoanEstimate implements Serializable {
 
 	private static final long serialVersionUID = 7465423018709662232L;
 	
-	private ClosingDisclosureDocumentDetails closingDisclosureDocDetails;
+	private LoanEstimateDocumentDetails closingDisclosureDocDetails;
     private LoanDetailModel loanDetail;
     private TermsOfLoanModel termsOfLoan;
     private DocumentClassificationModel documentClassification;
@@ -58,13 +58,13 @@ public class ClosingDisclosure implements Serializable {
 	/**
 	 * @return the closingDisclosureDocDetails
 	 */
-	public ClosingDisclosureDocumentDetails getClosingDisclosureDocDetails() {
+	public LoanEstimateDocumentDetails getClosingDisclosureDocDetails() {
 		return closingDisclosureDocDetails;
 	}
 	/**
 	 * @param closingDisclosureDocDetails the closingDisclosureDocDetails to set
 	 */
-	public void setClosingDisclosureDocDetails(ClosingDisclosureDocumentDetails closingDisclosureDocDetails) {
+	public void setClosingDisclosureDocDetails(LoanEstimateDocumentDetails closingDisclosureDocDetails) {
 		this.closingDisclosureDocDetails = closingDisclosureDocDetails;
 	}
 	/**

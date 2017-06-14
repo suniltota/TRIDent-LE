@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.actualize.mortgage.domainmodels.ClosingDisclosure;
+import com.actualize.mortgage.domainmodels.LoanEstimate;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSectionSummaryDetailModel;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSectionSummaryModel;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSubsectionPaymentModel;
@@ -221,7 +221,7 @@ public class Convertor {
 	 * @param json
 	 * @return list of IntegratedDisclosureSectionSummaryModel
 	 */
-	public static List<IntegratedDisclosureSectionSummaryModel> createIntegratedDisclosureSectionSummaryModels(ClosingDisclosure json)
+	public static List<IntegratedDisclosureSectionSummaryModel> createIntegratedDisclosureSectionSummaryModels(LoanEstimate json)
 	{
 		List<IntegratedDisclosureSectionSummaryModel> integratedDisclosureSectionSummaryModels = new LinkedList<>();
 		

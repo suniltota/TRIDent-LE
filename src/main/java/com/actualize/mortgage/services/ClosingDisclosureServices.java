@@ -2,10 +2,10 @@ package com.actualize.mortgage.services;
 
 import java.io.InputStream;
 
-import com.actualize.mortgage.domainmodels.ClosingDisclosure;
+import com.actualize.mortgage.domainmodels.LoanEstimate;
 /**
  * This is service interface for the Closing Disclosure which is used to define 
- * different methods for example create ClosingDisclosure XML / PDF and generate Page Objects to represents
+ * different methods for example create LoanEstimate XML / PDF and generate Page Objects to represents
  * the all the pages present in Closing Disclosure.
  * 
  * @author rsudula
@@ -14,8 +14,8 @@ import com.actualize.mortgage.domainmodels.ClosingDisclosure;
  */
 public interface ClosingDisclosureServices {
 
-    public ClosingDisclosure createClosingDisclosureObjectfromXMLDoc(InputStream inputXmlStream) throws Exception;
+    public LoanEstimate createClosingDisclosureObjectfromXMLDoc(InputStream inputXmlStream) throws Exception;
     
-    public String createClosingDisclosureXMLfromObject(ClosingDisclosure closingDisclosure) throws Exception;
+    public String createClosingDisclosureXMLfromObject(LoanEstimate loanEstimate) throws Exception;
 
 }
