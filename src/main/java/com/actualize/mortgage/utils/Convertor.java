@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.actualize.mortgage.domainmodels.LoanEstimate;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSectionSummaryDetailModel;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSectionSummaryModel;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSubsectionPaymentModel;
+import com.actualize.mortgage.domainmodels.LoanEstimate;
 import com.actualize.mortgage.domainmodels.MismoPaymentsModel;
 import com.actualize.mortgage.domainmodels.MismoProjectedPaymentsModel;
 import com.actualize.mortgage.domainmodels.PaymentsModel;
@@ -446,5 +446,24 @@ public class Convertor {
         formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return formatter.format(date);  
 		
+	}
+	/**
+	 * checks whether to insert payments section to MISMO XML
+	 * @param payment
+	 * @return boolean
+	 */
+	public static boolean isInsertFee(PaymentsModel payment)
+	{
+		if(null != payment.getBpAtClosing() && !payment.getBpAtClosing().isEmpty())
+			return true;
+		else if(null != payment.getBpB4Closing() && !payment.getBpB4Closing().isEmpty())
+			return true;
+		else if(null != payment.getSpAtClosing() && !payment.getSpAtClosing().isEmpty())
+			return true;
+		else if(null != payment.getSpB4Closing() && !payment.getSpB4Closing().isEmpty())
+			return true;
+		else if(null != payment.getPaidByOthers() && !payment.getPaidByOthers().isEmpty())
+			return true;
+		return false;
 	}
 }

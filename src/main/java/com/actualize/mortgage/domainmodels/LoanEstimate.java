@@ -19,7 +19,7 @@ public class LoanEstimate implements Serializable {
 
 	private static final long serialVersionUID = 7465423018709662232L;
 	
-	private LoanEstimateDocumentDetails closingDisclosureDocDetails;
+	private LoanEstimateDocumentDetails loanEstimateDocDetails;
     private LoanDetailModel loanDetail;
     private TermsOfLoanModel termsOfLoan;
     private DocumentClassificationModel documentClassification;
@@ -55,17 +55,18 @@ public class LoanEstimate implements Serializable {
     private LateChargeRuleModel lateChargeRule;
     private LoanCalculationsQualifiedMortgage loanCalculationsQualifiedMortgage;
     private ContactInformationModel contactInformation;
+	
 	/**
-	 * @return the closingDisclosureDocDetails
+	 * @return the loanEstimateDocDetails
 	 */
-	public LoanEstimateDocumentDetails getClosingDisclosureDocDetails() {
-		return closingDisclosureDocDetails;
+	public LoanEstimateDocumentDetails getLoanEstimateDocDetails() {
+		return loanEstimateDocDetails;
 	}
 	/**
-	 * @param closingDisclosureDocDetails the closingDisclosureDocDetails to set
+	 * @param loanEstimateDocDetails the loanEstimateDocDetails to set
 	 */
-	public void setClosingDisclosureDocDetails(LoanEstimateDocumentDetails closingDisclosureDocDetails) {
-		this.closingDisclosureDocDetails = closingDisclosureDocDetails;
+	public void setLoanEstimateDocDetails(LoanEstimateDocumentDetails loanEstimateDocDetails) {
+		this.loanEstimateDocDetails = loanEstimateDocDetails;
 	}
 	/**
 	 * @return the loanDetail
