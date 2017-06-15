@@ -177,7 +177,7 @@ public class LoanEstimateConvertor {
         
         Deal deal = new Deal(Deal.NS, (Element)document.getElementAddNS("DEAL_SETS/DEAL_SET/DEALS/DEAL"));
 
-	        loanEstimateDocument.setClosingDisclosureDocDetails(createClosingDisclosureDocumentDetails(document));
+	        loanEstimateDocument.setLoanEstimateDocDetails(createClosingDisclosureDocumentDetails(document));
 	        loanEstimateDocument.setTermsOfLoan(createTermsOfLoanModel(deal));
 	    	loanEstimateDocument.setLoanDetail(createLoanDetailModel(deal));
 	    	loanEstimateDocument.setDocumentClassification(createDocumentClassificationModel(document));
