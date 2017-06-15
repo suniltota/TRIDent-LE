@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.actualize.mortgage.convertors.LoanEstimateConvertor;
 import com.actualize.mortgage.datamodels.MISMODocument;
 import com.actualize.mortgage.domainmodels.LoanEstimate;
+import com.actualize.mortgage.utils.JsonToUcd;
 /**
  * This class implements all the services required to prepare, plot and generate XML and PDF for loan Estimate
  * @author sboragala
@@ -17,11 +18,7 @@ public class LoanEstimateServicesImpl {
 	
 	private static final Logger LOG = LogManager.getLogger(LoanEstimateServicesImpl.class);
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.actualize.mortgage.leservices.LoanEstimateServices#createLoanEstimateDocumentObjectfromXMLDoc(java.io.InputStream)
-	 */
-	//@Override
+	
 	public LoanEstimate createLoanEstimateDocumentObjectfromXMLDoc(InputStream inputXmlStream)
 			throws Exception {
 			MISMODocument document = new MISMODocument(inputXmlStream); 
@@ -30,6 +27,9 @@ public class LoanEstimateServicesImpl {
 		return loanEstimateDocument;
 	}
 
-	
+	public String createLoanEstimateXMLfromObject(LoanEstimate loanEstimateJSON) throws Exception {
+		JsonToUcd jsonToUcd = new JsonToUcd();
+		return jsonToUcd.transform(loanEstimateJSON);
+    }
 	
 }
