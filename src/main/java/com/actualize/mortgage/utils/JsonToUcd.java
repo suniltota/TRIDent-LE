@@ -2271,31 +2271,31 @@ public class JsonToUcd {
      */
 	private void insertParties(Document document, Element element, LoanEstimate jsonDocument) {
 		List<Borrower> borrowers = jsonDocument.getTransactionInformation().getBorrower();
-			insertPartys(document, element, borrowers);
-		List<Borrower> sellers = jsonDocument.getTransactionInformation().getSeller();
-			insertPartys(document, element, sellers);
-		List<Borrower> lenders = jsonDocument.getTransactionInformation().getLender();
-			insertPartys(document, element, lenders);
-				
-		ContactInformationDetailModel mortagageBroker =	jsonDocument.getContactInformation().getMortagageBroker();
-		if(null != mortagageBroker)
-			insertParty(document, element, mortagageBroker);
-		
-		ContactInformationDetailModel lender =	jsonDocument.getContactInformation().getLender();
-		if(null != lender)
-			insertParty(document, element, lender);
-		
-		ContactInformationDetailModel realEstateBrokerB =	jsonDocument.getContactInformation().getRealEstateBrokerB();
-		if(null != realEstateBrokerB)
-			insertParty(document, element, realEstateBrokerB);
-		
-		ContactInformationDetailModel realEstateBrokerS =	jsonDocument.getContactInformation().getRealEstateBrokerS();
-		if(null != realEstateBrokerS)
-			insertParty(document, element, realEstateBrokerS);
-		
-		ContactInformationDetailModel settlementAgent =	jsonDocument.getContactInformation().getSettlementAgent();
-		if(null != settlementAgent)
-			insertParty(document, element, settlementAgent);
+		insertPartys(document, element, borrowers);
+	List<Borrower> sellers = jsonDocument.getTransactionInformation().getSeller();
+		insertPartys(document, element, sellers);
+/*	List<Borrower> lenders = jsonDocument.getTransactionInformation().getLender();
+		insertPartys(document, element, lenders);*/
+			
+	ContactInformationDetailModel mortagageBroker =	jsonDocument.getContactInformation().getMortagageBroker();
+	if(null != mortagageBroker)
+		insertParty(document, element, mortagageBroker,"mortagageBroker");
+	
+	ContactInformationDetailModel lender =	jsonDocument.getContactInformation().getLender();
+	if(null != lender)
+		insertParty(document, element, lender, "lender");
+	
+	ContactInformationDetailModel realEstateBrokerB =	jsonDocument.getContactInformation().getRealEstateBrokerB();
+	if(null != realEstateBrokerB)
+		insertParty(document, element, realEstateBrokerB, "realEstateBrokerB");
+	
+	ContactInformationDetailModel realEstateBrokerS =	jsonDocument.getContactInformation().getRealEstateBrokerS();
+	if(null != realEstateBrokerS)
+		insertParty(document, element, realEstateBrokerS, "realEstateBrokerS");
+	
+	ContactInformationDetailModel settlementAgent =	jsonDocument.getContactInformation().getSettlementAgent();
+	if(null != settlementAgent)
+		insertParty(document, element, settlementAgent, "settlementAgent");
 	}
 	
 	/**
@@ -2345,13 +2345,11 @@ public class JsonToUcd {
 	 * @param element parent node of XML
 	 * @param partyDetail Input JSON Object
 	 */
-	private void insertParty(Document document, Element element, ContactInformationDetailModel partyDetail)
+	private void insertParty(Document document, Element element, ContactInformationDetailModel partyDetail, String type)
 	{
 		if(null != partyDetail.getOrganizationName() && !partyDetail.getOrganizationName().isEmpty())
 		{
 			Element party = insertLevels(document, element, "PARTY");
-			Element roleDetail = insertLevels(document, party, "ROLES/ROLE/ROLE_DETAIL");
-				insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
 			
 			Element legalEntity = insertLevels(document, party, "LEGAL_ENTITY/LEGAL_ENTITY_DETAIL");
 				insertData(document, legalEntity, "FullName",partyDetail.getOrganizationName());
@@ -2365,32 +2363,41 @@ public class JsonToUcd {
 				insertData(document, address, "CountryCode", partyDetail.getAddress().getCountryCode());
 				insertData(document, address, "PostalCode", partyDetail.getAddress().getPostalCode());
 				insertData(document, address, "StateCode", partyDetail.getAddress().getStateCode());
+									
+				Element role = insertLevels(document, party, "ROLES/ROLE");
 				
-				Element licenseDetail = insertLevels(document, party, "LICENSE/LICENSE_DETAIL");
-					insertData(document, licenseDetail, "licenseAuthorityLevelType", partyDetail.getOrganizationLicenseDetail().getLicenseAuthorityLevelType());
-					Element identifier =  returnElement(document, licenseDetail, "licenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
-					if(null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
-						identifier.setAttribute("IdentifierOwnerURI", partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI());
-					insertData(document, licenseDetail, "licenseIssueDate", partyDetail.getOrganizationLicenseDetail().getLicenseIssueDate());
-					insertData(document, licenseDetail, "licenseIssuingAuthorityName", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityName());
-					insertData(document, licenseDetail, "licenseIssuingAuthorityStateCode", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityStateCode());
+				if("realEstateBrokerB".equalsIgnoreCase(type))
+				{
+					Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
+						insertData(document, reAgent, "RealEstateAgentType", "Selling");
+				}
+				else if("realEstateBrokerS".equalsIgnoreCase(type))
+				{
+					Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
+						insertData(document, reAgent, "RealEstateAgentType", "Listing");
+				}	
+				
+				Element roleDetail = insertLevels(document, role, "ROLE_DETAIL");
+				
+				Element licenseDetail = insertLevels(document, role, "LICENSES/LICENSE/LICENSE_DETAIL");
+				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getOrganizationLicenseDetail().getLicenseAuthorityLevelType());
+			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
+				if(null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
+					identifier.setAttribute("IdentifierOwnerURI", partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI());
+				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getOrganizationLicenseDetail().getLicenseIssueDate());
+				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityName());
+				insertData(document, licenseDetail, "LicenseIssuingAuthorityStateCode", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityStateCode());
+
+				insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
 		}
 		
 		if(!partyDetail.getName().getFirstName().isEmpty() || !partyDetail.getName().getLastName().isEmpty() || !partyDetail.getName().getMiddleName().isEmpty() || !partyDetail.getName().getSuffixName().isEmpty())
 		{
 			Element party = insertLevels(document, element, "PARTY");
-			Element roleDetail = insertLevels(document, party, "ROLES/ROLE/ROLE_DETAIL");
-				insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
-						
-			Element name = insertLevels(document, party, "INDIVIDUAL/NAME");
-				insertData(document, name, "FirstName", partyDetail.getName().getFirstName());
-				insertData(document, name, "LastName", partyDetail.getName().getLastName());
-				insertData(document, name, "MiddleName", partyDetail.getName().getMiddleName());
-				insertData(document, name, "SuffixName", partyDetail.getName().getSuffixName());
-			
+			Element individual = insertLevels(document, party, "INDIVIDUAL");			
 			if((!partyDetail.getIndividualEmail().isEmpty() && null != partyDetail.getIndividualEmail()) || (!partyDetail.getIndividualPhone().isEmpty() && null != partyDetail.getIndividualPhone()))	
 			{	
-				Element contact = insertLevels(document, party, "INDIVIDUAL/CONTACT_POINTS");
+				Element contact = insertLevels(document, individual, "CONTACT_POINTS");
 				
 				if((!partyDetail.getIndividualEmail().isEmpty() && null != partyDetail.getIndividualEmail()))
 				{
@@ -2403,17 +2410,54 @@ public class JsonToUcd {
 					Element phone = insertLevels(document, contact, "CONTACT_POINT/CONTACT_POINT_TELEPHONE");
 						insertData(document, phone, "ContactPointTelephoneValue", partyDetail.getIndividualPhone());
 				}
-			
 			}
-			Element licenseDetail = insertLevels(document, party, "LICENSE/LICENSE_DETAIL");
 			
-				insertData(document, licenseDetail, "licenseAuthorityLevelType", partyDetail.getIndividualLicenseDetail().getLicenseAuthorityLevelType());
-				Element identifier =  returnElement(document, licenseDetail, "licenseIdentifier", partyDetail.getIndividualLicenseDetail().getLicenseIdentifier());
+			Element name = insertLevels(document, individual, "NAME");
+				insertData(document, name, "FirstName", partyDetail.getName().getFirstName());
+				insertData(document, name, "LastName", partyDetail.getName().getLastName());
+				insertData(document, name, "MiddleName", partyDetail.getName().getMiddleName());
+				insertData(document, name, "SuffixName", partyDetail.getName().getSuffixName());
+					
+			Element role = insertLevels(document, party, "ROLES/ROLE");
+				
+				String reType = "";
+				if("realEstateBrokerB".equalsIgnoreCase(type))
+					reType = "Selling";
+				else if("realEstateBrokerS".equalsIgnoreCase(type))
+					reType = "Listing";
+				
+			String label = Convertor.getSNumber(partyDetail.getPartyRoleType(), "I", reType);
+			String xlink = Convertor.getXLink(partyDetail.getPartyRoleType(), "I", reType);
+			
+				if(null != label && !label.isEmpty())
+					role.setAttribute("SequenceNumber", label);
+				if(null != xlink && !xlink.isEmpty())
+					role.setAttribute(XLINK_ALIAS+":label", xlink);
+			
+			if("realEstateBrokerB".equalsIgnoreCase(type))
+			{
+				Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
+					insertData(document, reAgent, "RealEstateAgentType", "Selling");
+			}
+			else if("realEstateBrokerS".equalsIgnoreCase(type))
+			{
+				Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
+					insertData(document, reAgent, "RealEstateAgentType", "Listing");
+			}	
+			
+			Element licenseDetail = insertLevels(document, role, "LICENSES/LICENSE/LICENSE_DETAIL");
+				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getIndividualLicenseDetail().getLicenseAuthorityLevelType());
+				
+			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getIndividualLicenseDetail().getLicenseIdentifier());
 					if(null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
 						identifier.setAttribute("IdentifierOwnerURI", partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI());
-				insertData(document, licenseDetail, "licenseIssueDate", partyDetail.getIndividualLicenseDetail().getLicenseIssueDate());
-				insertData(document, licenseDetail, "licenseIssuingAuthorityName", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityName());
-				insertData(document, licenseDetail, "licenseIssuingAuthorityStateCode", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityStateCode());
+				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getIndividualLicenseDetail().getLicenseIssueDate());
+				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityName());
+				insertData(document, licenseDetail, "LicenseIssuingAuthorityStateCode", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityStateCode());			
+				
+			Element roleDetail = insertLevels(document, role, "ROLE_DETAIL");
+			
+			insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
 		}
 		
 	}

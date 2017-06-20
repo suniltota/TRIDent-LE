@@ -447,6 +447,7 @@ public class Convertor {
         return formatter.format(date);  
 		
 	}
+	
 	/**
 	 * checks whether to insert payments section to MISMO XML
 	 * @param payment
@@ -465,5 +466,107 @@ public class Convertor {
 		else if(null != payment.getPaidByOthers() && !payment.getPaidByOthers().isEmpty())
 			return true;
 		return false;
+	}
+	
+	/**
+	 * to get the sequence number for specific party depending up on it's role and type
+	 * @param partyRole type of the party borrower, seller etc., 
+	 * @param partyType Organisation or individual
+	 * @param reType type of real estate agent 
+	 * @return the repsective Xlink label for specific party
+	 */
+	public static String getSNumber(String partyRole, String partyType, String reType)
+	{
+		if("NotePayTo".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "1";
+			else if("I".equalsIgnoreCase(partyType))
+				return "2";
+		}
+		else if("MortgageBroker".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "3";
+			else if("I".equalsIgnoreCase(partyType))
+				return "4";
+		}
+		else if("RealEstateAgent".equalsIgnoreCase(partyRole))
+		{
+			if("Selling".equalsIgnoreCase(reType))
+			{
+				if("O".equalsIgnoreCase(partyType))
+					return "5";
+				else if("I".equalsIgnoreCase(partyType))
+					return "6";
+			}
+			else if("Listing".equalsIgnoreCase(reType))
+			{
+				if("O".equalsIgnoreCase(partyType))
+					return "7";
+				else if("I".equalsIgnoreCase(partyType))
+					return "8";
+			}
+		}
+		else if("ClosingAgent".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "9";
+			else if("I".equalsIgnoreCase(partyType))
+				return "10";
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * to get the xlink label for specific party depending up on it's role and type
+	 * @param partyRole type of the party borrower, seller etc., 
+	 * @param partyType Organisation or individual
+	 * @param reType type of real estate agent 
+	 * @return the repsective Xlink label for specific party
+	 */
+	public static String getXLink(String partyRole, String partyType, String reType)
+	{
+		if("NotePayTo".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "PARTY1_ROLE1";
+			else if("I".equalsIgnoreCase(partyType))
+				return "PARTY2_ROLE1";
+		}
+		else if("MortgageBroker".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "PARTY3_ROLE1";
+			else if("I".equalsIgnoreCase(partyType))
+				return "PARTY4_ROLE1";
+		}
+		else if("RealEstateAgent".equalsIgnoreCase(partyRole))
+		{
+			if("Selling".equalsIgnoreCase(reType))
+			{
+				if("O".equalsIgnoreCase(partyType))
+					return "PARTY5_ROLE1";
+				else if("I".equalsIgnoreCase(partyType))
+					return "PARTY6_ROLE1";
+			}
+			else if("Listing".equalsIgnoreCase(reType))
+			{
+				if("O".equalsIgnoreCase(partyType))
+					return "PARTY7_ROLE1";
+				else if("I".equalsIgnoreCase(partyType))
+					return "PARTY8_ROLE1";
+			}
+		}
+		else if("ClosingAgent".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "PARTY9_ROLE1";
+			else if("I".equalsIgnoreCase(partyType))
+				return "PARTY10_ROLE1";
+		}
+		
+		return "";
 	}
 }
