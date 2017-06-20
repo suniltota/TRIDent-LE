@@ -1,7 +1,11 @@
 package com.actualize.mortgage.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,15 +14,19 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.actualize.mortgage.domainmodels.AddressModel;
 import com.actualize.mortgage.domainmodels.AutomatedUnderwritingsModel;
@@ -61,6 +69,7 @@ import com.actualize.mortgage.domainmodels.MismoProjectedPaymentsModel;
 import com.actualize.mortgage.domainmodels.NameModel;
 import com.actualize.mortgage.domainmodels.NegativeAmortizationModel;
 import com.actualize.mortgage.domainmodels.OtherModel;
+import com.actualize.mortgage.domainmodels.PDFResponse;
 import com.actualize.mortgage.domainmodels.PartialPaymentModel;
 import com.actualize.mortgage.domainmodels.PartialPaymentsModel;
 import com.actualize.mortgage.domainmodels.PaymentModel;
@@ -74,6 +83,8 @@ import com.actualize.mortgage.domainmodels.ProrationModel;
 import com.actualize.mortgage.domainmodels.QualifiedMortgageModel;
 import com.actualize.mortgage.domainmodels.SalesContractDetailModel;
 import com.actualize.mortgage.domainmodels.TermsOfLoanModel;
+import com.actualize.mortgage.mismodao.MISMODocument;
+import com.actualize.mortgage.services.impl.LoanEstimatePDFServicesImpl;
 /**
  * defines the functionality to render MISMO xml from JSON Object
  * @author sboragala
@@ -414,6 +425,60 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertForeignObject(Document document, Element element) {
+		
+		LoanEstimatePDFServicesImpl loanEstimatePDFServicesImpl = new LoanEstimatePDFServicesImpl();
+		Transformer tr = null;
+		try {
+			tr = TransformerFactory.newInstance().newTransformer();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        tr.setOutputProperty(OutputKeys.INDENT, "yes");
+        tr.setOutputProperty(OutputKeys.METHOD, "xml");
+        tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+        StreamResult result = new StreamResult(new StringWriter());
+      //  ByteArrayOutputStream out = new ByteArrayOutputStream();
+        //removeEmptyNodes(document);
+        try {
+			tr.transform(new DOMSource(document), result);
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        String xmlString = result.getWriter().toString();
+        MISMODocument mismoDocument = null;
+		try {
+			mismoDocument = new MISMODocument(new ByteArrayInputStream(xmlString.getBytes("utf-8")));
+		} catch (ParserConfigurationException | SAXException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        PDFResponse pdf = new PDFResponse();
+		try {
+			pdf = loanEstimatePDFServicesImpl.generateLoanEstimatePDF(mismoDocument);
+		} catch (COSVisitorException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			element.appendChild(document.createElement(addNamespace("EmbeddedContentXML")))
+					.appendChild(document.createTextNode(Base64.getEncoder().encodeToString( new String(pdf.getResponseData()).getBytes( "utf-8" ) )));
+		} catch (DOMException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        element.appendChild(document.createElement(addNamespace("MIMETypeIdentifier")))
+               .appendChild(document.createTextNode("application/pdf"));
+        element.appendChild(document.createElement(addNamespace("ObjectEncodingType")))
+               .appendChild(document.createTextNode("Base64"));
+        element.appendChild(document.createElement(addNamespace("ObjectName")))
+               .appendChild(document.createTextNode("ClosingDisclosure.pdf"));
+		
 		// TODO Auto-generated method stub
 		insertLevels(document, element, "EmbeddedContentXML"); // Placeholder for Base64 document
         element.appendChild(document.createElement(addNamespace("MIMETypeIdentifier")))
@@ -1364,26 +1429,26 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertEscrowDetail(Document document, Element element, LoanEstimateDocumentDetails  LoanEstimateDocumentDetails) {
+	private void insertEscrowDetail(Document document, Element element, LoanEstimateDocumentDetails  loanEstimateDocumentDetails) {
 		
-		if(!"".equals(LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid()) && null != LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid())
+		if(null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid() && !"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid()))
 		{
 			OtherModel other = new OtherModel();
 				other.setEscrowAggregateAccountingAdjustmentPaidByType("Seller");
 				other.setEscrowAggregateAccountingAdjustmentPaymentTimingType("AtClosing");
-			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid());
+			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid());
 			insertExtension(document, insertLevels(document, element, "EXTENSION"), other);	
 		}
-		else if(!"".equals(LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid()) && null != LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid())
+		else if(null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid() && !"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid()))
 		{
 			OtherModel other = new OtherModel();
 				other.setEscrowAggregateAccountingAdjustmentPaidByType("ThirdParty");
 				other.setEscrowAggregateAccountingAdjustmentPaymentTimingType("AtClosing");
-				insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid());
+				insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountOthersPaid());
 			insertExtension(document, insertLevels(document, element, "EXTENSION"), other);
 		}	
-		else if(!"".equals(LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount()) && null != LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount())	
-			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", LoanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount());
+		else if(null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount() && !"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount()))	
+			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount());
 	}
 	/**
      * Inserts Document Specific DataSet to MISMO XML
