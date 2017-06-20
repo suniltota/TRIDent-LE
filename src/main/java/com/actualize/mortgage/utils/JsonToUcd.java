@@ -351,8 +351,8 @@ public class JsonToUcd {
 		insertRelationships(document, insertLevels(document, element, "RELATIONSHIPS"), jsonDocument);
 		insertSignatories(document, insertLevels(document, element, "SIGNATORIES"), jsonDocument);
 		insertSystemSignatures(document, insertLevels(document, element, "SYSTEM_SIGNATORIES"), jsonDocument);*/
-		if(jsonDocument.isEmbeddedPDF())
-			insertViews(document, insertLevels(document, element, "VIEWS"));
+		//if(jsonDocument.isEmbeddedPDF())
+			//insertViews(document, insertLevels(document, element, "VIEWS"));
 		insertAboutVersions(document, insertLevels(document, element, "ABOUT_VERSIONS"), null);
 		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getDocumentClassification());
 	}
@@ -366,7 +366,7 @@ public class JsonToUcd {
 	private void insertDocumentClassification(Document document, Element element,
 			DocumentClassificationModel documentClassification) {
 		insertDocumentClasses(document,	insertLevels(document, element, "DOCUMENT_CLASSES"), documentClassification);
-		insertDocumentClassificationDetail(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION_DETAIL"), documentClassification);
+	//	insertDocumentClassificationDetail(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION_DETAIL"), documentClassification);
 	}
 	
 	private void insertDocumentClassificationDetail(Document document, Element element,
@@ -1238,7 +1238,7 @@ public class JsonToUcd {
 		
 		if(null != jsonDocument.getClosingCostDetailsOtherCosts().gettOGovtFeesList())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsOtherCosts().gettOGovtFeesList())
-				if(Convertor.isInsertFee(closingCostProperties))
+				if(Convertor.checkFeeActualTotalAmount(closingCostProperties))
 					insertFee(document, insertLevels(document, element, "FEE"), closingCostProperties);
 		
 		if(null != jsonDocument.getClosingCostDetailsOtherCosts().getOtherCostsList())

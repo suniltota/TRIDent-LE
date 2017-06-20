@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.actualize.mortgage.domainmodels.ClosingCostProperties;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSectionSummaryDetailModel;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSectionSummaryModel;
 import com.actualize.mortgage.domainmodels.IntegratedDisclosureSubsectionPaymentModel;
@@ -409,6 +410,17 @@ public class Convertor {
 		return integratedDisclosureSectionSummaryModel;
 	}
 	
+	/**
+	 * checks for null and empty
+	 * @param amount
+	 * @return boolean
+	 */
+	public static boolean checkNotNull(String amount)
+	{
+		if(null != amount && !amount.isEmpty() && !"0".equalsIgnoreCase(amount) && !"0.00".equalsIgnoreCase(amount))
+			return true;
+		return false;
+	}
 	
 	public static String booleanToString(boolean status)
 	{
@@ -568,5 +580,19 @@ public class Convertor {
 		}
 		
 		return "";
+	}
+	
+	/**
+	 * checks for null of Fee Actual Total Amount
+	 * @param closingCostProperties
+	 * @return boolean
+	 */
+	public static boolean checkFeeActualTotalAmount(ClosingCostProperties closingCostProperties)
+	{
+		if(isInsertFee(closingCostProperties))
+			return true;
+		else if(checkNotNull(closingCostProperties.getFeeActualTotalAmount()))
+			return true;
+		return false;
 	}
 }
