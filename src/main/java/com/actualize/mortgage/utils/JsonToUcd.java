@@ -15,7 +15,6 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,8 +28,6 @@ import com.actualize.mortgage.domainmodels.CashToCloseModel;
 import com.actualize.mortgage.domainmodels.ClosingAdjustmentItemModel;
 import com.actualize.mortgage.domainmodels.ClosingCostFundModel;
 import com.actualize.mortgage.domainmodels.ClosingCostProperties;
-import com.actualize.mortgage.domainmodels.LoanEstimate;
-import com.actualize.mortgage.domainmodels.LoanEstimateDocumentDetails;
 import com.actualize.mortgage.domainmodels.ClosingInformationDetailModel;
 import com.actualize.mortgage.domainmodels.ConstructionModel;
 import com.actualize.mortgage.domainmodels.ContactInformationDetailModel;
@@ -49,6 +46,7 @@ import com.actualize.mortgage.domainmodels.LiabilityModel;
 import com.actualize.mortgage.domainmodels.LoanCalculationModel;
 import com.actualize.mortgage.domainmodels.LoanDetailModel;
 import com.actualize.mortgage.domainmodels.LoanEstimate;
+import com.actualize.mortgage.domainmodels.LoanEstimateDocumentDetails;
 import com.actualize.mortgage.domainmodels.LoanInformation;
 import com.actualize.mortgage.domainmodels.LoanInformationLoanIdentifier;
 import com.actualize.mortgage.domainmodels.LoanProductModel;
@@ -76,9 +74,11 @@ import com.actualize.mortgage.domainmodels.ProrationModel;
 import com.actualize.mortgage.domainmodels.QualifiedMortgageModel;
 import com.actualize.mortgage.domainmodels.SalesContractDetailModel;
 import com.actualize.mortgage.domainmodels.TermsOfLoanModel;
-
-
-
+/**
+ * defines the functionality to render MISMO xml from JSON Object
+ * @author sboragala
+ *
+ */
 public class JsonToUcd {
 	private static final String GSE_ALIAS = "gse";
 	private static final String MISMO_ALIAS = "mismo";
@@ -339,8 +339,9 @@ public class JsonToUcd {
 	/*	insertAuditTrail(document, insertLevels(document, element, "AUDIT_TRAIL"), jsonDocument);
 		insertRelationships(document, insertLevels(document, element, "RELATIONSHIPS"), jsonDocument);
 		insertSignatories(document, insertLevels(document, element, "SIGNATORIES"), jsonDocument);
-		insertSystemSignatures(document, insertLevels(document, element, "SYSTEM_SIGNATORIES"), jsonDocument);
-		insertViews(document, insertLevels(document, element, "VIEWS"), jsonDocument);*/
+		insertSystemSignatures(document, insertLevels(document, element, "SYSTEM_SIGNATORIES"), jsonDocument);*/
+		if(jsonDocument.isEmbeddedPDF())
+			insertViews(document, insertLevels(document, element, "VIEWS"));
 		insertAboutVersions(document, insertLevels(document, element, "ABOUT_VERSIONS"), null);
 		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getDocumentClassification());
 	}
@@ -378,43 +379,41 @@ public class JsonToUcd {
 		insertData(document, element, "DocumentTypeOtherDescription",documentClassification.getDocumentTypeOtherDescription());
 	}
 	/**
-     * Inserts Views from JSON Object
+     * Inserts Views to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
-     *//*
-	private void insertViews(Document document, Element element, LoanEstimateDocument jsonDocument) {
+     */
+	private void insertViews(Document document, Element element) {
 		// TODO Auto-generated method stub
 		//for (String group : groupings)
-			insertView(document, insertLevels(document, element, "VIEW"), jsonDocument);
+			insertView(document, insertLevels(document, element, "VIEW"));
 	}
-	*//**
-     * Inserts View from JSON Object
+	/**
+     * Inserts View to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
-     *//*
-	private void insertView(Document document, Element element, LoanEstimateDocument jsonDocument) {
-		// TODO Auto-generated method stub
-		insertViewFile(document, insertLevels(document, element, "VIEW_FILES/VIEW_FILE"), jsonDocument);
+     */
+	private void insertView(Document document, Element element) {
+		insertViewFile(document, insertLevels(document, element, "VIEW_FILES/VIEW_FILE"));
 	}
-	*//**
-     * Inserts View File from JSON Object
+	/**
+     * Inserts View File to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
-     *//*
-	private void insertViewFile(Document document, Element element, LoanEstimateDocument jsonDocument) {
-		// TODO Auto-generated method stub
-		insertForeignObject(document, insertLevels(document, element, "FOREIGN_OBJECT"), jsonDocument);
+     */
+	private void insertViewFile(Document document, Element element) {
+		insertForeignObject(document, insertLevels(document, element, "FOREIGN_OBJECT"));
 	}
-	*//**
-     * Inserts Foreign Object from JSON Object
+	/**
+     * Inserts Foreign Object to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
-     *//*
-	private void insertForeignObject(Document document, Element element, LoanEstimateDocument jsonDocument) {
+     */
+	private void insertForeignObject(Document document, Element element) {
 		// TODO Auto-generated method stub
 		insertLevels(document, element, "EmbeddedContentXML"); // Placeholder for Base64 document
         element.appendChild(document.createElement(addNamespace("MIMETypeIdentifier")))
@@ -424,7 +423,7 @@ public class JsonToUcd {
         element.appendChild(document.createElement(addNamespace("ObjectName")))
                .appendChild(document.createTextNode("LoanEstimate.pdf"));
 	}
-	*//**
+	/**
      * Inserts System Signatories from JSON Object
      * @param document Output XML file
      * @param element parent node of XML
@@ -593,9 +592,9 @@ public class JsonToUcd {
 		insertDocumentSpecificDataSet(document, insertLevels(document, element, "DOCUMENT_SPECIFIC_DATA_SETS/DOCUMENT_SPECIFIC_DATA_SET"), jsonDocument);
 		insertEscrow(document, insertLevels(document, element, "ESCROW"), jsonDocument);
 		insertFeeInformation(document, insertLevels(document, element, "FEE_INFORMATION"), jsonDocument);
-		insertForeclosures(document, insertLevels(document, element, "FORECLOSURES"), Boolean.toString(jsonDocument.getLoanCalculationsQualifiedMortgage().getLoanCalculationModel().isDeficiencyRightsPreservedIndicator()).toLowerCase()); // Not needed for LE
+		//insertForeclosures(document, insertLevels(document, element, "FORECLOSURES"), Boolean.toString(jsonDocument.getLoanCalculationsQualifiedMortgage().getLoanCalculationModel().isDeficiencyRightsPreservedIndicator()).toLowerCase()); // Not needed for LE
 		/*insertHeloc(document, insertLevels(document, element, "HELOC"), jsonDocument); // Not needed for LE*/
-		insertHighCostMortgages(document, insertLevels(document, element, "HIGH_COST_MORTGAGES"), jsonDocument.getLoanCalculationsQualifiedMortgage().getQualifiedMortgage()); //  Not needed for LE
+		//insertHighCostMortgages(document, insertLevels(document, element, "HIGH_COST_MORTGAGES"), jsonDocument.getLoanCalculationsQualifiedMortgage().getQualifiedMortgage()); //  Not needed for LE
 		//insertHmdaLoan(document, insertLevels(document, element, "HMDA_LOAN"), jsonDocument); //  Not needed for LE*/
 		insertInterestOnly(document, insertLevels(document, element, "INTEREST_ONLY"), jsonDocument.getInterestOnly());
 		insertLateChargeRule(document, insertLevels(document, element, "LATE_CHARGE/EXTENSION/OTHER/gse:LATE_CHARGE_RULES/LATE_CHARGE_RULE"), jsonDocument.getLateChargeRule());
@@ -610,8 +609,8 @@ public class JsonToUcd {
 		insertPayment(document, insertLevels(document, element, "PAYMENT"), jsonDocument.getPayment());
 		insertPrepaymentPenalty(document, insertLevels(document, element, "PREPAYMENT_PENALTY"), jsonDocument.getLoanTerms().getLoanTermsPrepaymentPenalty());
 		//insertQualification(document, insertLevels(document, element, "QUALIFICATION"), jsonDocument); //Not needed for LE
-		insertQualifiedMortgage(document, insertLevels(document, element, "QUALIFIED_MORTGAGE"), jsonDocument.getLoanCalculationsQualifiedMortgage().getQualifiedMortgage()); // Not needed for LE
-		insertRefinance(document, insertLevels(document, element, "REFINANCE"),Boolean.toString(jsonDocument.getTransactionInformation().isRefinanceSameLenderIndicator()).toLowerCase()); //Not needed for LE
+		//insertQualifiedMortgage(document, insertLevels(document, element, "QUALIFIED_MORTGAGE"), jsonDocument.getLoanCalculationsQualifiedMortgage().getQualifiedMortgage()); // Not needed for LE
+		//insertRefinance(document, insertLevels(document, element, "REFINANCE"),Boolean.toString(jsonDocument.getTransactionInformation().isRefinanceSameLenderIndicator()).toLowerCase()); //Not needed for LE
 		/*insertReverseMortgage(document, insertLevels(document, element, "REVERSE_MORTGAGE"), jsonDocument); //Not needed for LE
 		insertServicing(document, insertLevels(document, element, "SERVICING"), jsonDocument); // Not needed for LE
 */		insertTermsOfLoan(document, insertLevels(document, element, "TERMS_OF_LOAN"), jsonDocument.getTermsOfLoan());

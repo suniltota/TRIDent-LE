@@ -55,6 +55,7 @@ public class LoanEstimate implements Serializable {
     private LateChargeRuleModel lateChargeRule;
     private LoanCalculationsQualifiedMortgage loanCalculationsQualifiedMortgage;
     private ContactInformationModel contactInformation;
+	private boolean embeddedPDF;
 	
 	/**
 	 * @return the loanEstimateDocDetails
@@ -476,6 +477,18 @@ public class LoanEstimate implements Serializable {
 	 */
 	public void setContactInformation(ContactInformationModel contactInformation) {
 		this.contactInformation = contactInformation;
+	}
+	/**
+	 * @return the embeddedPDF
+	 */
+	public boolean isEmbeddedPDF() {
+		return embeddedPDF;
+	}
+	/**
+	 * @param embeddedPDF the embeddedPDF to set
+	 */
+	public void setEmbeddedPDF(boolean embeddedPDF) {
+		this.embeddedPDF = embeddedPDF;
 	}
 	
     
