@@ -18,8 +18,10 @@ public class DocumentClassification extends MISMODataAccessObject {
 		super(element);
 		Element elem;
         elem = getElement(element, NS + "DOCUMENT_CLASSES");
-        documentClasses = elem == null ? null : new DocumentClasses(elem);
+        if(null != elem)
+        	documentClasses = elem == null ? null : new DocumentClasses(elem);
         elem = getElement(element, NS + "DOCUMENT_CLASSIFICATION_DETAIL");
-        documentClassificationDetail = elem == null ? null : new DocumentClassificationDetail(elem);
+        if(null != elem)
+        	documentClassificationDetail = elem == null ? null : new DocumentClassificationDetail(elem);
 	}
 }

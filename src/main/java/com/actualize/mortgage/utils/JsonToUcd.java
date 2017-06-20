@@ -2447,7 +2447,7 @@ public class JsonToUcd {
 				Element licenseDetail = insertLevels(document, role, "LICENSES/LICENSE/LICENSE_DETAIL");
 				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getOrganizationLicenseDetail().getLicenseAuthorityLevelType());
 			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
-				if(null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
+				if(null != identifier && null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
 					identifier.setAttribute("IdentifierOwnerURI", partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI());
 				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getOrganizationLicenseDetail().getLicenseIssueDate());
 				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityName());
@@ -2514,7 +2514,7 @@ public class JsonToUcd {
 				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getIndividualLicenseDetail().getLicenseAuthorityLevelType());
 				
 			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getIndividualLicenseDetail().getLicenseIdentifier());
-					if(null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
+					if(null != identifier && null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
 						identifier.setAttribute("IdentifierOwnerURI", partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI());
 				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getIndividualLicenseDetail().getLicenseIssueDate());
 				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityName());
