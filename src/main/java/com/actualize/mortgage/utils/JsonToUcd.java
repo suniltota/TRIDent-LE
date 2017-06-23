@@ -1316,10 +1316,10 @@ public class JsonToUcd {
 	private void insertFeeDetail(Document document, Element element,  ClosingCostProperties closingCostProperties) {
 		
 		OtherModel other = new OtherModel();
-			other.setPaymentIncludedInAPRIndicator(Boolean.toString(closingCostProperties.isPaymentIncludedInAPRIndicator()));
+			other.setPaymentIncludedInAPRIndicator(Convertor.booleanToString(closingCostProperties.getPaymentIncludedInAPRIndicator()));
 		insertData(document, element, "BorrowerChosenProviderIndicator", "");
 		insertData(document, element, "FeeActualTotalAmount", closingCostProperties.getFeeActualTotalAmount());
-		insertData(document, element, "FeeEstimatedTotalAmount", "" );
+		insertData(document, element, "FeeEstimatedTotalAmount", closingCostProperties.getFeeEstimatedTotalAmount());
 		insertData(document, element, "FeePaidToType", closingCostProperties.getFeePaidToType());
 		insertData(document, element, "FeePaidToTypeOtherDescription", closingCostProperties.getFeePaidToTypeOtherDescription());
 		insertData(document, element, "FeePercentBasisType", closingCostProperties.getFeePercentBasisType());
@@ -1329,8 +1329,8 @@ public class JsonToUcd {
 				feeTypeElement.setAttribute("gse:DisplayLabelText", closingCostProperties.getDisplayLabel());
 		insertData(document, element, "FeeTypeOtherDescription", closingCostProperties.getFeeTypeOtherDescription());
 		insertData(document, element, "IntegratedDisclosureSectionType", closingCostProperties.getIntegratedDisclosureSectionType());
-		insertData(document, element, "OptionalCostIndicator", Boolean.toString(closingCostProperties.isOptionalCostIndicator()));
-		insertData(document, element, "RegulationZPointsAndFeesIndicator", Boolean.toString(closingCostProperties.isRegulationZPointsAndFeesIndicator()).toLowerCase());
+		insertData(document, element, "OptionalCostIndicator", Convertor.booleanToString(closingCostProperties.getOptionalCostIndicator()));
+		insertData(document, element, "RegulationZPointsAndFeesIndicator", Convertor.booleanToString(closingCostProperties.getRegulationZPointsAndFeesIndicator()).toLowerCase());
 		insertData(document, element, "RequiredProviderOfServiceIndicator", "");
 		
 		insertExtension(document, insertLevels(document, element, "EXTENSION"), other);
@@ -1743,7 +1743,7 @@ public class JsonToUcd {
 	 */
 	private void insertBuydownRule(Document document, Element element, LoanTermsTemporaryBuydown temporaryBuydown) {
 		OtherModel other = new OtherModel();
-			other.setBuydownReflectedInNoteIndicator(Boolean.toString(temporaryBuydown.isGseBuydownReflectedInNoteIndicator()));
+			other.setBuydownReflectedInNoteIndicator(Convertor.booleanToString(temporaryBuydown.getGseBuydownReflectedInNoteIndicator()));
 		insertData(document, element, "BuydownChangeFrequencyMonthsCount", temporaryBuydown.getBuydownChangeFrequencyMonthsCount());
 		insertData(document, element, "BuydownDurationMonthsCount", temporaryBuydown.getBuydownDurationMonthsCount());
 		insertData(document, element, "BuydownIncreaseRatePercent", temporaryBuydown.getBuydownIncreaseRatePercent());
@@ -2559,7 +2559,7 @@ public class JsonToUcd {
 	private void insertSalesContractDetail(Document document, Element element,
 			SalesContractDetailModel salesContractDetail) {
 		insertData(document, element, "PersonalPropertyAmount", salesContractDetail.getPersonalPropertyAmount());
-		insertData(document, element, "PersonalPropertyIncludedIndicator",Boolean.toString(salesContractDetail.isPersonalPropertyIndicator()));
+		insertData(document, element, "PersonalPropertyIncludedIndicator",Convertor.booleanToString(salesContractDetail.getPersonalPropertyIndicator()));
 		insertData(document, element, "RealPropertyAmount", salesContractDetail.getRealPropertyAmount());
 		insertData(document, element, "SalesContractAmount", salesContractDetail.getSaleContractAmount());
 	}

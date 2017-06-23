@@ -1974,6 +1974,7 @@ public class LoanEstimateConvertor {
 		closingCostProperties.setFeeTotalPercent(fee.feeDetail.feeTotalPercent);
 		closingCostProperties.setFeePaidToFullName(fee.feePaidTo.legalEntity.legalEntityDetail.fullName);
 		closingCostProperties.setFeeActualTotalAmount(fee.feeDetail.feeActualTotalAmount);
+		closingCostProperties.setFeeEstimatedTotalAmount(fee.feeDetail.feeEstimatedTotalAmount);
 		
 		if(!"".equals(fee.feeDetail.displayLabelText))
 			closingCostProperties.setDisplayLabel(fee.feeDetail.displayLabelText);

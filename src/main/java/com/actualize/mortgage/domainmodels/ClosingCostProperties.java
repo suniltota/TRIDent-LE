@@ -2,7 +2,7 @@ package com.actualize.mortgage.domainmodels;
 
 import java.io.Serializable;
 /**
- * Defines ClosingCostProperties for UI Response
+ * Defines ClosingCosts for UI Response
  * @author sboragala
  *
  */
@@ -13,6 +13,7 @@ public class ClosingCostProperties extends PaymentsModel implements Serializable
 	private String displayLabel;
 	private String feePaidToFullName;
 	private String feeActualTotalAmount;
+	private String feeEstimatedTotalAmount;
 	private String feePaidToType;
 	private String feePaidToTypeOtherDescription;
 	private String feePercentBasisType;
@@ -20,9 +21,9 @@ public class ClosingCostProperties extends PaymentsModel implements Serializable
 	private String feeType;
 	private String feeTypeOtherDescription;
 	private String integratedDisclosureSectionType;
-	private boolean optionalCostIndicator;
-	private boolean regulationZPointsAndFeesIndicator;
-	private boolean paymentIncludedInAPRIndicator;
+	private Boolean optionalCostIndicator;
+	private Boolean regulationZPointsAndFeesIndicator;
+	private Boolean paymentIncludedInAPRIndicator;
 	
 	
 	/**
@@ -60,6 +61,18 @@ public class ClosingCostProperties extends PaymentsModel implements Serializable
 	 */
 	public void setFeeActualTotalAmount(String feeActualTotalAmount) {
 		this.feeActualTotalAmount = feeActualTotalAmount;
+	}
+	/**
+	 * @return the feeEstimatedTotalAmount
+	 */
+	public String getFeeEstimatedTotalAmount() {
+		return feeEstimatedTotalAmount;
+	}
+	/**
+	 * @param feeEstimatedTotalAmount the feeEstimatedTotalAmount to set
+	 */
+	public void setFeeEstimatedTotalAmount(String feeEstimatedTotalAmount) {
+		this.feeEstimatedTotalAmount = feeEstimatedTotalAmount;
 	}
 	/**
 	 * @return the feePaidToType
@@ -148,37 +161,37 @@ public class ClosingCostProperties extends PaymentsModel implements Serializable
 	/**
 	 * @return the optionalCostIndicator
 	 */
-	public boolean isOptionalCostIndicator() {
+	public Boolean getOptionalCostIndicator() {
 		return optionalCostIndicator;
 	}
 	/**
 	 * @param optionalCostIndicator the optionalCostIndicator to set
 	 */
-	public void setOptionalCostIndicator(boolean optionalCostIndicator) {
+	public void setOptionalCostIndicator(Boolean optionalCostIndicator) {
 		this.optionalCostIndicator = optionalCostIndicator;
 	}
 	/**
 	 * @return the regulationZPointsAndFeesIndicator
 	 */
-	public boolean isRegulationZPointsAndFeesIndicator() {
+	public Boolean getRegulationZPointsAndFeesIndicator() {
 		return regulationZPointsAndFeesIndicator;
 	}
 	/**
 	 * @param regulationZPointsAndFeesIndicator the regulationZPointsAndFeesIndicator to set
 	 */
-	public void setRegulationZPointsAndFeesIndicator(boolean regulationZPointsAndFeesIndicator) {
+	public void setRegulationZPointsAndFeesIndicator(Boolean regulationZPointsAndFeesIndicator) {
 		this.regulationZPointsAndFeesIndicator = regulationZPointsAndFeesIndicator;
 	}
 	/**
 	 * @return the paymentIncludedInAPRIndicator
 	 */
-	public boolean isPaymentIncludedInAPRIndicator() {
+	public Boolean getPaymentIncludedInAPRIndicator() {
 		return paymentIncludedInAPRIndicator;
 	}
 	/**
 	 * @param paymentIncludedInAPRIndicator the paymentIncludedInAPRIndicator to set
 	 */
-	public void setPaymentIncludedInAPRIndicator(boolean paymentIncludedInAPRIndicator) {
+	public void setPaymentIncludedInAPRIndicator(Boolean paymentIncludedInAPRIndicator) {
 		this.paymentIncludedInAPRIndicator = paymentIncludedInAPRIndicator;
 	}
 	

@@ -416,18 +416,33 @@ public class Convertor {
 		return false;
 	}
 	
-	public static String booleanToString(boolean status)
+	/**
+	 * converts Boolean to string
+	 * @param status
+	 * @return string
+	 */
+	public static String booleanToString(Boolean status)
 	{
-		if(status)
-			return "true";
-		return "false";
+		if(null != status)
+			if(status)
+				return "true";
+			else if(!status)
+				return "false";
+			return "";
 	}
 	
-	public static boolean stringToBoolean(String status)
+	/**
+	 * converts string to Boolean
+	 * @param status
+	 * @return
+	 */
+	public static Boolean stringToBoolean(String status)
 	{
 		if(status.equalsIgnoreCase("true"))
 			return true;
-		return false;
+		else if(status.equalsIgnoreCase("false"))
+			return false;
+		return null;
 	}
 	
 	public int convertYearsToMonthsFormat(String yearsdata){
