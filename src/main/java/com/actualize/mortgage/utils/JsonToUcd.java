@@ -20,6 +20,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -81,6 +83,7 @@ import com.actualize.mortgage.domainmodels.ProjectedPaymentsDetails;
 import com.actualize.mortgage.domainmodels.PropertyValuationDetailModel;
 import com.actualize.mortgage.domainmodels.ProrationModel;
 import com.actualize.mortgage.domainmodels.QualifiedMortgageModel;
+import com.actualize.mortgage.domainmodels.RelationshipsModel;
 import com.actualize.mortgage.domainmodels.SalesContractDetailModel;
 import com.actualize.mortgage.domainmodels.TermsOfLoanModel;
 import com.actualize.mortgage.mismodao.MISMODocument;
@@ -100,7 +103,10 @@ public class JsonToUcd {
 	private static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 	private static final String XSI_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
-	//private static final Logger LOGGER = Logger.getLogger(JsonToUcd.class.getName());
+	private List<RelationshipsModel> relationships = new LinkedList<>(); 
+	
+	private static final Logger LOG = LogManager.getLogger(JsonToUcd.class.getName());
+
 
 	private static final DocumentBuilderFactory dbf = initializeDocumentBuilderFactory();
 //	private static final XPath xPath = XPathFactory.newInstance().newXPath();
@@ -347,9 +353,9 @@ public class JsonToUcd {
 	private void insertDocument(Document document, Element element, LoanEstimate jsonDocument) {
 		element.setAttribute("MISMOReferenceModelIdentifier", "3.3.0299");
 		insertDealSets(document, insertLevels(document, element, "DEAL_SETS"), jsonDocument);
-	/*	insertAuditTrail(document, insertLevels(document, element, "AUDIT_TRAIL"), jsonDocument);
-		insertRelationships(document, insertLevels(document, element, "RELATIONSHIPS"), jsonDocument);
-		insertSignatories(document, insertLevels(document, element, "SIGNATORIES"), jsonDocument);
+	//	insertAuditTrail(document, insertLevels(document, element, "AUDIT_TRAIL"), jsonDocument);
+		insertRelationships(document, insertLevels(document, element, "RELATIONSHIPS"), relationships);
+		/*insertSignatories(document, insertLevels(document, element, "SIGNATORIES"), jsonDocument);
 		insertSystemSignatures(document, insertLevels(document, element, "SYSTEM_SIGNATORIES"), jsonDocument);*/
 		insertAboutVersions(document, insertLevels(document, element, "ABOUT_VERSIONS"), null);
 		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getDocumentClassification());
@@ -539,30 +545,28 @@ public class JsonToUcd {
 		insertExecution(document, insertLevels(document, element, "EXECUTION"), jsonDocument);
 	}
 	*//**
-     * Inserts Relationships from JSON Object
+     * Inserts Relationships to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
-     *//*		
-	private void insertRelationships(Document document, Element element, LoanEstimateDocument jsonDocument) {
-		// TODO Auto-generated method stub
-		//for (String group : groupings)
-			insertRelationship(document, insertLevels(document, element, "RELATIONSHIP"), jsonDocument);
+     */		
+	private void insertRelationships(Document document, Element element, List<RelationshipsModel> relationships) {
+		for (RelationshipsModel relationship : relationships)
+			insertRelationship(document, insertLevels(document, element, "RELATIONSHIP"), relationship);
 	}
-	*//**
-     * Inserts Relationship from JSON Object
+	/**
+     * Inserts Relationship to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param jsonDocument Input JSON Object
-     *//*	
-	private void insertRelationship(Document document, Element element, LoanEstimateDocument jsonDocument) {
-		// TODO Auto-generated method stub
-		element.setAttribute("SequenceNumber", "");
-		element.setAttribute(XLINK_ALIAS + ":from", "");
-		element.setAttribute(XLINK_ALIAS + ":to", "");
-		element.setAttribute(XLINK_ALIAS + ":arcrole", "");
+     */	
+	private void insertRelationship(Document document, Element element, RelationshipsModel relationship) {
+		element.setAttribute("SequenceNumber", relationship.getSequenceNumber());
+		element.setAttribute(XLINK_ALIAS + ":from", relationship.getXlinkFrom());
+		element.setAttribute(XLINK_ALIAS + ":to", relationship.getXlinkTo());
+		element.setAttribute(XLINK_ALIAS + ":arcrole", relationship.getXlinkArcrole());
 	}
-	*//**
+	/**
      * Inserts Audit Trail from JSON Object
      * @param document Output XML file
      * @param element parent node of XML
@@ -2417,6 +2421,15 @@ public class JsonToUcd {
 	 */
 	private void insertParty(Document document, Element element, ContactInformationDetailModel partyDetail, String type)
 	{
+		RelationshipsModel relationship = new RelationshipsModel();
+		
+		String reType = "";
+		
+		if("realEstateBrokerB".equalsIgnoreCase(type))
+			reType = "Selling";
+		else if("realEstateBrokerS".equalsIgnoreCase(type))
+			reType = "Listing";
+		
 		if(null != partyDetail.getOrganizationName() && !partyDetail.getOrganizationName().isEmpty())
 		{
 			Element party = insertLevels(document, element, "PARTY");
@@ -2436,6 +2449,16 @@ public class JsonToUcd {
 									
 				Element role = insertLevels(document, party, "ROLES/ROLE");
 				
+				String label = Convertor.getPartySNumber(partyDetail.getPartyRoleType(), "O", reType);
+				String xlink = Convertor.getXLink(partyDetail.getPartyRoleType(), "O", reType);
+			
+				if(null != label && !label.isEmpty())
+					role.setAttribute("SequenceNumber", label);
+				if(null != xlink && !xlink.isEmpty())
+					role.setAttribute(XLINK_ALIAS+":label", xlink);
+				
+				relationship.setXlinkTo(xlink);
+				
 				if("realEstateBrokerB".equalsIgnoreCase(type))
 				{
 					Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
@@ -2451,8 +2474,8 @@ public class JsonToUcd {
 				
 				Element licenseDetail = insertLevels(document, role, "LICENSES/LICENSE/LICENSE_DETAIL");
 				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getOrganizationLicenseDetail().getLicenseAuthorityLevelType());
-			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
-				if(null != identifier && null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
+				Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
+				if(null != identifier &&  null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
 					identifier.setAttribute("IdentifierOwnerURI", partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI());
 				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getOrganizationLicenseDetail().getLicenseIssueDate());
 				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityName());
@@ -2490,13 +2513,7 @@ public class JsonToUcd {
 					
 			Element role = insertLevels(document, party, "ROLES/ROLE");
 				
-				String reType = "";
-				if("realEstateBrokerB".equalsIgnoreCase(type))
-					reType = "Selling";
-				else if("realEstateBrokerS".equalsIgnoreCase(type))
-					reType = "Listing";
-				
-			String label = Convertor.getSNumber(partyDetail.getPartyRoleType(), "I", reType);
+			String label = Convertor.getPartySNumber(partyDetail.getPartyRoleType(), "I", reType);
 			String xlink = Convertor.getXLink(partyDetail.getPartyRoleType(), "I", reType);
 			
 				if(null != label && !label.isEmpty())
@@ -2504,6 +2521,8 @@ public class JsonToUcd {
 				if(null != xlink && !xlink.isEmpty())
 					role.setAttribute(XLINK_ALIAS+":label", xlink);
 			
+				relationship.setXlinkFrom(xlink);
+				
 			if("realEstateBrokerB".equalsIgnoreCase(type))
 			{
 				Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
@@ -2519,7 +2538,7 @@ public class JsonToUcd {
 				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getIndividualLicenseDetail().getLicenseAuthorityLevelType());
 				
 			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getIndividualLicenseDetail().getLicenseIdentifier());
-					if(null != identifier && null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
+					if(null != identifier &&  null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
 						identifier.setAttribute("IdentifierOwnerURI", partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI());
 				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getIndividualLicenseDetail().getLicenseIssueDate());
 				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityName());
@@ -2529,6 +2548,12 @@ public class JsonToUcd {
 			
 			insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
 		}
+		
+			relationship.setXlinkArcrole("urn:fdc:mismo.org:2009:residential/ROLE_IsEmployedBy_ROLE");
+			relationship.setSequenceNumber(Convertor.getRelationshipSNumber(partyDetail.getPartyRoleType(), reType));
+			
+		if(Convertor.checkNotNull(relationship.getXlinkFrom()) && Convertor.checkNotNull(relationship.getXlinkTo()))
+			relationships.add(relationship);
 		
 	}
 	
