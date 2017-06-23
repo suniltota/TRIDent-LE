@@ -481,7 +481,7 @@ public class Convertor {
 	 * @param reType type of real estate agent 
 	 * @return the repsective Xlink label for specific party
 	 */
-	public static String getPartySNumber(String partyRole, String partyType, String reType)
+	public static String getSNumber(String partyRole, String partyType, String reType)
 	{
 		if("NotePayTo".equalsIgnoreCase(partyRole))
 		{
@@ -520,41 +520,6 @@ public class Convertor {
 				return "9";
 			else if("I".equalsIgnoreCase(partyType))
 				return "10";
-		}
-		
-		return "";
-	}
-	
-	/**
-	 * returns the sequence number for relationships container
-	 * @param partyRole type of the party borrower, seller etc., 
-	 * @param reType type of real estate agent 
-	 * @return String sequence number for relationship container
-	 */
-	public static String getRelationshipSNumber(String partyRole, String reType)
-	{
-		if("NotePayTo".equalsIgnoreCase(partyRole))
-		{
-			return "1";
-		}
-		else if("MortgageBroker".equalsIgnoreCase(partyRole))
-		{
-			return "2";
-		}
-		else if("RealEstateAgent".equalsIgnoreCase(partyRole))
-		{
-			if("Selling".equalsIgnoreCase(reType))
-			{
-				return "3";
-			}
-			else if("Listing".equalsIgnoreCase(reType))
-			{
-				return "4";
-			}
-		}
-		else if("ClosingAgent".equalsIgnoreCase(partyRole))
-		{
-			return "5";
 		}
 		
 		return "";
