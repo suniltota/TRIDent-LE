@@ -1413,7 +1413,7 @@ public class JsonToUcd {
 			EscrowItemModel escrowItem) {
 		insertData(document, element, "EscrowCollectedNumberOfMonthsCount", escrowItem.getEscrowCollectedNumberOfMonthsCount());
 		insertData(document, element, "EscrowItemCategoryType","");
-		insertData(document, element, "EscrowItemEstimatedTotalAmount","");
+		insertData(document, element, "EscrowItemEstimatedTotalAmount", escrowItem.getEscrowItemEstimatedTotalAmount());
 		Element itemType = returnElement(document, element, "EscrowItemType", escrowItem.getEscrowItemType());
 			if(null != itemType && null != escrowItem.getDisplayLabel() && !escrowItem.getDisplayLabel().isEmpty())
 				itemType.setAttribute("gse:DisplayLabelText",  escrowItem.getDisplayLabel());
@@ -1895,7 +1895,7 @@ public class JsonToUcd {
 		insertData(document, element, "FeePaidToType", prepaidItem.getFeePaidToType());
 		insertData(document, element, "FeePaidToTypeOtherDescription", prepaidItem.getFeePaidToTypeOtherDescription());
 		insertData(document, element, "IntegratedDisclosureSectionType", prepaidItem.getIntegratedDisclosureSectionType());
-		//insertData(document, element, "PrepaidItemEstimatedTotalAmount", prepaidItem.getPre); 
+		insertData(document, element, "PrepaidItemEstimatedTotalAmount", prepaidItem.getPrepaidItemEstimatedTotalAmount()); 
 		insertData(document, element, "PrepaidItemMonthsPaidCount", prepaidItem.getPrepaidItemMonthsPaidCount());
 		//insertData(document, element, "PrepaidItemNumberOfDaysCount", prepaidItem.getprep);// TODO Value Not binded with object 
 		insertData(document, element, "PrepaidItemPaidFromDate", prepaidItem.getPrepaidItemPaidFromDate());

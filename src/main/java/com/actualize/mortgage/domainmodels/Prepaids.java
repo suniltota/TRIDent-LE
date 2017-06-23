@@ -15,6 +15,7 @@ public class Prepaids extends PaymentsModel implements Serializable{
 	private String feePaidToType;
 	private String feePaidToTypeOtherDescription;
 	private String integratedDisclosureSectionType;
+	private String prepaidItemEstimatedTotalAmount;
 	private String prepaidItemMonthsPaidCount;
 	private String prepaidItemPaidFromDate;
 	private String prepaidItemPaidThroughDate;
@@ -73,6 +74,18 @@ public class Prepaids extends PaymentsModel implements Serializable{
 	 */
 	public void setIntegratedDisclosureSectionType(String integratedDisclosureSectionType) {
 		this.integratedDisclosureSectionType = integratedDisclosureSectionType;
+	}
+	/**
+	 * @return the prepaidItemEstimatedTotalAmount
+	 */
+	public String getPrepaidItemEstimatedTotalAmount() {
+		return prepaidItemEstimatedTotalAmount;
+	}
+	/**
+	 * @param prepaidItemEstimatedTotalAmount the prepaidItemEstimatedTotalAmount to set
+	 */
+	public void setPrepaidItemEstimatedTotalAmount(String prepaidItemEstimatedTotalAmount) {
+		this.prepaidItemEstimatedTotalAmount = prepaidItemEstimatedTotalAmount;
 	}
 	/**
 	 * @return the prepaidItemMonthsPaidCount

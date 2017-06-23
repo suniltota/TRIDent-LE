@@ -2079,7 +2079,7 @@ public class LoanEstimateConvertor {
 		prepaid.setIntegratedDisclosureSectionType(prepaidItem.prepaidItemDetail.integratedDisclosureSectionType);
 		prepaid.setPrepaidItemPerDiemCalculationMethodType(prepaidItem.prepaidItemDetail.prepaidItemPerDiemCalculationMethodType);
 	 	prepaid.setPrepaidPaidToFullName(prepaidItem.prepaidItemPaidTo.legalEntity.legalEntityDetail.fullName);
-		
+		prepaid.setPrepaidItemEstimatedTotalAmount(prepaidItem.prepaidItemDetail.prepaidItemEstimatedTotalAmount);
 		for(PrepaidItemPayment prepaidPayment: prepaidItem.prepaidItemPayments.prepaidItemPayments)
 		{
 			if( null != prepaidPayment.prepaidItemPaymentPaidByType)
@@ -2158,6 +2158,7 @@ public class LoanEstimateConvertor {
 		iePatClosing.setIntegratedDisclosureSectionType(escrowItemDetail.integratedDisclosureSectionType);
 		iePatClosing.setRegulationZPointsAndFeesIndicator(Boolean.parseBoolean(escrowItemDetail.regulationZPointsAndFeesIndicator));
 		iePatClosing.setPaymentIncludedInAPRIndicator(Boolean.parseBoolean(escrowItemDetail.paymentIncludedInAPRIndicator));
+		iePatClosing.setEscrowItemEstimatedTotalAmount(escrowItemDetail.escrowItemEstimatedTotalAmount);
 		
 		for(EscrowItemPayment escrowitempayment : escrowItem.escrowItemPayments.escrowItemPayment)
 		{

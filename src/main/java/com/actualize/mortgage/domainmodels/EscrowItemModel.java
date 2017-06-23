@@ -15,6 +15,7 @@ public class EscrowItemModel extends PaymentsModel implements Serializable{
 	private String escrowItemType;
 	private String escrowItemTypeOtherDescription;
 	private String escrowMonthlyPaymentAmount;
+	private String escrowItemEstimatedTotalAmount;
 	private String feePaidToType;
 	private String feePaidToTypeOtherDescription;
 	private String integratedDisclosureSectionType;
@@ -80,6 +81,18 @@ public class EscrowItemModel extends PaymentsModel implements Serializable{
 	 */
 	public void setEscrowMonthlyPaymentAmount(String escrowMonthlyPaymentAmount) {
 		this.escrowMonthlyPaymentAmount = escrowMonthlyPaymentAmount;
+	}
+	/**
+	 * @return the escrowItemEstimatedTotalAmount
+	 */
+	public String getEscrowItemEstimatedTotalAmount() {
+		return escrowItemEstimatedTotalAmount;
+	}
+	/**
+	 * @param escrowItemEstimatedTotalAmount the escrowItemEstimatedTotalAmount to set
+	 */
+	public void setEscrowItemEstimatedTotalAmount(String escrowItemEstimatedTotalAmount) {
+		this.escrowItemEstimatedTotalAmount = escrowItemEstimatedTotalAmount;
 	}
 	/**
 	 * @return the feePaidToType
