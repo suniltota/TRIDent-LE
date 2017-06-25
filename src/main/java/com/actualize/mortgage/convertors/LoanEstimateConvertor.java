@@ -54,6 +54,7 @@ import com.actualize.mortgage.datamodels.LicenseDetail;
 import com.actualize.mortgage.datamodels.LoanDetail;
 import com.actualize.mortgage.datamodels.LoanIdentifiers;
 import com.actualize.mortgage.datamodels.LoanProduct;
+import com.actualize.mortgage.datamodels.Lock;
 import com.actualize.mortgage.datamodels.MIDataDetail;
 import com.actualize.mortgage.datamodels.MISMODocument;
 import com.actualize.mortgage.datamodels.MaturityRule;
@@ -122,6 +123,7 @@ import com.actualize.mortgage.domainmodels.LoanProductModel;
 import com.actualize.mortgage.domainmodels.LoanTerms;
 import com.actualize.mortgage.domainmodels.LoanTermsPrepaymentPenalty;
 import com.actualize.mortgage.domainmodels.LoanTermsTemporaryBuydown;
+import com.actualize.mortgage.domainmodels.LockModel;
 import com.actualize.mortgage.domainmodels.MIDataDetailModel;
 import com.actualize.mortgage.domainmodels.MaturityRuleModel;
 import com.actualize.mortgage.domainmodels.NameModel;
@@ -368,10 +370,19 @@ public class LoanEstimateConvertor {
      */
     private LoanProductModel createLoanProductModel(Deal deal) {
     	LoanProductModel loanProductModel = new LoanProductModel();
+    	LockModel lockModel = new LockModel();
+    	
     	LoanProduct loanProduct = new LoanProduct(null, (Element)deal.getElementAddNS("LOANS/LOAN/LOAN_PRODUCT"));
+    	Lock lock = loanProduct.lock;
     	
     	loanProductModel.setLoanPriceQuoteInterestRatePercent(loanProduct.loanPriceQuoteInterestRatePercent);
-
+    	
+    	lockModel.setLockExpirationDatetime(lock.lockExpirationDatetime);
+    	lockModel.setLockExpirationTimezoneType(lock.extension.other.lockExpirationTimezoneType);
+    	lockModel.setLockStatusType(lock.lockStatusType);
+    	
+    	loanProductModel.setLock(lockModel);
+    	
     	return loanProductModel;
 	}
 

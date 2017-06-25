@@ -12,8 +12,10 @@ public class LoanProduct extends MISMODataAccessObject {
 
 	private static final long serialVersionUID = -188948636323407864L;
 	public final String loanPriceQuoteInterestRatePercent;
+	public final Lock lock;
 	public LoanProduct(String NS, Element element) {
 		super(element);
 		loanPriceQuoteInterestRatePercent = getValueAddNS("LOAN_PRICE_QUOTES/LOAN_PRICE_QUOTE/LOAN_PRICE_QUOTE_DETAIL/LoanPriceQuoteInterestRatePercent");
+		lock = new Lock((Element)getElementAddNS("LOCKS/LOCK"));
 	}
 }

@@ -60,6 +60,7 @@ import com.actualize.mortgage.domainmodels.LoanInformationLoanIdentifier;
 import com.actualize.mortgage.domainmodels.LoanProductModel;
 import com.actualize.mortgage.domainmodels.LoanTermsPrepaymentPenalty;
 import com.actualize.mortgage.domainmodels.LoanTermsTemporaryBuydown;
+import com.actualize.mortgage.domainmodels.LockModel;
 import com.actualize.mortgage.domainmodels.MIDataDetailModel;
 import com.actualize.mortgage.domainmodels.MaturityRuleModel;
 import com.actualize.mortgage.domainmodels.MismoContactPointsModel;
@@ -671,7 +672,6 @@ public class JsonToUcd {
 		insertLoanDetail(document, insertLevels(document, element, "LOAN_DETAIL"), jsonDocument.getLoanDetail());
 		insertLoanIdentifiers(document, insertLevels(document, element, "LOAN_IDENTIFIERS"), jsonDocument.getLoanInformation().getLoanIdentifiers());
 		//insertLoanLevelCredit(document, insertLevels(document, element, "LOAN_LEVEL_CREDIT"), jsonDocument);
-		if(! jsonDocument.getLoanProduct().getLoanPriceQuoteInterestRatePercent().isEmpty() && null != jsonDocument.getLoanProduct().getLoanPriceQuoteInterestRatePercent())
 		insertLoanProduct(document, insertLevels(document, element, "LOAN_PRODUCT"), jsonDocument.getLoanProduct());
 		insertMaturityRule(document, insertLevels(document, element, "MATURITY/MATURITY_RULE"), jsonDocument.getMaturityRule());
 		insertMIDataDetail(document, insertLevels(document, element, "MI_DATA/MI_DATA_DETAIL"), jsonDocument.getMiDataDetail()); 
@@ -931,36 +931,36 @@ public class JsonToUcd {
      * Inserts Loan Product to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
-     * @param jsonDocument Input JSON Object
+     * @param loanProduct input LoanProductModel Object
      */
 	private void insertLoanProduct(Document document, Element element, LoanProductModel loanProduct) {
-		insertLoanPriceQuotes(document, insertLevels(document, element, "LOAN_PRICE_QUOTES"), loanProduct);
-		//insertLocks(document, insertLevels(document, element, "LOCKS"), jsonDocument);
+		//insertLoanPriceQuotes(document, insertLevels(document, element, "LOAN_PRICE_QUOTES"), loanProduct);
+		insertLocks(document, insertLevels(document, element, "LOCKS"), loanProduct.getLock());
 	}
 	/**
-     * Inserts Locks from JSON Object
+     * Inserts Locks to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
-     * @param jsonDocument Input JSON Object
-     *//*
-	private void insertLocks(Document document, Element element, LoanEstimateDocument jsonDocument) {
-		// TODO Auto-generated method stub
+     * @param lockModel Input LockModel Object
+     */
+	private void insertLocks(Document document, Element element, LockModel lockModel) {
 		//for (String group : groupings)
-			insertLock(document, insertLevels(document, element, "LOCK"), jsonDocument);
+			insertLock(document, insertLevels(document, element, "LOCK"), lockModel);
 	}
-	*//**
-     * Inserts Lock from JSON Object
+	/**
+     * Inserts Lock to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
-     * @param jsonDocument Input JSON Object
-     *//*
-	private void insertLock(Document document, Element element, LoanEstimateDocument jsonDocument) {
-		// TODO Auto-generated method stub
-		insertData(document, element, "LockExpirationDatetime", "");
-		insertData(document, element, "LockStatusType", "");
-		insertExtension(document, insertLevels(document, element, "EXTENSION"), jsonDocument);
+     * @param lockModel Input LockModel Object
+     */
+	private void insertLock(Document document, Element element, LockModel lockModel) {
+		insertData(document, element, "LockExpirationDatetime", lockModel.getLockExpirationDatetime());
+		insertData(document, element, "LockStatusType", lockModel.getLockStatusType());
+		OtherModel other = new OtherModel();
+			other.setLockExpirationTimezoneType(lockModel.getLockExpirationTimezoneType());
+		insertExtension(document, insertLevels(document, element, "EXTENSION"), other);
 	}
-	*//**
+	/**
      * Inserts Loan Price Quotes to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
@@ -1132,7 +1132,7 @@ public class JsonToUcd {
      * Inserts High Cost Mortgage to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
-     * @param jsonDocument Input JSON Object
+     * @param qualifiedMortgage Input QualifiedMortgageModel Object
      */
 	private void insertHighCostMortgage(Document document, Element element,
 			 QualifiedMortgageModel qualifiedMortgage) {
@@ -1167,7 +1167,7 @@ public class JsonToUcd {
      * Inserts Foreclosures to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
-     * @param jsonDocument Input JSON Object
+     * @param deficiencyRightsPreservedIndicator Input deficiencyRightsPreservedIndicator Object
      */
 	private void insertForeclosures(Document document, Element element, String deficiencyRightsPreservedIndicator) {
 		//for (String group : groupings)
@@ -1228,27 +1228,27 @@ public class JsonToUcd {
 		 
 		if(null != jsonDocument.getClosingCostDetailsLoanCosts().getOriginationCharges())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsLoanCosts().getOriginationCharges())
-				if(Convertor.isInsertFee(closingCostProperties))
+				if(Convertor.checkNotNull(closingCostProperties.getFeeEstimatedTotalAmount()))
 					insertFee(document, insertLevels(document, element, "FEE"), closingCostProperties);
 		
 		if(null != jsonDocument.getClosingCostDetailsLoanCosts().getSbDidNotShopFors())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsLoanCosts().getSbDidNotShopFors())
-				if(Convertor.isInsertFee(closingCostProperties))
+				if(Convertor.checkNotNull(closingCostProperties.getFeeEstimatedTotalAmount()))
 					insertFee(document, insertLevels(document, element, "FEE"), closingCostProperties);
 		
 		if(null != jsonDocument.getClosingCostDetailsLoanCosts().getSbDidShopFors())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsLoanCosts().getSbDidShopFors())
-				if(Convertor.isInsertFee(closingCostProperties))
+				if(Convertor.checkNotNull(closingCostProperties.getFeeEstimatedTotalAmount()))
 					insertFee(document, insertLevels(document, element, "FEE"), closingCostProperties);
 		
 		if(null != jsonDocument.getClosingCostDetailsOtherCosts().gettOGovtFeesList())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsOtherCosts().gettOGovtFeesList())
-				if(Convertor.checkFeeActualTotalAmount(closingCostProperties))
+				if(Convertor.checkNotNull(closingCostProperties.getFeeEstimatedTotalAmount()))
 					insertFee(document, insertLevels(document, element, "FEE"), closingCostProperties);
 		
 		if(null != jsonDocument.getClosingCostDetailsOtherCosts().getOtherCostsList())
 			for (ClosingCostProperties closingCostProperties : jsonDocument.getClosingCostDetailsOtherCosts().getOtherCostsList())
-				if(Convertor.isInsertFee(closingCostProperties))
+				if(Convertor.checkNotNull(closingCostProperties.getFeeEstimatedTotalAmount()))
 					insertFee(document, insertLevels(document, element, "FEE"), closingCostProperties);		
 	}
 	
@@ -1357,7 +1357,7 @@ public class JsonToUcd {
 	private void insertEscrowItems(Document document, Element element, List<EscrowItemModel> escrowItemList) {
 		for (EscrowItemModel escrowItem : escrowItemList)
 		{
-		  if(Convertor.isInsertFee(escrowItem))
+		  if(Convertor.checkNotNull(escrowItem.getEscrowItemEstimatedTotalAmount()))
 				insertEscrowItem(document, insertLevels(document, element, "ESCROW_ITEM"), escrowItem);
 		}
 	}
@@ -1824,7 +1824,7 @@ public class JsonToUcd {
      */
 	private void insertPrepaidItems(Document document, Element element, List<Prepaids> prepaidItems) {
 		for (Prepaids prepaidItem : prepaidItems)
-			if(Convertor.isInsertFee(prepaidItem))
+			if(Convertor.checkNotNull(prepaidItem.getPrepaidItemEstimatedTotalAmount()))
 				insertPrepaidItem(document, insertLevels(document, element, "PREPAID_ITEM"), prepaidItem);
 	}
 	/**
