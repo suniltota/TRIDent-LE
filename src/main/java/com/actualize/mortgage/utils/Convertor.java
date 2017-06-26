@@ -598,9 +598,9 @@ public class Convertor {
 	 */
 	public static boolean checkFeeActualTotalAmount(ClosingCostProperties closingCostProperties)
 	{
-		if(isInsertFee(closingCostProperties))
-			return true;
-		else if(checkNotNull(closingCostProperties.getFeeActualTotalAmount()))
+		/*if(isInsertFee(closingCostProperties))
+			return true;*/
+		if(checkNotNull(closingCostProperties.getFeeActualTotalAmount()))
 			return true;
 		return false;
 	}
