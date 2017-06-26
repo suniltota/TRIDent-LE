@@ -1262,7 +1262,7 @@ public class JsonToUcd {
 		insertFeeDetail(document,  insertLevels(document, element, "FEE_DETAIL"), closingCostProperties);
 		if(!closingCostProperties.getFeePaidToFullName().isEmpty() && null != closingCostProperties.getFeePaidToFullName())
 			insertFeePaidTo(document, 	insertLevels(document, element, "FEE_PAID_TO"), closingCostProperties.getFeePaidToFullName());
-		PaymentsModel paymentsModel = new PaymentsModel();
+		/*PaymentsModel paymentsModel = new PaymentsModel();
 			paymentsModel.setBpAtClosing(closingCostProperties.getBpAtClosing());
 			paymentsModel.setBpB4Closing(closingCostProperties.getBpB4Closing());
 			paymentsModel.setLenderStatus(closingCostProperties.isLenderStatus());
@@ -1271,7 +1271,7 @@ public class JsonToUcd {
 			paymentsModel.setSpB4Closing(closingCostProperties.getSpB4Closing());
 		List<MismoPaymentsModel> mismoPaymentsModelList = Convertor.toMismoFeePayments(paymentsModel, "FEE");
 		if(mismoPaymentsModelList.size() > 0)
-			insertFeePayments(document, insertLevels(document, element, "FEE_PAYMENTS"), mismoPaymentsModelList);
+			insertFeePayments(document, insertLevels(document, element, "FEE_PAYMENTS"), mismoPaymentsModelList);*/
 	}
 	
 	/**
@@ -1848,7 +1848,7 @@ public class JsonToUcd {
      */
 	private void insertPrepaidItemPayments(Document document, Element element,
 			Prepaids prepaidItem) {
-		PaymentsModel paymentsModel = new PaymentsModel();
+		/*PaymentsModel paymentsModel = new PaymentsModel();
 			paymentsModel.setBpAtClosing(prepaidItem.getBpAtClosing());
 			paymentsModel.setBpB4Closing(prepaidItem.getBpB4Closing());
 			paymentsModel.setLenderStatus(prepaidItem.isLenderStatus());
@@ -1859,7 +1859,7 @@ public class JsonToUcd {
 		List<MismoPaymentsModel> mismoFeePaymentsModels = Convertor.toMismoFeePayments(paymentsModel, "PREPAID");
 		
 		for (MismoPaymentsModel prepaidItemPayment : mismoFeePaymentsModels)
-			insertPrepaidItemPayment(document, insertLevels(document, element, "PREPAID_ITEM_PAYMENT"), prepaidItemPayment);
+			insertPrepaidItemPayment(document, insertLevels(document, element, "PREPAID_ITEM_PAYMENT"), prepaidItemPayment);*/
 	}
 	/**
      * Inserts Prepaid Item Payment to MISMO XML
@@ -1897,7 +1897,7 @@ public class JsonToUcd {
 		insertData(document, element, "IntegratedDisclosureSectionType", prepaidItem.getIntegratedDisclosureSectionType());
 		insertData(document, element, "PrepaidItemEstimatedTotalAmount", prepaidItem.getPrepaidItemEstimatedTotalAmount()); 
 		insertData(document, element, "PrepaidItemMonthsPaidCount", prepaidItem.getPrepaidItemMonthsPaidCount());
-		//insertData(document, element, "PrepaidItemNumberOfDaysCount", prepaidItem.getprep);// TODO Value Not binded with object 
+		insertData(document, element, "PrepaidItemNumberOfDaysCount", prepaidItem.getPrepaidItemNumberOfDaysCount()); 
 		insertData(document, element, "PrepaidItemPaidFromDate", prepaidItem.getPrepaidItemPaidFromDate());
 		insertData(document, element, "PrepaidItemPaidThroughDate", prepaidItem.getPrepaidItemPaidThroughDate());
 		insertData(document, element, "PrepaidItemPerDiemAmount", prepaidItem.getPrepaidItemPerDiemAmount());

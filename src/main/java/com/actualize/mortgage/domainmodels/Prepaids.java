@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author sboragala
  *
  */
-public class Prepaids extends PaymentsModel implements Serializable{
+public class Prepaids implements Serializable{
 
 	private static final long serialVersionUID = -3311207376960972497L;
 	
@@ -26,6 +26,7 @@ public class Prepaids extends PaymentsModel implements Serializable{
 	private boolean regulationZPointsAndFeesIndicator;
 	private boolean paymentIncludedInAPRIndicator;
 	private String prepaidPaidToFullName;
+	private String prepaidItemNumberOfDaysCount;
 	
 	/**
 	 * @return the displayLabel
@@ -206,6 +207,18 @@ public class Prepaids extends PaymentsModel implements Serializable{
 	 */
 	public void setPrepaidPaidToFullName(String prepaidPaidToFullName) {
 		this.prepaidPaidToFullName = prepaidPaidToFullName;
+	}
+	/**
+	 * @return the prepaidItemNumberOfDaysCount
+	 */
+	public String getPrepaidItemNumberOfDaysCount() {
+		return prepaidItemNumberOfDaysCount;
+	}
+	/**
+	 * @param prepaidItemNumberOfDaysCount the prepaidItemNumberOfDaysCount to set
+	 */
+	public void setPrepaidItemNumberOfDaysCount(String prepaidItemNumberOfDaysCount) {
+		this.prepaidItemNumberOfDaysCount = prepaidItemNumberOfDaysCount;
 	}
 	
 	

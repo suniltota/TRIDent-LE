@@ -1993,33 +1993,6 @@ public class LoanEstimateConvertor {
 			//    closingCostProperties.setDisplayLabel(StringFormatter.CAMEL.formatString(fee.feeDetail.feeTypeOtherDescription));
 		
 		
-		if(fee.feePayments.feePayments.length > 0)
-		for(FeePayment feepay :fee.feePayments.feePayments)
-		{
-			if(!"".equals(feepay.feePaymentPaidByType))
-			{
-				String paidByType = feepay.feePaymentPaidByType;
-				if( "Buyer".equalsIgnoreCase(paidByType)) 
-					if("true".equalsIgnoreCase(feepay.feePaymentPaidOutsideOfClosingIndicator))
-			            closingCostProperties.setBpB4Closing((!"".equals(feepay.feeActualPaymentAmount) && StringFormatter.doubleValue(feepay.feeActualPaymentAmount) != 0) ? feepay.feeActualPaymentAmount : "");
-					else
-					    closingCostProperties.setBpAtClosing(((!"".equals(feepay.feeActualPaymentAmount) && StringFormatter.doubleValue(feepay.feeActualPaymentAmount) != 0)) ? feepay.feeActualPaymentAmount : "");
-				else if("Seller".equalsIgnoreCase(paidByType))
-					if("true".equalsIgnoreCase(feepay.feePaymentPaidOutsideOfClosingIndicator))
-	                    closingCostProperties.setSpB4Closing((!"".equals(feepay.feeActualPaymentAmount) && StringFormatter.doubleValue(feepay.feeActualPaymentAmount) != 0) ? feepay.feeActualPaymentAmount : "");
-					else
-	                    closingCostProperties.setSpAtClosing((!"".equals(feepay.feeActualPaymentAmount) && StringFormatter.doubleValue(feepay.feeActualPaymentAmount) != 0) ? feepay.feeActualPaymentAmount : "");
-				else
-                     closingCostProperties.setPaidByOthers((!"".equals(feepay.feeActualPaymentAmount) && StringFormatter.doubleValue(feepay.feeActualPaymentAmount) != 0) ? feepay.feeActualPaymentAmount : "");
-				
-				if("Lender".equalsIgnoreCase(paidByType))
-					closingCostProperties.setLenderStatus(true);
-				else
-					closingCostProperties.setLenderStatus(false);
-			}
-
-		}
-		
 		return closingCostProperties;
 	}
 	
@@ -2091,29 +2064,8 @@ public class LoanEstimateConvertor {
 		prepaid.setPrepaidItemPerDiemCalculationMethodType(prepaidItem.prepaidItemDetail.prepaidItemPerDiemCalculationMethodType);
 	 	prepaid.setPrepaidPaidToFullName(prepaidItem.prepaidItemPaidTo.legalEntity.legalEntityDetail.fullName);
 		prepaid.setPrepaidItemEstimatedTotalAmount(prepaidItem.prepaidItemDetail.prepaidItemEstimatedTotalAmount);
-		for(PrepaidItemPayment prepaidPayment: prepaidItem.prepaidItemPayments.prepaidItemPayments)
-		{
-			if( null != prepaidPayment.prepaidItemPaymentPaidByType)
-			{
-				String paidBy = prepaidPayment.prepaidItemPaymentPaidByType;
-				if( "Buyer".equalsIgnoreCase(paidBy)) 
-					if("BeforeClosing".equalsIgnoreCase(prepaidPayment.prepaidItemPaymentTimingType))
-						prepaid.setBpB4Closing(prepaidPayment.prepaidItemActualPaymentAmount);
-					else
-						prepaid.setBpAtClosing(prepaidPayment.prepaidItemActualPaymentAmount);
-				else if("Seller".equalsIgnoreCase(paidBy))
-					if("BeforeClosing".equalsIgnoreCase(prepaidPayment.prepaidItemPaymentTimingType))
-						prepaid.setSpB4Closing(prepaidPayment.prepaidItemActualPaymentAmount);
-					else
-						prepaid.setSpAtClosing(prepaidPayment.prepaidItemActualPaymentAmount);
-				else
-					prepaid.setPaidByOthers(prepaidPayment.prepaidItemActualPaymentAmount);
-				if("Lender".equalsIgnoreCase(paidBy))
-					 prepaid.setLenderStatus(true);
-					else
-					 prepaid.setLenderStatus(false);
-			 }
-		}
+		prepaid.setPrepaidItemNumberOfDaysCount(prepaidItem.prepaidItemDetail.prepaidItemNumberOfDaysCount);
+		
 		return prepaid;		
 	}
 	
