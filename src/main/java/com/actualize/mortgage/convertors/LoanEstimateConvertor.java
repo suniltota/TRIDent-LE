@@ -743,8 +743,8 @@ public class LoanEstimateConvertor {
 		IntegratedDisclosureSectionSummaries integratedDisclosureSectionSummaries = new IntegratedDisclosureSectionSummaries((Element)deal.getElementAddNS("LOANS/LOAN/DOCUMENT_SPECIFIC_DATA_SETS/DOCUMENT_SPECIFIC_DATA_SET/INTEGRATED_DISCLOSURE/INTEGRATED_DISCLOSURE_SECTION_SUMMARIES"));
 		IntegratedDisclosureSectionSummaryDetail totalLoanCosts = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='TotalLoanCosts']"));
 		IntegratedDisclosureSectionSummaryDetail idOraganisationCharges = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='OriginationCharges']"));
-		IntegratedDisclosureSectionSummaryDetail idServicesBorrowerDidNotShopFor = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='ServicesBorrowerDidNotShopFor']"));
-		IntegratedDisclosureSectionSummaryDetail idServicesBorrowerDidShopFor = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='ServicesBorrowerDidShopFor']"));
+		IntegratedDisclosureSectionSummaryDetail idServicesBorrowerDidNotShopFor = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='ServicesYouCannotShopFor']"));
+		IntegratedDisclosureSectionSummaryDetail idServicesBorrowerDidShopFor = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='ServicesYouCanShopFor']"));
 		Fees fees = new Fees((Element)deal.getElementAddNS(loan + "/FEE_INFORMATION/FEES"));
 
 		closingCostDetailsLoanCosts.setOcTotalAmount(idOraganisationCharges.integratedDisclosureSectionTotalAmount);
@@ -768,17 +768,17 @@ public class LoanEstimateConvertor {
 					else if("LoanDiscountPoints".equalsIgnoreCase(closingCostProperties.getFeeType()))
 						loanDiscountPoints = closingCostProperties;
 			}
-			else if("ServicesBorrowerDidNotShopFor".equalsIgnoreCase(fee.feeDetail.integratedDisclosureSectionType))
+			else if("ServicesYouCannotShopFor".equalsIgnoreCase(fee.feeDetail.integratedDisclosureSectionType))
 			{
 				ClosingCostProperties closingCostProperties = new ClosingCostProperties();
-					closingCostProperties = loanCostsTable(fee,"ServicesBorrowerDidNotShopFor");
+					closingCostProperties = loanCostsTable(fee,"ServicesYouCannotShopFor");
 					if(null != closingCostProperties.getFeeType())
 						sbDidNotShopFors.add(closingCostProperties);
 			}
-			else if("ServicesBorrowerDidShopFor".equalsIgnoreCase(fee.feeDetail.integratedDisclosureSectionType))
+			else if("ServicesYouCanShopFor".equalsIgnoreCase(fee.feeDetail.integratedDisclosureSectionType))
 			{
 				ClosingCostProperties closingCostProperties = new ClosingCostProperties();
-					closingCostProperties = loanCostsTable(fee,"ServicesBorrowerDidShopFor");
+					closingCostProperties = loanCostsTable(fee,"ServicesYouCanShopFor");
 					if(null != closingCostProperties.getFeeType())
 						sbDidShopFors.add(closingCostProperties);
 			}
