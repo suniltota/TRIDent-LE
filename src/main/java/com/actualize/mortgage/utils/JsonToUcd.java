@@ -1436,7 +1436,7 @@ public class JsonToUcd {
 	 */
 	private void insertEscrowDetail(Document document, Element element, LoanEstimateDocumentDetails  loanEstimateDocumentDetails) {
 		
-		if(null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid() && !"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid()))
+		/*if(null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid() && !"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmountSellerPaid()))
 		{
 			OtherModel other = new OtherModel();
 				other.setEscrowAggregateAccountingAdjustmentPaidByType("Seller");
@@ -1453,7 +1453,7 @@ public class JsonToUcd {
 			insertExtension(document, insertLevels(document, element, "EXTENSION"), other);
 		}	
 		else if(null != loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount() && !"".equals(loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount()))	
-			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount());
+			insertData(document, element, "EscrowAggregateAccountingAdjustmentAmount", loanEstimateDocumentDetails.getEscrowAggregateAccountingAdjustmentAmount());*/
 	}
 	/**
      * Inserts Document Specific DataSet to MISMO XML

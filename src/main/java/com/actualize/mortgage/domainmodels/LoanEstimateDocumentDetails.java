@@ -18,9 +18,6 @@ public class LoanEstimateDocumentDetails implements Serializable {
     private String transactionType = "";
     private String documentType = "";
     private String formType = "";
-    private String escrowAggregateAccountingAdjustmentAmount = "";
-    private String escrowAggregateAccountingAdjustmentAmountSellerPaid = "";
-    private String escrowAggregateAccountingAdjustmentAmountOthersPaid = "";
     
 	/**
 	 * @return the transactionType
@@ -58,43 +55,4 @@ public class LoanEstimateDocumentDetails implements Serializable {
 	public void setFormType(String formType) {
 		this.formType = formType;
 	}
-	/**
-	 * @return the escrowAggregateAccountingAdjustmentAmount
-	 */
-	public String getEscrowAggregateAccountingAdjustmentAmount() {
-		return escrowAggregateAccountingAdjustmentAmount;
-	}
-	/**
-	 * @param escrowAggregateAccountingAdjustmentAmount the escrowAggregateAccountingAdjustmentAmount to set
-	 */
-	public void setEscrowAggregateAccountingAdjustmentAmount(String escrowAggregateAccountingAdjustmentAmount) {
-		this.escrowAggregateAccountingAdjustmentAmount = escrowAggregateAccountingAdjustmentAmount;
-	}
-	/**
-	 * @return the escrowAggregateAccountingAdjustmentAmountSellerPaid
-	 */
-	public String getEscrowAggregateAccountingAdjustmentAmountSellerPaid() {
-		return escrowAggregateAccountingAdjustmentAmountSellerPaid;
-	}
-	/**
-	 * @param escrowAggregateAccountingAdjustmentAmountSellerPaid the escrowAggregateAccountingAdjustmentAmountSellerPaid to set
-	 */
-	public void setEscrowAggregateAccountingAdjustmentAmountSellerPaid(
-			String escrowAggregateAccountingAdjustmentAmountSellerPaid) {
-		this.escrowAggregateAccountingAdjustmentAmountSellerPaid = escrowAggregateAccountingAdjustmentAmountSellerPaid;
-	}
-	/**
-	 * @return the escrowAggregateAccountingAdjustmentAmountOthersPaid
-	 */
-	public String getEscrowAggregateAccountingAdjustmentAmountOthersPaid() {
-		return escrowAggregateAccountingAdjustmentAmountOthersPaid;
-	}
-	/**
-	 * @param escrowAggregateAccountingAdjustmentAmountOthersPaid the escrowAggregateAccountingAdjustmentAmountOthersPaid to set
-	 */
-	public void setEscrowAggregateAccountingAdjustmentAmountOthersPaid(
-			String escrowAggregateAccountingAdjustmentAmountOthersPaid) {
-		this.escrowAggregateAccountingAdjustmentAmountOthersPaid = escrowAggregateAccountingAdjustmentAmountOthersPaid;
-	}
-    
 }

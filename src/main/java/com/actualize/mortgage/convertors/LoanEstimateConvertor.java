@@ -33,7 +33,6 @@ import com.actualize.mortgage.datamodels.EscrowItemPayment;
 import com.actualize.mortgage.datamodels.EscrowItems;
 import com.actualize.mortgage.datamodels.EstimatedPropertyCostComponents;
 import com.actualize.mortgage.datamodels.Fee;
-import com.actualize.mortgage.datamodels.FeePayment;
 import com.actualize.mortgage.datamodels.FeeSummaryDetail;
 import com.actualize.mortgage.datamodels.Fees;
 import com.actualize.mortgage.datamodels.Foreclosures;
@@ -66,7 +65,6 @@ import com.actualize.mortgage.datamodels.Parties;
 import com.actualize.mortgage.datamodels.Party;
 import com.actualize.mortgage.datamodels.Payment;
 import com.actualize.mortgage.datamodels.PrepaidItem;
-import com.actualize.mortgage.datamodels.PrepaidItemPayment;
 import com.actualize.mortgage.datamodels.PrepaidItems;
 import com.actualize.mortgage.datamodels.PrepaymentPenaltyLifetimeRule;
 import com.actualize.mortgage.datamodels.PrincipalAndInterestPaymentAdjustment;
@@ -154,7 +152,6 @@ import com.actualize.mortgage.domainmodels.SummariesofTransactionsDetailsSellerT
 import com.actualize.mortgage.domainmodels.TermsOfLoanModel;
 import com.actualize.mortgage.domainmodels.TransactionInformation;
 import com.actualize.mortgage.utils.Convertor;
-import com.actualize.mortgage.utils.StringFormatter;
 
 
 /**
@@ -229,19 +226,21 @@ public class LoanEstimateConvertor {
     {
     	LoanEstimateDocumentDetails loanEstimateDocumentDetails = new LoanEstimateDocumentDetails();
     	
-    	DocumentClassification docClassification = new DocumentClassification(Document.NS, (Element)document.getElementAddNS("DOCUMENT_CLASSIFICATION"));
-        Deal deal = new Deal(Deal.NS, (Element)document.getElementAddNS("DEAL_SETS/DEAL_SET/DEALS/DEAL"));
-        EscrowDetail escrowdetail = new EscrowDetail((Element)deal.getElementAddNS("LOANS/LOAN/ESCROW/ESCROW_DETAIL"));
-        
-        loanEstimateDocumentDetails.setDocumentType(docClassification.documentClasses.documentClass.documentTypeOtherDescription.split(":")[0]);
-        loanEstimateDocumentDetails.setFormType(docClassification.documentClasses.documentClass.documentTypeOtherDescription.split(":")[1]);
-       
-        if("Seller".equalsIgnoreCase(escrowdetail.other.escrowAggregateAccountingAdjustmentPaidByType) )
-        	loanEstimateDocumentDetails.setEscrowAggregateAccountingAdjustmentAmountOthersPaid(escrowdetail.escrowAggregateAccountingAdjustmentAmount);
-        else if("ThirdParty".equalsIgnoreCase(escrowdetail.other.escrowAggregateAccountingAdjustmentPaidByType) )
-        	loanEstimateDocumentDetails.setEscrowAggregateAccountingAdjustmentAmountSellerPaid(escrowdetail.escrowAggregateAccountingAdjustmentAmount);
-        else
-    	 	loanEstimateDocumentDetails.setEscrowAggregateAccountingAdjustmentAmount(escrowdetail.escrowAggregateAccountingAdjustmentAmount);
+    	if(null != document.documentClassification)
+    	{
+    		String type = "";
+    		String formType = "";
+    		
+	    	DocumentClassification docClassification = document.documentClassification;
+	    	
+	    	if(docClassification.documentClasses.documentClass.documentTypeOtherDescription.contains(":"))
+    		{
+    			type = docClassification.documentClasses.documentClass.documentTypeOtherDescription.split(":")[0];
+    			formType = docClassification.documentClasses.documentClass.documentTypeOtherDescription.split(":")[1];
+    		}
+	        	loanEstimateDocumentDetails.setDocumentType(type);
+	        	loanEstimateDocumentDetails.setFormType(formType);
+    	}
         
 		return loanEstimateDocumentDetails;
     }
@@ -1615,15 +1614,20 @@ public class LoanEstimateConvertor {
      */
     private DocumentClassificationModel createDocumentClassificationModel(Document document)
     {
-    	DocumentClassification docClassification = new DocumentClassification(Document.NS, (Element)document.getElementAddNS("DOCUMENT_CLASSIFICATION"));
- 	    DocumentClassificationModel documentClassification = new DocumentClassificationModel();
-
- 	  //  documentClassification.setDocumentFormIssuingEntityNameType(docClassification.documentClassificationDetail.documentFormIssuingEntityNameType);
- 	   // documentClassification.setDocumentFormIssuingEntityVersionIdentifier(docClassification.documentClassificationDetail.documentFormIssuingEntityVersionIdentifier);
- 	   // documentClassification.setDocumentSignatureRequiredIndicator(Boolean.parseBoolean(docClassification.documentClassificationDetail.other.documentSignatureRequiredIndicator));
- 	    documentClassification.setDocumentType(docClassification.documentClasses.documentClass.documentType);
- 	    documentClassification.setDocumentTypeOtherDescription(docClassification.documentClasses.documentClass.documentTypeOtherDescription);
- 	    
+    	DocumentClassificationModel documentClassification = new DocumentClassificationModel();
+    	if(null != document.documentClassification)
+    	{
+    		DocumentClassification docClassification = new DocumentClassification(Document.NS, (Element)document.getElementAddNS("DOCUMENT_CLASSIFICATION"));
+	    	
+	 	    if(null != docClassification.documentClassificationDetail)
+	 	    {
+		 	    documentClassification.setDocumentFormIssuingEntityNameType(docClassification.documentClassificationDetail.documentFormIssuingEntityNameType);
+		 	    documentClassification.setDocumentFormIssuingEntityVersionIdentifier(docClassification.documentClassificationDetail.documentFormIssuingEntityVersionIdentifier);
+		 	    documentClassification.setDocumentSignatureRequiredIndicator(Boolean.parseBoolean(docClassification.documentClassificationDetail.other.documentSignatureRequiredIndicator));
+	 	    }
+	 	    documentClassification.setDocumentType(docClassification.documentClasses.documentClass.documentType);
+	 	    documentClassification.setDocumentTypeOtherDescription(docClassification.documentClasses.documentClass.documentTypeOtherDescription);
+    	}
 		return documentClassification;
     }
     
