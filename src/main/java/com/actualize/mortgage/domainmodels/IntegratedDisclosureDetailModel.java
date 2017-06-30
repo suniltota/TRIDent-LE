@@ -21,6 +21,8 @@ public class IntegratedDisclosureDetailModel implements Serializable {
 	private boolean integratedDisclosureHomeEquityLoanIndicator;
 	private String integratedDisclosureIssuedDate;
 	private String integratedDisclosureLoanProductDescription;
+	private String fiveYearTotalOfPaymentsComparisonAmount;
+	private String fiveYearPrincipalReductionComparisonAmount;
 	
 	/**
 	 * @return the firstYearTotalEscrowPaymentAmount
@@ -105,6 +107,30 @@ public class IntegratedDisclosureDetailModel implements Serializable {
 	 */
 	public void setIntegratedDisclosureLoanProductDescription(String integratedDisclosureLoanProductDescription) {
 		this.integratedDisclosureLoanProductDescription = integratedDisclosureLoanProductDescription;
+	}
+	/**
+	 * @return the fiveYearTotalOfPaymentsComparisonAmount
+	 */
+	public String getFiveYearTotalOfPaymentsComparisonAmount() {
+		return fiveYearTotalOfPaymentsComparisonAmount;
+	}
+	/**
+	 * @param fiveYearTotalOfPaymentsComparisonAmount the fiveYearTotalOfPaymentsComparisonAmount to set
+	 */
+	public void setFiveYearTotalOfPaymentsComparisonAmount(String fiveYearTotalOfPaymentsComparisonAmount) {
+		this.fiveYearTotalOfPaymentsComparisonAmount = fiveYearTotalOfPaymentsComparisonAmount;
+	}
+	/**
+	 * @return the fiveYearPrincipalReductionComparisonAmount
+	 */
+	public String getFiveYearPrincipalReductionComparisonAmount() {
+		return fiveYearPrincipalReductionComparisonAmount;
+	}
+	/**
+	 * @param fiveYearPrincipalReductionComparisonAmount the fiveYearPrincipalReductionComparisonAmount to set
+	 */
+	public void setFiveYearPrincipalReductionComparisonAmount(String fiveYearPrincipalReductionComparisonAmount) {
+		this.fiveYearPrincipalReductionComparisonAmount = fiveYearPrincipalReductionComparisonAmount;
 	}
 	
 	

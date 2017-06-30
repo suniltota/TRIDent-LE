@@ -646,6 +646,9 @@ public class JsonToUcd {
 		insertData(document, element, "IntegratedDisclosureHomeEquityLoanIndicator", Boolean.toString(integratedDisclosureDetail.isIntegratedDisclosureHomeEquityLoanIndicator()));
 		insertData(document, element, "IntegratedDisclosureLoanProductDescription", integratedDisclosureDetail.getIntegratedDisclosureLoanProductDescription());
 		insertData(document, element, "IntegratedDisclosureIssuedDate", integratedDisclosureDetail.getIntegratedDisclosureIssuedDate());
+		insertData(document, element, "FiveYearTotalOfPaymentsComparisonAmount", integratedDisclosureDetail.getFiveYearTotalOfPaymentsComparisonAmount());
+		insertData(document, element, "FiveYearPrincipalReductionComparisonAmount", integratedDisclosureDetail.getFiveYearPrincipalReductionComparisonAmount());
+		
 	}
 	/**
 	 * inserts Loan to MISMO XML
