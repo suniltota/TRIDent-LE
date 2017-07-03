@@ -142,7 +142,6 @@ import com.actualize.mortgage.domainmodels.ProjectedPaymentsPC;
 import com.actualize.mortgage.domainmodels.ProjectedPaymentsPI;
 import com.actualize.mortgage.domainmodels.PropertyValuationDetailModel;
 import com.actualize.mortgage.domainmodels.ProrationModel;
-import com.actualize.mortgage.domainmodels.QualifiedMortgageModel;
 import com.actualize.mortgage.domainmodels.SalesContractDetailModel;
 import com.actualize.mortgage.domainmodels.SummariesofTransactions;
 import com.actualize.mortgage.domainmodels.SummariesofTransactionsDetailsBorrowerTransaction;
@@ -1374,11 +1373,9 @@ public class LoanEstimateConvertor {
     {
     	LoanCalculationsQualifiedMortgage loanCalculationsQualifiedMortgage = new LoanCalculationsQualifiedMortgage();
     	LoanCalculationModel loanCalculationModel = new LoanCalculationModel();
-    	QualifiedMortgageModel qualifiedMortgageModel = new QualifiedMortgageModel();
     	
     	FeeSummaryDetail feeSummaryDetail = new FeeSummaryDetail((Element)deal.getElementAddNS("LOANS/LOAN/FEE_INFORMATION/FEES_SUMMARY/FEE_SUMMARY_DETAIL"));
     	HighCostMortgages highCostMortgages = new HighCostMortgages(null, (Element)deal.getElementAddNS("LOANS/LOAN/HIGH_COST_MORTGAGES/HIGH_COST_MORTGAGE"));
-    	QualifiedMortgage qualifiedMortgage = new QualifiedMortgage(null, (Element)deal.getElementAddNS("LOANS/LOAN/QUALIFIED_MORTGAGE"));
     	Foreclosures foreclosures =  new Foreclosures(null, (Element)deal.getElementAddNS("LOANS/LOAN/FORECLOSURES/FORECLOSURE/FORECLOSURE_DETAIL"));
     	
     	loanCalculationModel.setAprPercent(feeSummaryDetail.aprPercent);
@@ -1388,18 +1385,7 @@ public class LoanEstimateConvertor {
     	loanCalculationModel.setFeeSummaryTotalOfAllPaymentsAmount(feeSummaryDetail.feeSummaryTotalOfAllPaymentsAmount);
     	loanCalculationModel.setDeficiencyRightsPreservedIndicator(Boolean.parseBoolean(foreclosures.deficiencyRightsPreservedIndicator));
     	
-    	qualifiedMortgageModel.setAveragePrimeOfferRatePercent(highCostMortgages.averagePrimeOfferRatePercent);
-    	qualifiedMortgageModel.setRegulationZExcludedBonaFideDiscountPointsIndicator(Boolean.parseBoolean(highCostMortgages.regulationZExcludedBonaFideDiscountPointsIndicator));
-    	qualifiedMortgageModel.setRegulationZExcludedBonaFideDiscountPointsPercent(highCostMortgages.regulationZExcludedBonaFideDiscountPointsPercent);
-    	qualifiedMortgageModel.setRegulationZTotalAffiliateFeesAmount(highCostMortgages.regulationZTotalAffiliateFeesAmount);
-    	qualifiedMortgageModel.setRegulationZTotalLoanAmount(highCostMortgages.regulationZTotalLoanAmount);
-    	qualifiedMortgageModel.setRegulationZTotalPointsAndFeesAmount(highCostMortgages.regulationZTotalPointsAndFeesAmount);
-    	
-    	qualifiedMortgageModel.setAbilityToRepayExemptionReasonType(qualifiedMortgage.exemption.abilityToRepayExemptionReasonType);
-    	qualifiedMortgageModel.setAbilityToRepayMethodType(qualifiedMortgage.qualifiedMortgageDetail.abilityToRepayMethodType);
-    	
     	loanCalculationsQualifiedMortgage.setLoanCalculationModel(loanCalculationModel);
-    	loanCalculationsQualifiedMortgage.setQualifiedMortgage(qualifiedMortgageModel);
 		
     	return loanCalculationsQualifiedMortgage;
     }

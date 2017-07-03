@@ -81,7 +81,6 @@ import com.actualize.mortgage.domainmodels.PrincipalAndInterestPaymentAdjustment
 import com.actualize.mortgage.domainmodels.ProjectedPaymentsDetails;
 import com.actualize.mortgage.domainmodels.PropertyValuationDetailModel;
 import com.actualize.mortgage.domainmodels.ProrationModel;
-import com.actualize.mortgage.domainmodels.QualifiedMortgageModel;
 import com.actualize.mortgage.domainmodels.SalesContractDetailModel;
 import com.actualize.mortgage.domainmodels.TermsOfLoanModel;
 import com.actualize.mortgage.mismodao.MISMODocument;
@@ -784,12 +783,12 @@ public class JsonToUcd {
 	 * @param element parent node of XML
 	 * @param jsonDocument Input JSON Object
 	 */
-	private void insertQualifiedMortgage(Document document, Element element, QualifiedMortgageModel qualifiedMortgage) {
+	/*private void insertQualifiedMortgage(Document document, Element element, QualifiedMortgageModel qualifiedMortgage) {
 		if(!"".equals(qualifiedMortgage.getAbilityToRepayExemptionReasonType()))
 			insertExemption(document, insertLevels(document, element, "EXEMPTIONS/EXEMPTION"), qualifiedMortgage.getAbilityToRepayExemptionReasonType());
 		if(!"".equals(qualifiedMortgage.getAbilityToRepayMethodType()))
 			insertQualifiedMortgageDetail(document, insertLevels(document, element, "QUALIFIED_MORTGAGE_DETAIL"), qualifiedMortgage.getAbilityToRepayMethodType());
-	}
+	}*/
 	/**
 	 * Inserts Qualified Mortgage Detail to MISMO XML
 	 * @param document Output XML file
@@ -1127,17 +1126,17 @@ public class JsonToUcd {
 	 * @param element
 	 * @param jsonDocument
 	 */
-	private void insertHighCostMortgages(Document document, Element element, QualifiedMortgageModel qualifiedMortgage) {
+	/*private void insertHighCostMortgages(Document document, Element element, QualifiedMortgageModel qualifiedMortgage) {
 		//for (String group : groupings)
 			insertHighCostMortgage(document, insertLevels(document, element, "HIGH_COST_MORTGAGE"), qualifiedMortgage);
-	}
+	}*/
 	/**
      * Inserts High Cost Mortgage to MISMO XML
      * @param document Output XML file
      * @param element parent node of XML
      * @param qualifiedMortgage Input QualifiedMortgageModel Object
      */
-	private void insertHighCostMortgage(Document document, Element element,
+	/*private void insertHighCostMortgage(Document document, Element element,
 			 QualifiedMortgageModel qualifiedMortgage) {
 		insertData(document, element, "AveragePrimeOfferRatePercent", qualifiedMortgage.getAveragePrimeOfferRatePercent());
 		insertData(document, element, "RegulationZExcludedBonaFideDiscountPointsIndicator",Boolean.toString(qualifiedMortgage.isRegulationZExcludedBonaFideDiscountPointsIndicator()));
@@ -1145,7 +1144,7 @@ public class JsonToUcd {
 		insertData(document, element, "RegulationZTotalAffiliateFeesAmount", qualifiedMortgage.getRegulationZTotalAffiliateFeesAmount());
 		insertData(document, element, "RegulationZTotalLoanAmount", qualifiedMortgage.getRegulationZTotalLoanAmount());
 		insertData(document, element, "RegulationZTotalPointsAndFeesAmount", qualifiedMortgage.getRegulationZTotalPointsAndFeesAmount());
-	}
+	}*/
 	/**
      * Inserts Heloc from JSON Object
      * @param document Output XML file
