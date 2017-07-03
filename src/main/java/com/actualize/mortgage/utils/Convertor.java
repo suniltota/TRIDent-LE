@@ -307,16 +307,7 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsOtherCosts().getTotalOtherCostsTotalAmount()))
-		{
-			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
-			
-			integratedDisclosureSectionSummaryModel = createIntegratedDisclosureSectionSummaryModel(json.getClosingCostDetailsOtherCosts().getTotalOtherCostsTotalAmount(),
-			"TotalOtherCosts", "","OtherCostsSubtotal", true, json.getClosingCostDetailsOtherCosts().getTotalOtherCosts());
-			
-			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
-		}
-		
+				
 		//ClosingCostsTotal
 		if(checkNotNull(json.getClosingCostsTotal().getTotalClosingCosts()))
 		{

@@ -688,7 +688,6 @@ public class LoanEstimateConvertor {
 		CostsAtClosingCashToClose costsAtClosingCashToClose = new CostsAtClosingCashToClose(); 
 		ClosingInformationDetail closingDetail = new ClosingInformationDetail((Element)deal.getElementAddNS(ciDetail));
 		IntegratedDisclosureSectionSummaryDetail idClosingDetail = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='TotalClosingCosts'][IntegratedDisclosureSubsectionType='ClosingCostsSubtotal']"));
-		IntegratedDisclosureSectionSummaryDetail totalOtherCosts = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='TotalOtherCosts']"));
 		IntegratedDisclosureSectionSummaryDetail totalLoanCosts = new IntegratedDisclosureSectionSummaryDetail((Element)deal.getElementAddNS(idDetail + "[IntegratedDisclosureSectionType='TotalLoanCosts']"));
 		IntegratedDisclosureSubsectionPayment idLenderCredits = new IntegratedDisclosureSubsectionPayment((Element)deal.getElementAddNS(idSummary + "[INTEGRATED_DISCLOSURE_SECTION_SUMMARY_DETAIL/IntegratedDisclosureSubsectionType='LenderCredits']/INTEGRATED_DISCLOSURE_SUBSECTION_PAYMENTS/INTEGRATED_DISCLOSURE_SUBSECTION_PAYMENT"));
 
@@ -703,7 +702,6 @@ public class LoanEstimateConvertor {
 		}
 		
 			costsAtClosingClosingCosts.setAmount(idClosingDetail.integratedDisclosureSectionTotalAmount);
-			costsAtClosingClosingCosts.setTotalOtherCosts(totalOtherCosts.integratedDisclosureSectionTotalAmount);
 			costsAtClosingClosingCosts.setLenderCredits(lenderCredits);
 			costsAtClosingClosingCosts.setTotalLoanCosts(totalLoanCosts.integratedDisclosureSectionTotalAmount);
 			costsAtClosingCashToClose.setAmount(closingDetail.cashFromBorrowerAtClosingAmount.equals("") ? closingDetail.cashToBorrowerAtClosingAmount : closingDetail.cashFromBorrowerAtClosingAmount);
@@ -951,7 +949,6 @@ public class LoanEstimateConvertor {
 		closingCostDetailsOtherCosts.setPrepaidsList(prepaidsList);
 		closingCostDetailsOtherCosts.setEscrowItemsList(escrowItemsList);
 		closingCostDetailsOtherCosts.setOtherCostsList(otherCostsList);
-		closingCostDetailsOtherCosts.setTotalOtherCosts(totalOtherCosts);
 		
 		return closingCostDetailsOtherCosts;
     	

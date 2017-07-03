@@ -15,7 +15,6 @@ public class ClosingCostDetailsOtherCosts implements Serializable {
 	private String escrowItemsTotalAmount;
 	private String otherTotalAmount;
 	private String totalOtherCostsTotalAmount;
-	private PaymentsModel totalOtherCosts;
 	private List<ClosingCostProperties> tOGovtFeesList;
 	private List<Prepaids> prepaidsList;
 	private List<EscrowItemModel> escrowItemsList;
@@ -80,18 +79,6 @@ public class ClosingCostDetailsOtherCosts implements Serializable {
 	 */
 	public void setTotalOtherCostsTotalAmount(String totalOtherCostsTotalAmount) {
 		this.totalOtherCostsTotalAmount = totalOtherCostsTotalAmount;
-	}
-	/**
-	 * @return the totalOtherCosts
-	 */
-	public PaymentsModel getTotalOtherCosts() {
-		return totalOtherCosts;
-	}
-	/**
-	 * @param totalOtherCosts the totalOtherCosts to set
-	 */
-	public void setTotalOtherCosts(PaymentsModel totalOtherCosts) {
-		this.totalOtherCosts = totalOtherCosts;
 	}
 	/**
 	 * @return the tOGovtFeesList

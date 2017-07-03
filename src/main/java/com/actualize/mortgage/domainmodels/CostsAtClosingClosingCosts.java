@@ -14,7 +14,6 @@ public class CostsAtClosingClosingCosts implements Serializable {
 	private String integratedDisclosureSubsectionTotalAmount;
 	private String integratedDisclosureSubsectionPaymentAmount;
 	private String totalLoanCosts;
-	private String totalOtherCosts;
 	private String lenderCredits;
 	
 	/**
@@ -65,18 +64,6 @@ public class CostsAtClosingClosingCosts implements Serializable {
 	 */
 	public void setTotalLoanCosts(String totalLoanCosts) {
 		this.totalLoanCosts = totalLoanCosts;
-	}
-	/**
-	 * @return the totalOtherCosts
-	 */
-	public String getTotalOtherCosts() {
-		return totalOtherCosts;
-	}
-	/**
-	 * @param totalOtherCosts the totalOtherCosts to set
-	 */
-	public void setTotalOtherCosts(String totalOtherCosts) {
-		this.totalOtherCosts = totalOtherCosts;
 	}
 	/**
 	 * @return the lenderCredits
