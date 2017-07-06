@@ -9,13 +9,25 @@ import java.util.List;
  *
  */
 public class ETIASection implements Serializable {
-
-	private static final long serialVersionUID = 1185489693159686185L;
-
+	
+	private static final long serialVersionUID = -5637216582350976041L;
+	private String displayLabel;
 	private List<String> escrowTypes;
 	private String projectedPaymentEstimatedTaxesInsuranceAssessmentTotalAmount;
 	private List<ETIA> etiaValues;
 	
+	/**
+	 * @return the displayLabel
+	 */
+	public String getDisplayLabel() {
+		return displayLabel;
+	}
+	/**
+	 * @param displayLabel the displayLabel to set
+	 */
+	public void setDisplayLabel(String displayLabel) {
+		this.displayLabel = displayLabel;
+	}
 	/**
 	 * @return the escrowTypes
 	 */

@@ -583,6 +583,7 @@ public class LoanEstimateConvertor {
   			eTIAs.add(eTIA);
   		}
   		
+  		etiaSection.setDisplayLabel(estimatedPropertyCostComponents.displayLabel);
   		etiaSection.setEtiaValues(eTIAs);
 		etiaSection.setProjectedPaymentEstimatedTaxesInsuranceAssessmentTotalAmount(projectedPaymentEstimatedTaxesInsuranceAssessmentTotalAmount);
   		etiaSection.setEscrowTypes(escrowTypes);

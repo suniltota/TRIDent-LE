@@ -1610,7 +1610,7 @@ public class JsonToUcd {
      */
 	private void insertEstimatedPropertyCost(Document document, Element element,
 			ETIASection propertyCost) {
-		insertEstimatedPropertyCostComponents(document, insertLevels(document, element, "ESTIMATED_PROPERTY_COST_COMPONENTS"), propertyCost.getEtiaValues());
+		insertEstimatedPropertyCostComponents(document, insertLevels(document, element, "ESTIMATED_PROPERTY_COST_COMPONENTS"), propertyCost);
 		if(!"".equals(propertyCost.getProjectedPaymentEstimatedTaxesInsuranceAssessmentTotalAmount()) && null != propertyCost.getProjectedPaymentEstimatedTaxesInsuranceAssessmentTotalAmount())
 			insertEstimatedPropertyCostDetail(document, insertLevels(document, element, "ESTIMATED_PROPERTY_COST_DETAIL"), propertyCost.getProjectedPaymentEstimatedTaxesInsuranceAssessmentTotalAmount());
 	}
@@ -1631,9 +1631,10 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertEstimatedPropertyCostComponents(Document document, Element element,
-			List<ETIA> etiaValues) {
-		//element.setAttribute("gse:DisplayLabelText", estimatedPropertyCostComponents.getgseDispalyLabelText()); //TODO Data Not found for this field
-		for (ETIA ETIA : etiaValues)
+			ETIASection propertyCost) {
+		if(null != element && null != propertyCost.getDisplayLabel() && !propertyCost.getDisplayLabel().isEmpty())
+			element.setAttribute("gse:DisplayLabelText", propertyCost.getDisplayLabel());
+		for (ETIA ETIA : propertyCost.getEtiaValues())
 			insertEstimatedPropertyCostComponent(document, insertLevels(document, element, "ESTIMATED_PROPERTY_COST_COMPONENT"), ETIA);
 	}
 	/**
