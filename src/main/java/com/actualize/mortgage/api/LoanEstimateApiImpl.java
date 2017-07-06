@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.actualize.mortgage.domainmodels.LoanEstimate;
-import com.actualize.mortgage.services.impl.LoanEstimateServicesImpl;
+import com.actualize.mortgage.services.impl.ILoanEstimateServices;
 /**
  * This class is the rest controller which defines the all the APIs associated for generation of JSON from MISMO XML and vice versa for Loan Estimate 
  * @author sboragala
@@ -27,6 +28,8 @@ public class LoanEstimateApiImpl {
 
 	private static final Logger LOG = LogManager.getLogger(LoanEstimateApiImpl.class);
 	
+	@Autowired
+	private ILoanEstimateServices loanEstimateServices;
     
 
     /**
@@ -40,8 +43,7 @@ public class LoanEstimateApiImpl {
     public LoanEstimate generateresponse(@PathVariable String version, @RequestBody String xmldoc) throws Exception {
     	LOG.info("Service: letojson called");
         InputStream inputStream = new ByteArrayInputStream(xmldoc.getBytes(StandardCharsets.UTF_8));
-        LoanEstimateServicesImpl loanEstimateServicesImpl = new LoanEstimateServicesImpl();
-        return loanEstimateServicesImpl.createLoanEstimateDocumentObjectfromXMLDoc(inputStream);
+        return loanEstimateServices.createLoanEstimateDocumentObjectfromXMLDoc(inputStream);
     }
     
     /**
@@ -54,8 +56,7 @@ public class LoanEstimateApiImpl {
     @RequestMapping(value = "/{version}/jsontole", method = { RequestMethod.POST })
     public String generateMISMOxml(@PathVariable String version, @RequestBody LoanEstimate loanEstimateJSON) throws Exception {
     	LOG.info("Service: jsontole called");
-    	LoanEstimateServicesImpl loanEstimateServicesImpl = new LoanEstimateServicesImpl();
-    	return loanEstimateServicesImpl.createLoanEstimateXMLfromObject(loanEstimateJSON);
+    	return loanEstimateServices.createLoanEstimateXMLfromObject(loanEstimateJSON);
     }
     
     /**

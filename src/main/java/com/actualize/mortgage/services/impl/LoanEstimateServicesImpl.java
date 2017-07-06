@@ -16,7 +16,7 @@ import com.actualize.mortgage.utils.JsonToUcd;
  *
  */
 @Service
-public class LoanEstimateServicesImpl {
+public class LoanEstimateServicesImpl implements ILoanEstimateServices{
 	
 	private static final Logger LOG = LogManager.getLogger(LoanEstimateServicesImpl.class);
 
