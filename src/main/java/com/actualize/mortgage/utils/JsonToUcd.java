@@ -20,6 +20,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -100,7 +102,7 @@ public class JsonToUcd {
 	private static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 	private static final String XSI_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
-	//private static final Logger LOGGER = Logger.getLogger(JsonToUcd.class.getName());
+	private static final Logger LOG = LogManager.getLogger(JsonToUcd.class);
 
 	private static final DocumentBuilderFactory dbf = initializeDocumentBuilderFactory();
 //	private static final XPath xPath = XPathFactory.newInstance().newXPath();
@@ -2555,8 +2557,8 @@ public class JsonToUcd {
 	private void insertSubjectProperty(Document document, Element element, LoanEstimate jsonDocument) {
 
 		insertAddress(document, insertLevels(document, element, "ADDRESS"), jsonDocument.getClosingInformation().getProperty());
-		//insertUnparsedLegalDescription(document, 
-			//	insertLevels(document, element,"LEGAL_DESCRIPTIONS/LEGAL_DESCRIPTION/UNPARSED_LEGAL_DESCRIPTIONS/UNPARSED_LEGAL_DESCRIPTION"), "TODO");
+		insertUnparsedLegalDescription(document, 
+				insertLevels(document, element,"LEGAL_DESCRIPTIONS/LEGAL_DESCRIPTION/UNPARSED_LEGAL_DESCRIPTIONS/UNPARSED_LEGAL_DESCRIPTION"), jsonDocument.getClosingInformation().getProperty().getUnparsedLegalDescription());
 		//insertLocationIdentifier(document, insertLevels(document, element, "LOCATION_IDENTIFIER"), jsonDocument);
 		insertPropertyDetail(document, insertLevels(document, element, "PROPERTY_DETAIL"), jsonDocument.getClosingInformation().getPropertyValuationDetail().getPropertyEstimatedValueAmount());
 		insertPropertyValuations(document, insertLevels(document, element, "PROPERTY_VALUATIONS"), jsonDocument.getClosingInformation().getPropertyValuationDetail());
@@ -2684,7 +2686,7 @@ public class JsonToUcd {
      */
 	private void insertUnparsedLegalDescription(Document document, Element element,
 			String unparsedLegalDescription) {
-		insertData(document, element, "UnparsedLegalDescription", "");
+		insertData(document, element, "UnparsedLegalDescription", unparsedLegalDescription);
 	}
 	/**
      * Inserts Terms Of Loan from JSON Object
