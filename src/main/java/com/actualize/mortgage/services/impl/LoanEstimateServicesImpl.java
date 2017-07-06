@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.actualize.mortgage.convertors.LoanEstimateConvertor;
 import com.actualize.mortgage.datamodels.MISMODocument;
@@ -14,6 +15,7 @@ import com.actualize.mortgage.utils.JsonToUcd;
  * @author sboragala
  *
  */
+@Service
 public class LoanEstimateServicesImpl {
 	
 	private static final Logger LOG = LogManager.getLogger(LoanEstimateServicesImpl.class);

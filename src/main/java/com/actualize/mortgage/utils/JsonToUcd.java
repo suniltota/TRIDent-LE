@@ -207,10 +207,10 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertClosingInformationDetail(Document document, Element element, ClosingInformationDetailModel closingInformationDetailModel) {
-		insertData(document, element, "CashFromBorrowerAtClosingAmount", closingInformationDetailModel.getCashFromBorrowerAtClosingAmount());
-		insertData(document, element, "CashFromSellerAtClosingAmount", closingInformationDetailModel.getCashFromSellerAtClosingAmount());
-		insertData(document, element, "CashToBorrowerAtClosingAmount", closingInformationDetailModel.getCashToBorrowerAtClosingAmount());
-		insertData(document, element, "CashToSellerAtClosingAmount", closingInformationDetailModel.getCashToSellerAtClosingAmount());
+		insertData(document, element, "CashFromBorrowerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashFromBorrowerAtClosingAmount()));
+		insertData(document, element, "CashFromSellerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashFromSellerAtClosingAmount()));
+		insertData(document, element, "CashToBorrowerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashToBorrowerAtClosingAmount()));
+		insertData(document, element, "CashToSellerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashToSellerAtClosingAmount()));
 		insertData(document, element, "CurrentRateSetDate", closingInformationDetailModel.getCurrentRateSetDate());
 		insertData(document, element, "DocumentOrderClassificationType", closingInformationDetailModel.getDocumentOrderClassificationType()); //TODO: This datapoint is not found in UCD Spec.
 		insertData(document, element, "ClosingAgentOrderNumberIdentifier", closingInformationDetailModel.getClosingAgentOrderNumberIdentifier());
@@ -638,14 +638,14 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertIntegratedDisclosureDetail(Document document, Element element, IntegratedDisclosureDetailModel integratedDisclosureDetail) {
-		insertData(document, element, "FirstYearTotalEscrowPaymentAmount", integratedDisclosureDetail.getFirstYearTotalEscrowPaymentAmount());
+		insertData(document, element, "FirstYearTotalEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalEscrowPaymentDescription());
-		insertData(document, element, "FirstYearTotalNonEscrowPaymentAmount", integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentAmount());
+		insertData(document, element, "FirstYearTotalNonEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentDescription());
 		insertData(document, element, "IntegratedDisclosureHomeEquityLoanIndicator", Boolean.toString(integratedDisclosureDetail.isIntegratedDisclosureHomeEquityLoanIndicator()));
 		insertData(document, element, "IntegratedDisclosureLoanProductDescription", integratedDisclosureDetail.getIntegratedDisclosureLoanProductDescription());
 		insertData(document, element, "IntegratedDisclosureIssuedDate", integratedDisclosureDetail.getIntegratedDisclosureIssuedDate());
-		insertData(document, element, "FiveYearTotalOfPaymentsComparisonAmount", integratedDisclosureDetail.getFiveYearTotalOfPaymentsComparisonAmount());
+		insertData(document, element, "FiveYearTotalOfPaymentsComparisonAmount", Convertor.checkAmountFormat(integratedDisclosureDetail.getFiveYearTotalOfPaymentsComparisonAmount()));
 		insertData(document, element, "FiveYearPrincipalReductionComparisonAmount", integratedDisclosureDetail.getFiveYearPrincipalReductionComparisonAmount());
 		
 	}
@@ -914,7 +914,7 @@ public class JsonToUcd {
 		//insertData(document, element, "LoanNegativeAmortizationResolutionType", "");
 		//insertData(document, element, "LoanNegativeAmortizationResolutionTypeOtherDescription", "");
 		insertData(document, element, "NegativeAmortizationLimitMonthsCount", negativeAmortization.getNegativeAmortizationLimitMonthsCount());
-		insertData(document, element, "NegativeAmortizationMaximumLoanBalanceAmount", negativeAmortization.getNegativeAmortizationMaximumLoanBalanceAmount());
+		insertData(document, element, "NegativeAmortizationMaximumLoanBalanceAmount", Convertor.checkAmountFormat(negativeAmortization.getNegativeAmortizationMaximumLoanBalanceAmount()));
 		insertData(document, element, "NegativeAmortizationType", negativeAmortization.getNegativeAmortizationType());
 	}
 	/**
@@ -1027,7 +1027,7 @@ public class JsonToUcd {
 		//insertData(document, element, "AssumedIndicator",);
 		insertData(document, element, "AssumabilityIndicator", Boolean.toString(loanDetail.isAssumabilityIndicator()));
 		insertData(document, element, "BalloonIndicator", Boolean.toString(loanDetail.isBalloonIndicator()));
-		insertData(document, element, "BalloonPaymentAmount",  loanDetail.getBalloonPaymentAmount());
+		insertData(document, element, "BalloonPaymentAmount", Convertor.checkAmountFormat(loanDetail.getBalloonPaymentAmount()));
 		insertData(document, element, "BuydownTemporarySubsidyFundingIndicator",Boolean.toString(loanDetail.isBuydownTemporarySubsidyFundingIndicator()));
 		insertData(document, element, "ConstructionLoanIndicator",Boolean.toString(loanDetail.isConstructionLoanIndicator()));
 		insertData(document, element, "CreditorServicingOfLoanStatementType", loanDetail.getCreditorServicingOfLoanStatementType());
@@ -1044,7 +1044,7 @@ public class JsonToUcd {
 		insertData(document, element, "PrepaymentPenaltyIndicator",Boolean.toString(loanDetail.isPrepaymentPenaltyIndicator()));
 		insertData(document, element, "SeasonalPaymentFeatureIndicator", Boolean.toString(loanDetail.isSeasonalPaymentFeatureIndicator()));
 		insertData(document, element, "StepPaymentsFeatureDescription", loanDetail.getStepPaymentsFeatureDescription());
-		insertData(document, element, "TotalSubordinateFinancingAmount", loanDetail.getTotalSubordinateFinancingAmount());
+		insertData(document, element, "TotalSubordinateFinancingAmount", Convertor.checkAmountFormat(loanDetail.getTotalSubordinateFinancingAmount()));
 		OtherModel other = new OtherModel();
 			other.setSubordinateFinancingIsNewIndicator(Boolean.toString(loanDetail.isSubordinateFinancingIsNewIndicator()).toLowerCase());
 		insertExtension(document, insertLevels(document, element, "EXTENSION"), other);
@@ -1056,7 +1056,7 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertLateChargeRule(Document document, Element element, LateChargeRuleModel lateChargeRule) {
-		insertData(document, element, GSE_ALIAS + ":LateChargeAmount", lateChargeRule.getLateChargeAmount());
+		insertData(document, element, GSE_ALIAS + ":LateChargeAmount", Convertor.checkAmountFormat(lateChargeRule.getLateChargeAmount()));
 		insertData(document, element, GSE_ALIAS + ":LateChargeGracePeriodDaysCount", lateChargeRule.getLateChargeGracePeriodDaysCount() );
 		//insertData(document, element, "LateChargeMaximumAmount", "");
 		//insertData(document, element, "LateChargeMinimumAmount", "");
@@ -1214,10 +1214,10 @@ public class JsonToUcd {
 	private void insertFeeSummaryDetail(Document document, Element element,
 			LoanCalculationModel loanCalculation) {
 		insertData(document, element, "APRPercent", loanCalculation.getAprPercent());
-		insertData(document, element, "FeeSummaryTotalAmountFinancedAmount", loanCalculation.getFeeSummaryTotalAmountFinancedAmount());
-		insertData(document, element, "FeeSummaryTotalFinanceChargeAmount", loanCalculation.getFeeSummaryTotalFinanceChargeAmount());
-		insertData(document, element, "FeeSummaryTotalInterestPercent", loanCalculation.getFeeSummaryTotalInterestPercent());
-		insertData(document, element, "FeeSummaryTotalOfAllPaymentsAmount", loanCalculation.getFeeSummaryTotalOfAllPaymentsAmount());
+		insertData(document, element, "FeeSummaryTotalAmountFinancedAmount", Convertor.checkAmountFormat(loanCalculation.getFeeSummaryTotalAmountFinancedAmount()));
+		insertData(document, element, "FeeSummaryTotalFinanceChargeAmount", Convertor.checkAmountFormat(loanCalculation.getFeeSummaryTotalFinanceChargeAmount()));
+		insertData(document, element, "FeeSummaryTotalInterestPercent",loanCalculation.getFeeSummaryTotalInterestPercent());
+		insertData(document, element, "FeeSummaryTotalOfAllPaymentsAmount", Convertor.checkAmountFormat(loanCalculation.getFeeSummaryTotalOfAllPaymentsAmount()));
 	}
 	
 	/**
@@ -1320,7 +1320,7 @@ public class JsonToUcd {
 		OtherModel other = new OtherModel();
 			other.setPaymentIncludedInAPRIndicator(Convertor.booleanToString(closingCostProperties.getPaymentIncludedInAPRIndicator()));
 		insertData(document, element, "BorrowerChosenProviderIndicator", "");
-		insertData(document, element, "FeeActualTotalAmount", closingCostProperties.getFeeActualTotalAmount());
+		insertData(document, element, "FeeActualTotalAmount", Convertor.checkAmountFormat(closingCostProperties.getFeeActualTotalAmount()));
 		insertData(document, element, "FeeEstimatedTotalAmount", closingCostProperties.getFeeEstimatedTotalAmount());
 		insertData(document, element, "FeePaidToType", closingCostProperties.getFeePaidToType());
 		insertData(document, element, "FeePaidToTypeOtherDescription", closingCostProperties.getFeePaidToTypeOtherDescription());
@@ -1415,7 +1415,7 @@ public class JsonToUcd {
 			EscrowItemModel escrowItem) {
 		insertData(document, element, "EscrowCollectedNumberOfMonthsCount", escrowItem.getEscrowCollectedNumberOfMonthsCount());
 		insertData(document, element, "EscrowItemCategoryType","");
-		insertData(document, element, "EscrowItemEstimatedTotalAmount", escrowItem.getEscrowItemEstimatedTotalAmount());
+		insertData(document, element, "EscrowItemEstimatedTotalAmount", Convertor.checkAmountFormat(escrowItem.getEscrowItemEstimatedTotalAmount()));
 		Element itemType = returnElement(document, element, "EscrowItemType", escrowItem.getEscrowItemType());
 			if(null != itemType && null != escrowItem.getDisplayLabel() && !escrowItem.getDisplayLabel().isEmpty())
 				itemType.setAttribute("gse:DisplayLabelText",  escrowItem.getDisplayLabel());
@@ -1693,8 +1693,8 @@ public class JsonToUcd {
 			CashToCloseModel cashToClose) {
 			insertData(document, element, "IntegratedDisclosureCashToCloseItemAmountChangedIndicator",Boolean.toString(cashToClose.isIntegratedDisclosureCashToCloseItemAmountChangedIndicator()));
 			insertData(document, element, "IntegratedDisclosureCashToCloseItemChangeDescription", cashToClose.getIntegratedDisclosureCashToCloseItemChangeDescription());
-			insertData(document, element, "IntegratedDisclosureCashToCloseItemEstimatedAmount", cashToClose.getIntegratedDisclosureCashToCloseItemEstimatedAmount());
-			insertData(document, element, "IntegratedDisclosureCashToCloseItemFinalAmount", cashToClose.getIntegratedDisclosureCashToCloseItemFinalAmount());
+			insertData(document, element, "IntegratedDisclosureCashToCloseItemEstimatedAmount", Convertor.checkAmountFormat(cashToClose.getIntegratedDisclosureCashToCloseItemEstimatedAmount()));
+			insertData(document, element, "IntegratedDisclosureCashToCloseItemFinalAmount", Convertor.checkAmountFormat(cashToClose.getIntegratedDisclosureCashToCloseItemFinalAmount()));
 			insertData(document, element, "IntegratedDisclosureCashToCloseItemPaymentType", cashToClose.getIntegratedDisclosureCashToCloseItemPaymentType());
 			insertData(document, element, "IntegratedDisclosureCashToCloseItemType",  cashToClose.getIntegratedDisclosureCashToCloseItemType());
 	}
@@ -1820,7 +1820,7 @@ public class JsonToUcd {
 	private void insertProrationItem(Document document, Element element, ProrationModel prorationItem) {
 		insertData(document, element, "IntegratedDisclosureSectionType", prorationItem.getIntegratedDisclosureSectionType());
 		insertData(document, element, "IntegratedDisclosureSubsectionType", prorationItem.getIntegratedDisclosureSubsectionType());
-		insertData(document, element, "ProrationItemAmount", prorationItem.getProrationItemAmount());
+		insertData(document, element, "ProrationItemAmount", Convertor.checkAmountFormat(prorationItem.getProrationItemAmount()));
 		insertData(document, element, "ProrationItemPaidFromDate",  prorationItem.getProrationItemPaidFromDate());
 		insertData(document, element, "ProrationItemPaidThroughDate",  prorationItem.getProrationItemPaidThroughDate());
 		Element prorationItemTypeElement = returnElement(document, element, "ProrationItemType",  prorationItem.getProrationItemType());
@@ -1908,7 +1908,7 @@ public class JsonToUcd {
 		insertData(document, element, "FeePaidToType", prepaidItem.getFeePaidToType());
 		insertData(document, element, "FeePaidToTypeOtherDescription", prepaidItem.getFeePaidToTypeOtherDescription());
 		insertData(document, element, "IntegratedDisclosureSectionType", prepaidItem.getIntegratedDisclosureSectionType());
-		insertData(document, element, "PrepaidItemEstimatedTotalAmount", prepaidItem.getPrepaidItemEstimatedTotalAmount()); 
+		insertData(document, element, "PrepaidItemEstimatedTotalAmount", Convertor.checkAmountFormat(prepaidItem.getPrepaidItemEstimatedTotalAmount())); 
 		insertData(document, element, "PrepaidItemMonthsPaidCount", prepaidItem.getPrepaidItemMonthsPaidCount());
 		insertData(document, element, "PrepaidItemNumberOfDaysCount", prepaidItem.getPrepaidItemNumberOfDaysCount()); 
 		insertData(document, element, "PrepaidItemPaidFromDate", prepaidItem.getPrepaidItemPaidFromDate());
@@ -2085,7 +2085,7 @@ public class JsonToUcd {
      */
 	private void insertClosingAdjustmentItemDetail(Document document, Element element,
 			ClosingAdjustmentItemModel closingAdjustmentItem) {
-		insertData(document, element, "ClosingAdjustmentItemAmount", closingAdjustmentItem.getClosingAdjustmentItemAmount());
+		insertData(document, element, "ClosingAdjustmentItemAmount", Convertor.checkAmountFormat(closingAdjustmentItem.getClosingAdjustmentItemAmount()));
 		//insertData(document, element, "ClosingAdjustmentItemPaidOutsideOfClosingIndicator",);
 		Element closingAdjustmentItemTypeElement = insertData(document, element, "ClosingAdjustmentItemType", closingAdjustmentItem.getClosingAdjustmentItemType());
 			if(!closingAdjustmentItem.getDisplayLabel().isEmpty() && null != closingAdjustmentItem.getDisplayLabel())
@@ -2149,15 +2149,15 @@ public class JsonToUcd {
 		if("First".equalsIgnoreCase(type))
 		{
 			insertData(document,element, "AdjustmentRuleType", principalAndInterestPaymentAdjustment.getFirstAdjustmentRuleType());
-			insertData(document,element, "PerChangeMaximumPrincipalAndInterestPaymentAmount", principalAndInterestPaymentAdjustment.getFirstPerChangeMaximumPrincipalAndInterestPaymentAmount()); 
-			insertData(document,element, "PerChangeMinimumPrincipalAndInterestPaymentAmount", principalAndInterestPaymentAdjustment.getFirstPerChangeMinimumPrincipalAndInterestPaymentAmount());
+			insertData(document,element, "PerChangeMaximumPrincipalAndInterestPaymentAmount", Convertor.checkAmountFormat(principalAndInterestPaymentAdjustment.getFirstPerChangeMaximumPrincipalAndInterestPaymentAmount())); 
+			insertData(document,element, "PerChangeMinimumPrincipalAndInterestPaymentAmount", Convertor.checkAmountFormat(principalAndInterestPaymentAdjustment.getFirstPerChangeMinimumPrincipalAndInterestPaymentAmount()));
 			insertData(document,element, "PerChangePrincipalAndInterestPaymentAdjustmentFrequencyMonthsCount", principalAndInterestPaymentAdjustment.getFirstPerChangePrincipalAndInterestPaymentAdjustmentFrequencyMonthsCount());
 		}
 		if("Subsequent".equalsIgnoreCase(type))
 		{
 			insertData(document,element, "AdjustmentRuleType", principalAndInterestPaymentAdjustment.getSubsequentAdjustmentRuleType());
-			insertData(document,element, "PerChangeMaximumPrincipalAndInterestPaymentAmount", principalAndInterestPaymentAdjustment.getSubsequentPerChangeMaximumPrincipalAndInterestPaymentAmount()); 
-			insertData(document,element, "PerChangeMinimumPrincipalAndInterestPaymentAmount", principalAndInterestPaymentAdjustment.getSubsequentPerChangeMinimumPrincipalAndInterestPaymentAmount());
+			insertData(document,element, "PerChangeMaximumPrincipalAndInterestPaymentAmount", Convertor.checkAmountFormat(principalAndInterestPaymentAdjustment.getSubsequentPerChangeMaximumPrincipalAndInterestPaymentAmount())); 
+			insertData(document,element, "PerChangeMinimumPrincipalAndInterestPaymentAmount", Convertor.checkAmountFormat(principalAndInterestPaymentAdjustment.getSubsequentPerChangeMinimumPrincipalAndInterestPaymentAmount()));
 			insertData(document,element, "PerChangePrincipalAndInterestPaymentAdjustmentFrequencyMonthsCount", principalAndInterestPaymentAdjustment.getSubsequentPerChangePrincipalAndInterestPaymentAdjustmentFrequencyMonthsCount());
 		}
 	}
@@ -2170,7 +2170,7 @@ public class JsonToUcd {
 	private void insertPrincipalAndInterestPaymentLifetimeAdjustmentRule(Document document, Element element,
 			PrincipalAndInterestPaymentAdjustmentModel principalAndInterestPaymentAdjustment) {
 		insertData(document, element, "FirstPrincipalAndInterestPaymentChangeMonthsCount",principalAndInterestPaymentAdjustment.getFirstPrincipalAndInterestPaymentChangeMonthsCount() );
-		insertData(document, element, "PrincipalAndInterestPaymentMaximumAmount", principalAndInterestPaymentAdjustment.getPrincipalAndInterestPaymentMaximumAmount());
+		insertData(document, element, "PrincipalAndInterestPaymentMaximumAmount", Convertor.checkAmountFormat(principalAndInterestPaymentAdjustment.getPrincipalAndInterestPaymentMaximumAmount()));
 		insertData(document, element, "PrincipalAndInterestPaymentMaximumAmountEarliestEffectiveMonthsCount", principalAndInterestPaymentAdjustment.getPrincipalAndInterestPaymentMaximumAmountEarliestEffectiveMonthsCount());
 	}
 	/**
@@ -2260,7 +2260,7 @@ public class JsonToUcd {
 	private void insertOther(Document document, Element element, OtherModel other) {
 	 	insertData(document, element, GSE_ALIAS + ":BuydownReflectedInNoteIndicator", other.getBuydownReflectedInNoteIndicator());
 		insertData(document, element, GSE_ALIAS + ":DocumentSignatureRequiredIndicator", other.getDocumentSignatureRequiredIndicator());
-		insertData(document, element, GSE_ALIAS + ":EscrowAccountRolloverAmount", other.getEscrowAccountRolloverAmount());
+		insertData(document, element, GSE_ALIAS + ":EscrowAccountRolloverAmount", Convertor.checkAmountFormat(other.getEscrowAccountRolloverAmount()));
 		insertData(document, element,
 				GSE_ALIAS + ":IntegratedDisclosureEstimatedClosingCostsExpirationTimezoneType", other.getIntegratedDisclosureEstimatedClosingCostsExpirationTimezoneType());
 		insertData(document, element, GSE_ALIAS + ":IntegratedDisclosureSectionType", other.getIntegratedDisclosureSectionType());
@@ -2571,10 +2571,10 @@ public class JsonToUcd {
      */
 	private void insertSalesContractDetail(Document document, Element element,
 			SalesContractDetailModel salesContractDetail) {
-		insertData(document, element, "PersonalPropertyAmount", salesContractDetail.getPersonalPropertyAmount());
+		insertData(document, element, "PersonalPropertyAmount", Convertor.checkAmountFormat(salesContractDetail.getPersonalPropertyAmount()));
 		insertData(document, element, "PersonalPropertyIncludedIndicator",Convertor.booleanToString(salesContractDetail.getPersonalPropertyIndicator()));
-		insertData(document, element, "RealPropertyAmount", salesContractDetail.getRealPropertyAmount());
-		insertData(document, element, "SalesContractAmount", salesContractDetail.getSaleContractAmount());
+		insertData(document, element, "RealPropertyAmount", Convertor.checkAmountFormat(salesContractDetail.getRealPropertyAmount()));
+		insertData(document, element, "SalesContractAmount", Convertor.checkAmountFormat(salesContractDetail.getSaleContractAmount()));
 	}
 	/**
      * Inserts Property Valuations from JSON Object
@@ -2608,7 +2608,7 @@ public class JsonToUcd {
 		Element appraisalIdentifierelement = insertLevels(document, element, "AppraisalIdentifier");
 		if(null != appraisalIdentifierelement && null != propertyValuationDetail.getIdentifierOwnerURI() && ! propertyValuationDetail.getIdentifierOwnerURI().isEmpty())
 			appraisalIdentifierelement.setAttribute("IdentifierOwnerURI", propertyValuationDetail.getIdentifierOwnerURI());
-		insertData(document, element, "PropertyValuationAmount", propertyValuationDetail.getPropertyValuationAmount());
+		insertData(document, element, "PropertyValuationAmount", Convertor.checkAmountFormat(propertyValuationDetail.getPropertyValuationAmount()));
 		insertData(document, element, "PropertyValuationMethodType", propertyValuationDetail.getPropertyValuationMethodType());
 		insertData(document, element, "PropertyValuationMethodTypeOtherDescription", propertyValuationDetail.getPropertyValuationMethodTypeOtherDescription());
 		
@@ -2627,7 +2627,7 @@ public class JsonToUcd {
 		insertData(document, element, "MSAIndicator", "");
 		insertData(document, element, "PropertyEstateType", "");
 		insertData(document, element, "PropertyEstateTypeOtherDescription", "");
-		insertData(document, element, "PropertyEstimatedValueAmount", propertyEstimatedValueAmount);
+		insertData(document, element, "PropertyEstimatedValueAmount", Convertor.checkAmountFormat(propertyEstimatedValueAmount));
 		insertData(document, element, "PropertyUsageType", "");
 	}
 	/**
@@ -2693,13 +2693,13 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertTermsOfLoan(Document document, Element element, TermsOfLoanModel termsOfLoan) {
-		insertData(document, element, "AssumedLoanAmount", termsOfLoan.getAssumedLoanAmount());
+		insertData(document, element, "AssumedLoanAmount", Convertor.checkAmountFormat(termsOfLoan.getAssumedLoanAmount()));
 		insertData(document, element, "DisclosedFullyIndexedRatePercent", termsOfLoan.getDisclosedFullyIndexedRatePercent());
 		insertData(document, element, "LienPriorityType", termsOfLoan.getLienPriorityType());
 		insertData(document, element, "LoanPurposeType", termsOfLoan.getLoanPurposeType());
 		insertData(document, element, "MortgageType", termsOfLoan.getMortgageType());
 		insertData(document, element, "MortgageTypeOtherDescription", termsOfLoan.getMortgageTypeOtherDescription());
-		insertData(document, element, "NoteAmount", termsOfLoan.getNoteAmount());
+		insertData(document, element, "NoteAmount", Convertor.checkAmountFormat(termsOfLoan.getNoteAmount()));
 		insertData(document, element, "NoteRatePercent", termsOfLoan.getNoteRatePercent());
 		insertData(document, element, "WeightedAverageInterestRatePercent", termsOfLoan.getWeightedAverageInterestRatePercent());
 	}

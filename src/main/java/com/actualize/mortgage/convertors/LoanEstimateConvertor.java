@@ -1375,7 +1375,7 @@ public class LoanEstimateConvertor {
     	LoanCalculationModel loanCalculationModel = new LoanCalculationModel();
     	
     	FeeSummaryDetail feeSummaryDetail = new FeeSummaryDetail((Element)deal.getElementAddNS("LOANS/LOAN/FEE_INFORMATION/FEES_SUMMARY/FEE_SUMMARY_DETAIL"));
-    	HighCostMortgages highCostMortgages = new HighCostMortgages(null, (Element)deal.getElementAddNS("LOANS/LOAN/HIGH_COST_MORTGAGES/HIGH_COST_MORTGAGE"));
+    	//HighCostMortgages highCostMortgages = new HighCostMortgages(null, (Element)deal.getElementAddNS("LOANS/LOAN/HIGH_COST_MORTGAGES/HIGH_COST_MORTGAGE"));
     	Foreclosures foreclosures =  new Foreclosures(null, (Element)deal.getElementAddNS("LOANS/LOAN/FORECLOSURES/FORECLOSURE/FORECLOSURE_DETAIL"));
     	
     	loanCalculationModel.setAprPercent(feeSummaryDetail.aprPercent);
