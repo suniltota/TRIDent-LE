@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class LoanEstimateApiImpl {
      */
     @RequestMapping(value = "/{version}/letojson", method = { RequestMethod.POST })
     public LoanEstimate generateresponse(@PathVariable String version, @RequestBody String xmldoc) throws Exception {
-    	LOG.info("Service: letojson called");
+    	LOG.info("user "+SecurityContextHolder.getContext().getAuthentication().getName()+" used Service: LE MISMO XML to LE JSON");
         InputStream inputStream = new ByteArrayInputStream(xmldoc.getBytes(StandardCharsets.UTF_8));
         return loanEstimateServices.createLoanEstimateDocumentObjectfromXMLDoc(inputStream);
     }
@@ -55,7 +56,7 @@ public class LoanEstimateApiImpl {
      */
     @RequestMapping(value = "/{version}/jsontole", method = { RequestMethod.POST })
     public String generateMISMOxml(@PathVariable String version, @RequestBody LoanEstimate loanEstimateJSON) throws Exception {
-    	LOG.info("Service: jsontole called");
+    	LOG.info("user "+SecurityContextHolder.getContext().getAuthentication().getName()+" used Service: LE JSON to LE MISMO XML");
     	return loanEstimateServices.createLoanEstimateXMLfromObject(loanEstimateJSON);
     }
     
@@ -68,6 +69,7 @@ public class LoanEstimateApiImpl {
      */
     @RequestMapping(value = "/{version}/ping", method = { RequestMethod.GET })
     public String generateMISMOxml(@RequestParam String version) throws Exception {
+    	LOG.info("user "+SecurityContextHolder.getContext().getAuthentication().getName()+" used Service: ping to TRIDENT-LE Service");
 		return "The Service to generate JSON from XML and vice versa is running and ready to accept the requests";
     }
 }
