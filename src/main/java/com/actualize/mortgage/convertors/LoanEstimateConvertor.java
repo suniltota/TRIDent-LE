@@ -2053,6 +2053,8 @@ public class LoanEstimateConvertor {
 	 	prepaid.setPrepaidPaidToFullName(prepaidItem.prepaidItemPaidTo.legalEntity.legalEntityDetail.fullName);
 		prepaid.setPrepaidItemEstimatedTotalAmount(prepaidItem.prepaidItemDetail.prepaidItemEstimatedTotalAmount);
 		prepaid.setPrepaidItemNumberOfDaysCount(prepaidItem.prepaidItemDetail.prepaidItemNumberOfDaysCount);
+		prepaid.setPaymentIncludedInAPRIndicator(Boolean.parseBoolean(prepaidItem.prepaidItemDetail.paymentIncludedInAPRIndicator));
+	 	prepaid.setRegulationZPointsAndFeesIndicator(Boolean.parseBoolean(prepaidItem.prepaidItemDetail.regulationZPointsAndFeesIndicator));
 		
 		return prepaid;		
 	}
