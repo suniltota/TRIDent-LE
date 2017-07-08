@@ -23,6 +23,7 @@ public class IntegratedDisclosureDetailModel implements Serializable {
 	private String integratedDisclosureLoanProductDescription;
 	private String fiveYearTotalOfPaymentsComparisonAmount;
 	private String fiveYearPrincipalReductionComparisonAmount;
+	private String integratedDisclosureEstimatedClosingCostsExpirationDatetime;
 	
 	/**
 	 * @return the firstYearTotalEscrowPaymentAmount
@@ -131,6 +132,19 @@ public class IntegratedDisclosureDetailModel implements Serializable {
 	 */
 	public void setFiveYearPrincipalReductionComparisonAmount(String fiveYearPrincipalReductionComparisonAmount) {
 		this.fiveYearPrincipalReductionComparisonAmount = fiveYearPrincipalReductionComparisonAmount;
+	}
+	/**
+	 * @return the integratedDisclosureEstimatedClosingCostsExpirationDatetime
+	 */
+	public String getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime() {
+		return integratedDisclosureEstimatedClosingCostsExpirationDatetime;
+	}
+	/**
+	 * @param integratedDisclosureEstimatedClosingCostsExpirationDatetime the integratedDisclosureEstimatedClosingCostsExpirationDatetime to set
+	 */
+	public void setIntegratedDisclosureEstimatedClosingCostsExpirationDatetime(
+			String integratedDisclosureEstimatedClosingCostsExpirationDatetime) {
+		this.integratedDisclosureEstimatedClosingCostsExpirationDatetime = integratedDisclosureEstimatedClosingCostsExpirationDatetime;
 	}
 	
 	

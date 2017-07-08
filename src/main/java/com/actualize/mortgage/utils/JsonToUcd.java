@@ -644,6 +644,7 @@ public class JsonToUcd {
 		insertData(document, element, "FirstYearTotalEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalEscrowPaymentDescription());
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentDescription());
+		insertData(document, element, "IntegratedDisclosureEstimatedClosingCostsExpirationDatetime", integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime());
 		insertData(document, element, "IntegratedDisclosureHomeEquityLoanIndicator", Boolean.toString(integratedDisclosureDetail.isIntegratedDisclosureHomeEquityLoanIndicator()));
 		insertData(document, element, "IntegratedDisclosureLoanProductDescription", integratedDisclosureDetail.getIntegratedDisclosureLoanProductDescription());
 		insertData(document, element, "IntegratedDisclosureIssuedDate", integratedDisclosureDetail.getIntegratedDisclosureIssuedDate());

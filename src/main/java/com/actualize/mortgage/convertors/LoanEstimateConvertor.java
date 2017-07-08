@@ -1358,7 +1358,7 @@ public class LoanEstimateConvertor {
 	    	integratedDisclosureDetailModel.setIntegratedDisclosureLoanProductDescription(idDetail.integratedDisclosureLoanProductDescription);
 	    	integratedDisclosureDetailModel.setFiveYearPrincipalReductionComparisonAmount(idDetail.fiveYearPrincipalReductionComparisonAmount);
 	    	integratedDisclosureDetailModel.setFiveYearTotalOfPaymentsComparisonAmount(idDetail.fiveYearTotalOfPaymentsComparisonAmount);
-	    	
+	    	integratedDisclosureDetailModel.setIntegratedDisclosureEstimatedClosingCostsExpirationDatetime(idDetail.integratedDisclosureEstimatedClosingCostsExpirationDatetime);
 		return integratedDisclosureDetailModel;
     }
     
