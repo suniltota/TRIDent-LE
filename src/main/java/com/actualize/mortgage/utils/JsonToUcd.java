@@ -640,11 +640,15 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertIntegratedDisclosureDetail(Document document, Element element, IntegratedDisclosureDetailModel integratedDisclosureDetail) {
+		String integratedDisclosureEstimatedClosingCostsExpirationDatetime = "";
 		insertData(document, element, "FirstYearTotalEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalEscrowPaymentDescription());
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentDescription());
-		insertData(document, element, "IntegratedDisclosureEstimatedClosingCostsExpirationDatetime", integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime());
+		if(null != integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime() && !integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime().isEmpty() 
+				&& integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime().contains("."))
+			integratedDisclosureEstimatedClosingCostsExpirationDatetime =  integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime().split("\\.")[0]+"Z";
+		insertData(document, element, "IntegratedDisclosureEstimatedClosingCostsExpirationDatetime", integratedDisclosureEstimatedClosingCostsExpirationDatetime);
 		insertData(document, element, "IntegratedDisclosureHomeEquityLoanIndicator", Boolean.toString(integratedDisclosureDetail.isIntegratedDisclosureHomeEquityLoanIndicator()));
 		insertData(document, element, "IntegratedDisclosureLoanProductDescription", integratedDisclosureDetail.getIntegratedDisclosureLoanProductDescription());
 		insertData(document, element, "IntegratedDisclosureIssuedDate", integratedDisclosureDetail.getIntegratedDisclosureIssuedDate());
@@ -959,7 +963,11 @@ public class JsonToUcd {
      * @param lockModel Input LockModel Object
      */
 	private void insertLock(Document document, Element element, LockModel lockModel) {
-		insertData(document, element, "LockExpirationDatetime", lockModel.getLockExpirationDatetime());
+		String lockExpirationDatetime = "";
+		if(null != lockModel.getLockExpirationDatetime() && !lockModel.getLockExpirationDatetime().isEmpty() 
+				&& lockModel.getLockExpirationDatetime().contains("."))
+			lockExpirationDatetime =  lockModel.getLockExpirationDatetime().split("\\.")[0]+"Z";
+		insertData(document, element, "LockExpirationDatetime", lockExpirationDatetime);
 		insertData(document, element, "LockStatusType", lockModel.getLockStatusType());
 		OtherModel other = new OtherModel();
 			other.setLockExpirationTimezoneType(lockModel.getLockExpirationTimezoneType());
