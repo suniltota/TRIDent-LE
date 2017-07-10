@@ -226,7 +226,7 @@ public class Convertor {
 	{
 	List<IntegratedDisclosureSectionSummaryModel> integratedDisclosureSectionSummaryModels = new LinkedList<>();
 		
-		if(checkNotNull(json.getClosingCostDetailsLoanCosts().getOcTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsLoanCosts().getOcTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			
@@ -236,27 +236,27 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsLoanCosts().getSbDidShopTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsLoanCosts().getSbDidShopTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			
 			integratedDisclosureSectionSummaryModel = createIntegratedDisclosureSectionSummaryModel(json.getClosingCostDetailsLoanCosts().getSbDidShopTotalAmount(),
-			"ServicesBorrowerDidShopFor", "","", false, null);			
+			"ServicesYouCanShopFor", "","", false, null);			
 			
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsLoanCosts().getSbDidNotShopTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsLoanCosts().getSbDidNotShopTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			
 			integratedDisclosureSectionSummaryModel = createIntegratedDisclosureSectionSummaryModel(json.getClosingCostDetailsLoanCosts().getSbDidNotShopTotalAmount(),
-			"ServicesBorrowerDidNotShopFor", "","", false, null);			
+			"ServicesYouCannotShopFor", "","", false, null);			
 			
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsLoanCosts().getTlCostsTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsLoanCosts().getTlCostsTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			
@@ -267,7 +267,7 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsOtherCosts().gettOGovtFeesTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsOtherCosts().gettOGovtFeesTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 						
@@ -277,7 +277,7 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsOtherCosts().getPrepaidsTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsOtherCosts().getPrepaidsTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 						
@@ -287,7 +287,7 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsOtherCosts().getEscrowItemsTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsOtherCosts().getEscrowItemsTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 						
@@ -297,7 +297,7 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostDetailsOtherCosts().getOtherTotalAmount()))
+		if(checkAmountNotNull(json.getClosingCostDetailsOtherCosts().getOtherTotalAmount()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			
@@ -307,9 +307,20 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
+		if(checkNotNull(json.getClosingCostDetailsOtherCosts().getTotalOtherCostsTotalAmount()))
+		{
+			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
+			
+			integratedDisclosureSectionSummaryModel = createIntegratedDisclosureSectionSummaryModel(json.getClosingCostDetailsOtherCosts().getTotalOtherCostsTotalAmount(),
+			"TotalOtherCosts", "","", false, null);
+			
+			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
+		}
+		
+		
 				
 		//ClosingCostsTotal
-		if(checkNotNull(json.getClosingCostsTotal().getTotalClosingCosts()))
+		if(checkAmountNotNull(json.getClosingCostsTotal().getTotalClosingCosts()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			
@@ -319,7 +330,7 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getClosingCostsTotal().getLenderCredits()))
+		if(checkAmountNotNull(json.getClosingCostsTotal().getLenderCredits()))
 		{
 			IntegratedDisclosureSectionSummaryModel integratedDisclosureSectionSummaryModel = new IntegratedDisclosureSectionSummaryModel();
 			PaymentsModel lenderCredits = new PaymentsModel();
@@ -334,27 +345,27 @@ public class Convertor {
 			integratedDisclosureSectionSummaryModels.add(integratedDisclosureSectionSummaryModel);
 		}
 		
-		if(checkNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getPaidAlreadyByOrOnBehalfOfBorrowerAtClosing().
+		if(checkAmountNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getPaidAlreadyByOrOnBehalfOfBorrowerAtClosing().
 			getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionTotalAmount()) &&
-				checkNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getPaidAlreadyByOrOnBehalfOfBorrowerAtClosing().
+				checkAmountNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getPaidAlreadyByOrOnBehalfOfBorrowerAtClosing().
 						getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionType()))
 				integratedDisclosureSectionSummaryModels.add(json.getSummariesofTransactions().getBorrowerTransaction().getPaidAlreadyByOrOnBehalfOfBorrowerAtClosing());
 
-		if(checkNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getDueFromBorrowerAtClosing()
+		if(checkAmountNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getDueFromBorrowerAtClosing()
 			.getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionTotalAmount()) && 
-				checkNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getDueFromBorrowerAtClosing()
+				checkAmountNotNull(json.getSummariesofTransactions().getBorrowerTransaction().getDueFromBorrowerAtClosing()
 						.getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionType()))
 				integratedDisclosureSectionSummaryModels.add(json.getSummariesofTransactions().getBorrowerTransaction().getDueFromBorrowerAtClosing());	
 		
-		if(checkNotNull(json.getSummariesofTransactions().getSellerTransaction().getFromSellerAtClosing()
+		if(checkAmountNotNull(json.getSummariesofTransactions().getSellerTransaction().getFromSellerAtClosing()
 				.getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionTotalAmount()) && 
-				checkNotNull(json.getSummariesofTransactions().getSellerTransaction().getFromSellerAtClosing()
+				checkAmountNotNull(json.getSummariesofTransactions().getSellerTransaction().getFromSellerAtClosing()
 						.getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionType()))
 					integratedDisclosureSectionSummaryModels.add(json.getSummariesofTransactions().getSellerTransaction().getFromSellerAtClosing());
 
-		if(checkNotNull(json.getSummariesofTransactions().getSellerTransaction().getToSellerAtClosing()
+		if(checkAmountNotNull(json.getSummariesofTransactions().getSellerTransaction().getToSellerAtClosing()
 			.getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionTotalAmount()) &&
-				checkNotNull(json.getSummariesofTransactions().getSellerTransaction().getToSellerAtClosing()
+				checkAmountNotNull(json.getSummariesofTransactions().getSellerTransaction().getToSellerAtClosing()
 						.getIntegratedDisclosureSectionSummaryDetailModel().getIntegratedDisclosureSectionType())) 
 				integratedDisclosureSectionSummaryModels.add(json.getSummariesofTransactions().getSellerTransaction().getToSellerAtClosing());	
 		
