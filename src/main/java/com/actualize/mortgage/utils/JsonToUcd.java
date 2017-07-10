@@ -85,7 +85,7 @@ import com.actualize.mortgage.domainmodels.PropertyValuationDetailModel;
 import com.actualize.mortgage.domainmodels.ProrationModel;
 import com.actualize.mortgage.domainmodels.SalesContractDetailModel;
 import com.actualize.mortgage.domainmodels.TermsOfLoanModel;
-import com.actualize.mortgage.mismodao.MISMODocument;
+import com.actualize.mortgage.pdf.mismodao.MISMODocument;
 import com.actualize.mortgage.services.impl.LoanEstimatePDFServicesImpl;
 /**
  * defines the functionality to render MISMO xml from JSON Object
@@ -354,12 +354,12 @@ public class JsonToUcd {
 		insertSignatories(document, insertLevels(document, element, "SIGNATORIES"), jsonDocument);
 		insertSystemSignatures(document, insertLevels(document, element, "SYSTEM_SIGNATORIES"), jsonDocument);*/
 		insertAboutVersions(document, insertLevels(document, element, "ABOUT_VERSIONS"), null);
-		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getDocumentClassification());
+		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getLoanEstimateDocDetails());
 		Element view = null;
 		if(jsonDocument.isEmbeddedPDF())
 			 view = insertLevels(document, element, "VIEWS");
 		insertAboutVersions(document, insertLevels(document, element, "ABOUT_VERSIONS"), null);
-		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getDocumentClassification());
+		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getLoanEstimateDocDetails());
 		if(jsonDocument.isEmbeddedPDF())
 			insertViews(document, view);
 	}
@@ -371,7 +371,7 @@ public class JsonToUcd {
 	 * @param jsonDocument
 	 */
 	private void insertDocumentClassification(Document document, Element element,
-			DocumentClassificationModel documentClassification) {
+			LoanEstimateDocumentDetails documentClassification) {
 		insertDocumentClasses(document,	insertLevels(document, element, "DOCUMENT_CLASSES"), documentClassification);
 	//	insertDocumentClassificationDetail(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION_DETAIL"), documentClassification);
 	}
@@ -386,15 +386,15 @@ public class JsonToUcd {
 	}
 	
 	private void insertDocumentClasses(Document document, Element element,
-			DocumentClassificationModel documentClassification) {
+			LoanEstimateDocumentDetails documentClassification) {
 		//for (String group : groupings)
 			insertDocumentClass(document, insertLevels(document, element, "DOCUMENT_CLASS"), documentClassification);
 	}
 	
-	private void insertDocumentClass(Document document, Element element, DocumentClassificationModel documentClassification) {
+	private void insertDocumentClass(Document document, Element element, LoanEstimateDocumentDetails documentClassification) {
 
-		insertData(document, element, "DocumentType", documentClassification.getDocumentType());
-		insertData(document, element, "DocumentTypeOtherDescription",documentClassification.getDocumentTypeOtherDescription());
+		insertData(document, element, "DocumentType", "Other");
+		insertData(document, element, "DocumentTypeOtherDescription",documentClassification.getDocumentType()+":"+documentClassification.getFormType());
 	}
 	/**
      * Inserts Views to MISMO XML
