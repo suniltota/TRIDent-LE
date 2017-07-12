@@ -103,6 +103,8 @@ public class JsonToUcd {
 	private static final String XSI_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
 	private static final Logger LOG = LogManager.getLogger(JsonToUcd.class);
+	private int borrowerSNumber = 11;
+	private int sellerSNumber = 13;
 
 	private static final DocumentBuilderFactory dbf = initializeDocumentBuilderFactory();
 //	private static final XPath xPath = XPathFactory.newInstance().newXPath();
@@ -2395,10 +2397,6 @@ public class JsonToUcd {
 	{
 		for (Borrower borrower : borrowers) {
 			Element party = insertLevels(document, element, "PARTY");
-			Element roleDetail = insertLevels(document, party, "ROLES/ROLE/ROLE_DETAIL");
-			insertData(document, roleDetail, "PartyRoleType", borrower.getPartyRoleType());
-			if ("Other".equals(borrower.getPartyRoleType()))
-				insertData(document, roleDetail, "PartyRoleTypeOtherDescription", borrower.getPartyRoleOtherDescription());
 			
 			if(!borrower.getNameModel().getFullName().isEmpty())
 			{
@@ -2415,14 +2413,45 @@ public class JsonToUcd {
 			}
 			
 			Element address = insertLevels(document, party, "ADDRESSES/ADDRESS");
-			insertData(document, address, "AddressLineText", borrower.getAddress().getAddressLineText());
-			insertData(document, address, "AddressUnitDesignatorType", borrower.getAddress().getAddressUnitDesignatorType());
-			insertData(document, address, "AddressUnitIdentifier", borrower.getAddress().getAddressUnitIdentifier());
-			insertData(document, address, "AddressType", borrower.getAddress().getAddressType());
-			insertData(document, address, "CityName", borrower.getAddress().getCityName());
-			insertData(document, address, "CountryCode", borrower.getAddress().getCountryCode());
-			insertData(document, address, "PostalCode", borrower.getAddress().getPostalCode());
-			insertData(document, address, "StateCode", borrower.getAddress().getStateCode());
+				insertData(document, address, "AddressLineText", borrower.getAddress().getAddressLineText());
+				insertData(document, address, "AddressUnitDesignatorType", borrower.getAddress().getAddressUnitDesignatorType());
+				insertData(document, address, "AddressUnitIdentifier", borrower.getAddress().getAddressUnitIdentifier());
+				insertData(document, address, "AddressType", borrower.getAddress().getAddressType());
+				insertData(document, address, "CityName", borrower.getAddress().getCityName());
+				insertData(document, address, "CountryCode", borrower.getAddress().getCountryCode());
+				insertData(document, address, "PostalCode", borrower.getAddress().getPostalCode());
+				insertData(document, address, "StateCode", borrower.getAddress().getStateCode());
+			
+			Element role = insertLevels(document, party, "ROLES/ROLE");
+			if("Borrower".equalsIgnoreCase(borrower.getPartyRoleType()))
+			{
+				role.setAttribute("SequenceNumber", Integer.toString(borrowerSNumber));
+				role.setAttribute(XLINK_ALIAS+":label", "PARTY" + Integer.toString(borrowerSNumber) + "_ROLE1");
+				borrowerSNumber ++;
+				if(13 == borrowerSNumber)
+					borrowerSNumber = borrowerSNumber + 2;
+			}
+			else if("PropertySeller".equalsIgnoreCase(borrower.getPartyRoleType()))
+			{
+				if(14 > sellerSNumber)
+				{
+					role.setAttribute("SequenceNumber", Integer.toString(sellerSNumber));
+					role.setAttribute(XLINK_ALIAS+":label", "PARTY" + Integer.toString(sellerSNumber) + "_ROLE1");
+					sellerSNumber ++;
+				}
+				else
+				{
+					role.setAttribute("SequenceNumber", Integer.toString(borrowerSNumber));
+					role.setAttribute(XLINK_ALIAS+":label", "PARTY" + Integer.toString(borrowerSNumber) + "_ROLE1");
+					borrowerSNumber ++;
+				}
+				
+			}
+				
+			Element roleDetail = insertLevels(document, role, "ROLE_DETAIL");
+				insertData(document, roleDetail, "PartyRoleType", borrower.getPartyRoleType());
+				if ("Other".equals(borrower.getPartyRoleType()))
+					insertData(document, roleDetail, "PartyRoleTypeOtherDescription", borrower.getPartyRoleOtherDescription());
 		}
 	}
 	
@@ -2434,6 +2463,12 @@ public class JsonToUcd {
 	 */
 	private void insertParty(Document document, Element element, ContactInformationDetailModel partyDetail, String type)
 	{
+		String reType = "";
+		if("realEstateBrokerB".equalsIgnoreCase(type))
+			reType = "Selling";
+		else if("realEstateBrokerS".equalsIgnoreCase(type))
+			reType = "Listing";
+		
 		if(null != partyDetail.getOrganizationName() && !partyDetail.getOrganizationName().isEmpty())
 		{
 			Element party = insertLevels(document, element, "PARTY");
@@ -2453,6 +2488,15 @@ public class JsonToUcd {
 									
 				Element role = insertLevels(document, party, "ROLES/ROLE");
 				
+				String label = Convertor.getPartySNumber(partyDetail.getPartyRoleType(), "O", reType);
+				String xlink = Convertor.getXLink(partyDetail.getPartyRoleType(), "O", reType);
+			
+				if(null != label && !label.isEmpty())
+					role.setAttribute("SequenceNumber", label);
+				if(null != xlink && !xlink.isEmpty())
+					role.setAttribute(XLINK_ALIAS+":label", xlink);
+				
+				
 				if("realEstateBrokerB".equalsIgnoreCase(type))
 				{
 					Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
@@ -2468,8 +2512,8 @@ public class JsonToUcd {
 				
 				Element licenseDetail = insertLevels(document, role, "LICENSES/LICENSE/LICENSE_DETAIL");
 				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getOrganizationLicenseDetail().getLicenseAuthorityLevelType());
-			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
-				if(null != identifier && null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
+				Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getOrganizationLicenseDetail().getLicenseIdentifier());
+				if(null != identifier &&  null != partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI().isEmpty())
 					identifier.setAttribute("IdentifierOwnerURI", partyDetail.getOrganizationLicenseDetail().getIdentifierOwnerURI());
 				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getOrganizationLicenseDetail().getLicenseIssueDate());
 				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getOrganizationLicenseDetail().getLicenseIssuingAuthorityName());
@@ -2478,7 +2522,7 @@ public class JsonToUcd {
 				insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
 		}
 		
-		if(!partyDetail.getName().getFirstName().isEmpty() || !partyDetail.getName().getLastName().isEmpty() || !partyDetail.getName().getMiddleName().isEmpty() || !partyDetail.getName().getSuffixName().isEmpty())
+		if(!partyDetail.getName().getFullName().isEmpty() || !partyDetail.getName().getFirstName().isEmpty() || !partyDetail.getName().getLastName().isEmpty() || !partyDetail.getName().getMiddleName().isEmpty() || !partyDetail.getName().getSuffixName().isEmpty())
 		{
 			Element party = insertLevels(document, element, "PARTY");
 			Element individual = insertLevels(document, party, "INDIVIDUAL");			
@@ -2504,16 +2548,11 @@ public class JsonToUcd {
 				insertData(document, name, "LastName", partyDetail.getName().getLastName());
 				insertData(document, name, "MiddleName", partyDetail.getName().getMiddleName());
 				insertData(document, name, "SuffixName", partyDetail.getName().getSuffixName());
+				insertData(document, name, "FullName", partyDetail.getName().getFullName());
 					
 			Element role = insertLevels(document, party, "ROLES/ROLE");
 				
-				String reType = "";
-				if("realEstateBrokerB".equalsIgnoreCase(type))
-					reType = "Selling";
-				else if("realEstateBrokerS".equalsIgnoreCase(type))
-					reType = "Listing";
-				
-			String label = Convertor.getSNumber(partyDetail.getPartyRoleType(), "I", reType);
+			String label = Convertor.getPartySNumber(partyDetail.getPartyRoleType(), "I", reType);
 			String xlink = Convertor.getXLink(partyDetail.getPartyRoleType(), "I", reType);
 			
 				if(null != label && !label.isEmpty())
@@ -2521,6 +2560,7 @@ public class JsonToUcd {
 				if(null != xlink && !xlink.isEmpty())
 					role.setAttribute(XLINK_ALIAS+":label", xlink);
 			
+				
 			if("realEstateBrokerB".equalsIgnoreCase(type))
 			{
 				Element reAgent = insertLevels(document, role, "REAL_ESTATE_AGENT");
@@ -2536,7 +2576,7 @@ public class JsonToUcd {
 				insertData(document, licenseDetail, "LicenseAuthorityLevelType", partyDetail.getIndividualLicenseDetail().getLicenseAuthorityLevelType());
 				
 			Element identifier =  returnElement(document, licenseDetail, "LicenseIdentifier", partyDetail.getIndividualLicenseDetail().getLicenseIdentifier());
-					if(null != identifier && null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
+					if(null != identifier &&  null != partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI() && !partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI().isEmpty())
 						identifier.setAttribute("IdentifierOwnerURI", partyDetail.getIndividualLicenseDetail().getIdentifierOwnerURI());
 				insertData(document, licenseDetail, "LicenseIssueDate", partyDetail.getIndividualLicenseDetail().getLicenseIssueDate());
 				insertData(document, licenseDetail, "LicenseIssuingAuthorityName", partyDetail.getIndividualLicenseDetail().getLicenseIssuingAuthorityName());
@@ -2546,6 +2586,7 @@ public class JsonToUcd {
 			
 			insertData(document, roleDetail, "PartyRoleType", partyDetail.getPartyRoleType());
 		}
+		
 		
 	}
 	

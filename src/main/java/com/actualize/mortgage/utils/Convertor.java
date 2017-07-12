@@ -406,6 +406,57 @@ public class Convertor {
 		return integratedDisclosureSectionSummaryModel;
 	}
 	
+	
+	/**
+	 * to get the sequence number for specific party depending up on it's role and type
+	 * @param partyRole type of the party borrower, seller etc., 
+	 * @param partyType Organisation or individual
+	 * @param reType type of real estate agent 
+	 * @return the repsective Xlink label for specific party
+	 */
+	public static String getPartySNumber(String partyRole, String partyType, String reType)
+	{
+		if("NotePayTo".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "1";
+			else if("I".equalsIgnoreCase(partyType))
+				return "2";
+		}
+		else if("MortgageBroker".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "3";
+			else if("I".equalsIgnoreCase(partyType))
+				return "4";
+		}
+		else if("RealEstateAgent".equalsIgnoreCase(partyRole))
+		{
+			if("Selling".equalsIgnoreCase(reType))
+			{
+				if("O".equalsIgnoreCase(partyType))
+					return "5";
+				else if("I".equalsIgnoreCase(partyType))
+					return "6";
+			}
+			else if("Listing".equalsIgnoreCase(reType))
+			{
+				if("O".equalsIgnoreCase(partyType))
+					return "7";
+				else if("I".equalsIgnoreCase(partyType))
+					return "8";
+			}
+		}
+		else if("ClosingAgent".equalsIgnoreCase(partyRole))
+		{
+			if("O".equalsIgnoreCase(partyType))
+				return "9";
+			else if("I".equalsIgnoreCase(partyType))
+				return "10";
+		}
+		
+		return "";
+	}
 	/**
 	 * checks for null and empty
 	 * @param amount
