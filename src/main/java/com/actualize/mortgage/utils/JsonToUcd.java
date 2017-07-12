@@ -355,8 +355,6 @@ public class JsonToUcd {
 		insertRelationships(document, insertLevels(document, element, "RELATIONSHIPS"), jsonDocument);
 		insertSignatories(document, insertLevels(document, element, "SIGNATORIES"), jsonDocument);
 		insertSystemSignatures(document, insertLevels(document, element, "SYSTEM_SIGNATORIES"), jsonDocument);*/
-		insertAboutVersions(document, insertLevels(document, element, "ABOUT_VERSIONS"), null);
-		insertDocumentClassification(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION"), jsonDocument.getLoanEstimateDocDetails());
 		Element view = null;
 		if(jsonDocument.isEmbeddedPDF())
 			 view = insertLevels(document, element, "VIEWS");
