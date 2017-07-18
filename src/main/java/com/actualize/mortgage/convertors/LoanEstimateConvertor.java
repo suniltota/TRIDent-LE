@@ -1827,11 +1827,19 @@ public class LoanEstimateConvertor {
 	 */
 	private static NameModel toNameModel(Name name) {
 		NameModel nameModel = new NameModel();
-		
+		String fullName = "";
 		if (!name.fullName.equals(""))
-			nameModel.setFullName(name.fullName);
+		{
+			fullName = name.fullName;
+			nameModel.setFirstName(fullName);
+		}
 		if (!name.firstName.equals(""))
-			nameModel.setFirstName(name.firstName);
+		{
+			if(!fullName.isEmpty())
+				nameModel.setFirstName(fullName+" "+name.firstName);
+			else
+				nameModel.setFirstName(name.firstName);
+		}
 		if (!name.middleName.equals("")) 
 			nameModel.setMiddleName(name.middleName);
 		if (!name.lastName.equals("")) 
