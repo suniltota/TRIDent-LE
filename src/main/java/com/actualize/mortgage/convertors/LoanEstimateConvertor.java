@@ -175,7 +175,7 @@ public class LoanEstimateConvertor {
 	        loanEstimateDocument.setLoanEstimateDocDetails(createClosingDisclosureDocumentDetails(document));
 	        loanEstimateDocument.setTermsOfLoan(createTermsOfLoanModel(deal));
 	    	loanEstimateDocument.setLoanDetail(createLoanDetailModel(deal));
-	    	loanEstimateDocument.setDocumentClassification(createDocumentClassificationModel(document));
+	    	//loanEstimateDocument.setDocumentClassification(createDocumentClassificationModel(document));
         	loanEstimateDocument.setClosingInformation(createClosingInformation(deal));
         	loanEstimateDocument.setConstruction(createConstructionModel(deal));
         	loanEstimateDocument.setClosingInformationDetail(createClosingInformationDetail(deal));
@@ -236,6 +236,13 @@ public class LoanEstimateConvertor {
     		}
 	        	loanEstimateDocumentDetails.setDocumentType(type);
 	        	loanEstimateDocumentDetails.setFormType(formType);
+	        	
+	      if(null != docClassification.documentClassificationDetail)
+	      {
+	    	  loanEstimateDocumentDetails.setDocumentFormIssuingEntityNameType(docClassification.documentClassificationDetail.documentFormIssuingEntityNameType);
+	    	  loanEstimateDocumentDetails.setDocumentFormIssuingEntityVersionIdentifier(docClassification.documentClassificationDetail.documentFormIssuingEntityVersionIdentifier);
+	    	  loanEstimateDocumentDetails.setDocumentSignatureRequiredIndicator(Boolean.parseBoolean(docClassification.documentClassificationDetail.other.documentSignatureRequiredIndicator));
+	      }	
     	}
         
 		return loanEstimateDocumentDetails;

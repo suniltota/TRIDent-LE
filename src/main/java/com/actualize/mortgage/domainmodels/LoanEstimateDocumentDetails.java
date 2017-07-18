@@ -18,7 +18,10 @@ public class LoanEstimateDocumentDetails implements Serializable {
     private String transactionType = "";
     private String documentType = "";
     private String formType = "";
-    
+	private String documentFormIssuingEntityNameType = "";
+	private String documentFormIssuingEntityVersionIdentifier = "";
+	private boolean documentSignatureRequiredIndicator = false;
+	
 	/**
 	 * @return the transactionType
 	 */
@@ -54,5 +57,41 @@ public class LoanEstimateDocumentDetails implements Serializable {
 	 */
 	public void setFormType(String formType) {
 		this.formType = formType;
+	}
+	/**
+	 * @return the documentFormIssuingEntityNameType
+	 */
+	public String getDocumentFormIssuingEntityNameType() {
+		return documentFormIssuingEntityNameType;
+	}
+	/**
+	 * @param documentFormIssuingEntityNameType the documentFormIssuingEntityNameType to set
+	 */
+	public void setDocumentFormIssuingEntityNameType(String documentFormIssuingEntityNameType) {
+		this.documentFormIssuingEntityNameType = documentFormIssuingEntityNameType;
+	}
+	/**
+	 * @return the documentFormIssuingEntityVersionIdentifier
+	 */
+	public String getDocumentFormIssuingEntityVersionIdentifier() {
+		return documentFormIssuingEntityVersionIdentifier;
+	}
+	/**
+	 * @param documentFormIssuingEntityVersionIdentifier the documentFormIssuingEntityVersionIdentifier to set
+	 */
+	public void setDocumentFormIssuingEntityVersionIdentifier(String documentFormIssuingEntityVersionIdentifier) {
+		this.documentFormIssuingEntityVersionIdentifier = documentFormIssuingEntityVersionIdentifier;
+	}
+	/**
+	 * @return the documentSignatureRequiredIndicator
+	 */
+	public boolean isDocumentSignatureRequiredIndicator() {
+		return documentSignatureRequiredIndicator;
+	}
+	/**
+	 * @param documentSignatureRequiredIndicator the documentSignatureRequiredIndicator to set
+	 */
+	public void setDocumentSignatureRequiredIndicator(boolean documentSignatureRequiredIndicator) {
+		this.documentSignatureRequiredIndicator = documentSignatureRequiredIndicator;
 	}
 }

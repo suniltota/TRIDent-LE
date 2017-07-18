@@ -22,7 +22,7 @@ public class LoanEstimate implements Serializable {
 	private LoanEstimateDocumentDetails loanEstimateDocDetails;
     private LoanDetailModel loanDetail;
     private TermsOfLoanModel termsOfLoan;
-    private DocumentClassificationModel documentClassification;
+  //  private DocumentClassificationModel documentClassification;
     private ClosingInformationModel closingInformation;
     private ClosingInformationDetailModel closingInformationDetail;
     private ConstructionModel construction;
@@ -95,16 +95,16 @@ public class LoanEstimate implements Serializable {
 	}
 	/**
 	 * @return the documentClassification
-	 */
+	 *//*
 	public DocumentClassificationModel getDocumentClassification() {
 		return documentClassification;
 	}
-	/**
+	*//**
 	 * @param documentClassification the documentClassification to set
-	 */
+	 *//*
 	public void setDocumentClassification(DocumentClassificationModel documentClassification) {
 		this.documentClassification = documentClassification;
-	}
+	}*/
 	/**
 	 * @return the closingInformation
 	 */
