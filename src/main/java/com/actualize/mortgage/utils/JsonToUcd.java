@@ -373,11 +373,11 @@ public class JsonToUcd {
 	private void insertDocumentClassification(Document document, Element element,
 			LoanEstimateDocumentDetails documentClassification) {
 		insertDocumentClasses(document,	insertLevels(document, element, "DOCUMENT_CLASSES"), documentClassification);
-	//	insertDocumentClassificationDetail(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION_DETAIL"), documentClassification);
+		insertDocumentClassificationDetail(document, insertLevels(document, element, "DOCUMENT_CLASSIFICATION_DETAIL"), documentClassification);
 	}
 	
 	private void insertDocumentClassificationDetail(Document document, Element element,
-			DocumentClassificationModel documentClassification) {
+			LoanEstimateDocumentDetails documentClassification) {
 		OtherModel other = new OtherModel();
 			other.setDocumentSignatureRequiredIndicator(Boolean.toString(documentClassification.isDocumentSignatureRequiredIndicator()).toLowerCase());
 		insertData(document, element, "DocumentFormIssuingEntityNameType", documentClassification.getDocumentFormIssuingEntityNameType());
