@@ -659,7 +659,9 @@ public class LoanEstimateConvertor {
 			paymentCalculation.setProjectedPaymentCalculationPeriodTermTypeOtherDescription(payment.projectedPaymentCalculationPeriodTermTypeOtherDescription);
 			paymentCalculation.setSequenceNumber(payment.sequenceNumber);
 		
-			int startYear = Integer.parseInt(payment.projectedPaymentCalculationPeriodStartNumber);
+			int startYear = 0;
+			if(null != payment.projectedPaymentCalculationPeriodStartNumber && !payment.projectedPaymentCalculationPeriodStartNumber.isEmpty())
+				startYear = Integer.parseInt(payment.projectedPaymentCalculationPeriodStartNumber);
 			if ((startYear-1)*12 < interestOnlyTermMonthsCount && "true".equalsIgnoreCase(loanDetail.interestOnlyIndicator))
 				principalInterest.setInterestOnlyStatus(true);
 			else
