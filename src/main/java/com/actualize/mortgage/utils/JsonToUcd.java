@@ -2107,6 +2107,8 @@ public class JsonToUcd {
 	 */
 	private void insertAmortizationRule(Document document, Element element, LoanInformation loanInformation) {
 		insertData(document ,element ,"AmortizationType" , loanInformation.getAmortizationType());
+		insertData(document ,element ,"LoanAmortizationPeriodCount" , loanInformation.getLoanAmortizationPeriodCount());
+		insertData(document ,element ,"LoanAmortizationPeriodType" , loanInformation.getLoanAmortizationPeriodType());
 	}
 	/**
      * Inserts Adjustment to MISMO XML

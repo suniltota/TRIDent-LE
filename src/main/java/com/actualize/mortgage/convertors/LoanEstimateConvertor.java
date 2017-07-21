@@ -502,7 +502,9 @@ public class LoanEstimateConvertor {
  	  	}
  	  	
  	    loanInformationSection.setLoanIdentifiers(loanInformationLoanIdentifiers);
- 	    loanInformationSection.setAmortizationType(amortization.AmortizationType);
+ 	    loanInformationSection.setAmortizationType(amortization.amortizationType);
+ 	    loanInformationSection.setLoanAmortizationPeriodCount(amortization.loanAmortizationPeriodCount);
+	   	loanInformationSection.setLoanAmortizationPeriodType(amortization.loanAmortizationPeriodType);
  	    loanInformationSection.setAutomatedUnderwritings(automatedUnderwritingsModelList);
  	    loanInformationSection.setLoanManualUnderwritingIndicator(Boolean.parseBoolean(underwriting.underwritingDetail.loanManualUnderwritingIndicator));
 
