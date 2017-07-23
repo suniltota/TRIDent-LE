@@ -41,7 +41,6 @@ import com.actualize.mortgage.domainmodels.ClosingCostProperties;
 import com.actualize.mortgage.domainmodels.ClosingInformationDetailModel;
 import com.actualize.mortgage.domainmodels.ConstructionModel;
 import com.actualize.mortgage.domainmodels.ContactInformationDetailModel;
-import com.actualize.mortgage.domainmodels.DocumentClassificationModel;
 import com.actualize.mortgage.domainmodels.ETIA;
 import com.actualize.mortgage.domainmodels.ETIASection;
 import com.actualize.mortgage.domainmodels.EscrowItemModel;
@@ -1061,8 +1060,8 @@ public class JsonToUcd {
 	private void insertLateChargeRule(Document document, Element element, LateChargeRuleModel lateChargeRule) {
 		insertData(document, element, GSE_ALIAS + ":LateChargeAmount", Convertor.checkAmountFormat(lateChargeRule.getLateChargeAmount()));
 		insertData(document, element, GSE_ALIAS + ":LateChargeGracePeriodDaysCount", lateChargeRule.getLateChargeGracePeriodDaysCount() );
-		//insertData(document, element, "LateChargeMaximumAmount", "");
-		//insertData(document, element, "LateChargeMinimumAmount", "");
+		insertData(document, element, GSE_ALIAS + ":LateChargeMaximumAmount", lateChargeRule.getLateChargeMaximumAmount());
+		insertData(document, element, GSE_ALIAS + ":LateChargeMinimumAmount", lateChargeRule.getLateChargeMinimumAmount());
 		insertData(document, element, GSE_ALIAS + ":LateChargeRatePercent", lateChargeRule.getLateChargeRatePercent());
 		insertData(document, element, GSE_ALIAS + ":LateChargeType",  lateChargeRule.getLateChargeType());
 	}
