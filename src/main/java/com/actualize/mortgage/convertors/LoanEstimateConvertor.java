@@ -54,6 +54,8 @@ import com.actualize.mortgage.datamodels.LoanIdentifiers;
 import com.actualize.mortgage.datamodels.LoanProduct;
 import com.actualize.mortgage.datamodels.Lock;
 import com.actualize.mortgage.datamodels.MIDataDetail;
+import com.actualize.mortgage.datamodels.MIPremium;
+import com.actualize.mortgage.datamodels.MIPremiums;
 import com.actualize.mortgage.datamodels.MISMODocument;
 import com.actualize.mortgage.datamodels.MaturityRule;
 import com.actualize.mortgage.datamodels.Name;
@@ -122,6 +124,7 @@ import com.actualize.mortgage.domainmodels.LoanTermsPrepaymentPenalty;
 import com.actualize.mortgage.domainmodels.LoanTermsTemporaryBuydown;
 import com.actualize.mortgage.domainmodels.LockModel;
 import com.actualize.mortgage.domainmodels.MIDataDetailModel;
+import com.actualize.mortgage.domainmodels.MIPremiumModel;
 import com.actualize.mortgage.domainmodels.MaturityRuleModel;
 import com.actualize.mortgage.domainmodels.NameModel;
 import com.actualize.mortgage.domainmodels.NegativeAmortizationModel;
@@ -184,6 +187,7 @@ public class LoanEstimateConvertor {
 	        loanEstimateDocument.setTransactionInformation(createTransactionInformation(deal));
 	        loanEstimateDocument.setIntegratedDisclosureDetail(createIntegratedDisclosureDetail(deal));
 	        loanEstimateDocument.setMiDataDetail(createMIDataDetailModel(deal));
+	        loanEstimateDocument.setMiPremium(createMIPremiumDetailModel(deal));
 	        loanEstimateDocument.setLoanInformation(createLoanInformation(deal));
 	        loanEstimateDocument.setSalesContractDetail(createSalesContractDetailModel(deal));
 	        loanEstimateDocument.setNegativeAmortization(createNegativeAmortizationModel(deal));
@@ -543,6 +547,29 @@ public class LoanEstimateConvertor {
     		miDataDetailModel.setMiScheduledTerminationDate(miDataDetail.miScheduledTerminationDate);
     	
 		return miDataDetailModel;
+    	
+    }
+    /**
+     * converts mipremiums to List of MIPremiumModels
+     * @param deal
+     * @return  List of MIPremiumModels
+     */
+    private List<MIPremiumModel> createMIPremiumDetailModel(Deal deal)
+    {
+    	List<MIPremiumModel> miPremiumModelList = new LinkedList<>();
+    	MIPremiums miPremiums =  new MIPremiums((Element)deal.getElementAddNS("LOANS/LOAN/MI_DATA/MI_PREMIUMS"));
+    	
+    	for(int i=0; i<miPremiums.miPremiumList.length; i++)
+    	{
+    		MIPremium miPremium =  miPremiums.miPremiumList[i];
+    		MIPremiumModel miPremiumModel = new MIPremiumModel();
+	    		miPremiumModel.setMiPremiumPeriodType(miPremium.miPremiumDetail.miPremiumPeriodType);
+	    		miPremiumModel.setMiPremiumRateDurationMonthsCount(miPremium.miPremiumDetail.miPremiumRateDurationMonthsCount);
+	    		miPremiumModel.setMiPremiumRatePercent(miPremium.miPremiumDetail.miPremiumRatePercent);
+	    	miPremiumModelList.add(miPremiumModel);
+    	}
+	    		
+		return miPremiumModelList;
     	
     }
     

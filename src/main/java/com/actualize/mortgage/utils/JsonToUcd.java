@@ -63,6 +63,7 @@ import com.actualize.mortgage.domainmodels.LoanTermsPrepaymentPenalty;
 import com.actualize.mortgage.domainmodels.LoanTermsTemporaryBuydown;
 import com.actualize.mortgage.domainmodels.LockModel;
 import com.actualize.mortgage.domainmodels.MIDataDetailModel;
+import com.actualize.mortgage.domainmodels.MIPremiumModel;
 import com.actualize.mortgage.domainmodels.MaturityRuleModel;
 import com.actualize.mortgage.domainmodels.MismoContactPointsModel;
 import com.actualize.mortgage.domainmodels.MismoIndividualModel;
@@ -677,6 +678,7 @@ public class JsonToUcd {
 		insertLoanIdentifiers(document, insertLevels(document, element, "LOAN_IDENTIFIERS"), jsonDocument.getLoanInformation().getLoanIdentifiers());
 		//insertLoanLevelCredit(document, insertLevels(document, element, "LOAN_LEVEL_CREDIT"), jsonDocument);
 		insertLoanProduct(document, insertLevels(document, element, "LOAN_PRODUCT"), jsonDocument.getLoanProduct());
+		insertMIData(document, insertLevels(document, element, "MI_DATA"), jsonDocument);
 		insertMaturityRule(document, insertLevels(document, element, "MATURITY/MATURITY_RULE"), jsonDocument.getMaturityRule());
 		insertMIDataDetail(document, insertLevels(document, element, "MI_DATA/MI_DATA_DETAIL"), jsonDocument.getMiDataDetail()); 
 		insertNegativeAmortization(document, insertLevels(document, element, "NEGATIVE_AMORTIZATION"), jsonDocument.getNegativeAmortization());
@@ -929,7 +931,30 @@ public class JsonToUcd {
 		insertData(document, element, "MICertificateIdentifier", miDataDetail.getMiCertificateIdentifier());
 		insertData(document, element, "MICompanyNameType", miDataDetail.getMiCompanyNameType());
 		insertData(document, element, "MICompanyNameTypeOtherDescription",  miDataDetail.getMiCompanyNameTypeOtherDescription());
+		insertData(document, element, "MICoveragePercent",  miDataDetail.getMiCoveragePercent());
 		insertData(document, element, "MIScheduledTerminationDate",  miDataDetail.getMiScheduledTerminationDate());
+	}
+	/**
+     * Inserts MI Premiums to MISMO XML
+     * @param document Output XML file
+     * @param element parent node of XML
+     * @param MIPremiumList Input List of MIPremium Object
+     */
+	private void insertMIPremium(Document document, Element element, List<MIPremiumModel> miPremiumList) {
+		for(MIPremiumModel miPremiumModel: miPremiumList)
+			insertMIPremiumDetail(document, insertLevels(document, element, "MI_PREMIUM/MI_PREMIUM_DETAIL"), miPremiumModel);
+	}
+	
+	/**
+     * Inserts MI Premium Detail to MISMO XML
+     * @param document Output XML file
+     * @param element parent node of XML
+     * @param miPremiumModel Input MIPremiumModel Object
+     */
+	private void insertMIPremiumDetail(Document document, Element element, MIPremiumModel miPremiumModel) {
+		insertData(document, element, "MIPremiumPeriodType", miPremiumModel.getMiPremiumPeriodType());
+		insertData(document, element, "MIPremiumRateDurationMonthsCount", miPremiumModel.getMiPremiumRateDurationMonthsCount());
+		insertData(document, element, "MIPremiumRatePercent", miPremiumModel.getMiPremiumRatePercent());
 	}
 	/**
      * Inserts Loan Product to MISMO XML
@@ -940,6 +965,16 @@ public class JsonToUcd {
 	private void insertLoanProduct(Document document, Element element, LoanProductModel loanProduct) {
 		//insertLoanPriceQuotes(document, insertLevels(document, element, "LOAN_PRICE_QUOTES"), loanProduct);
 		insertLocks(document, insertLevels(document, element, "LOCKS"), loanProduct.getLock());
+	}
+	/**
+     * Inserts MIData to MISMO XML
+     * @param document Output XML file
+     * @param element parent node of XML
+     * @param jsonDocument Input JSON Object
+     */
+	private void insertMIData(Document document, Element element, LoanEstimate jsonDocument) {
+		insertMIDataDetail(document, insertLevels(document, element, "MI_DATA_DETAIL"), jsonDocument.getMiDataDetail()); 
+		insertMIPremium(document, insertLevels(document, element, "MI_PREMIUMS"), jsonDocument.getMiPremium());
 	}
 	/**
      * Inserts Locks to MISMO XML

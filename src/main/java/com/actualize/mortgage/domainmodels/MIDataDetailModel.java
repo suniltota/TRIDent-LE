@@ -19,6 +19,7 @@ public class MIDataDetailModel implements Serializable {
 	private String miCompanyNameTypeOtherDescription;
 	private String miScheduledTerminationDate;
 	private String miInitialPremiumAmount;
+	private String miCoveragePercent;
 	
 	/**
 	 * @return the miCertificateIdentifier
@@ -79,6 +80,18 @@ public class MIDataDetailModel implements Serializable {
 	 */
 	public void setMiInitialPremiumAmount(String miInitialPremiumAmount) {
 		this.miInitialPremiumAmount = miInitialPremiumAmount;
+	}
+	/**
+	 * @return the miCoveragePercent
+	 */
+	public String getMiCoveragePercent() {
+		return miCoveragePercent;
+	}
+	/**
+	 * @param miCoveragePercent the miCoveragePercent to set
+	 */
+	public void setMiCoveragePercent(String miCoveragePercent) {
+		this.miCoveragePercent = miCoveragePercent;
 	}
 	
 	
