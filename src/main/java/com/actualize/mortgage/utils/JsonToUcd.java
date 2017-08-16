@@ -867,9 +867,9 @@ public class JsonToUcd {
 	private void insertPaymentRule(Document document, Element element, PaymentRuleModel paymentRule) {
 		insertData(document, element, "FullyIndexedInitialPrincipalAndInterestPaymentAmount", paymentRule.getFullyIndexedInitialPrincipalAndInterestPaymentAmount());
 		insertData(document, element, "InitialPrincipalAndInterestPaymentAmount", paymentRule.getInitialPrincipalAndInterestPaymentAmount());
-		//insertData(document, element, "PartialPaymentAllowedIndicator", paymentRule.get);
+		insertData(document, element, "PartialPaymentAllowedIndicator", Convertor.booleanToString(paymentRule.isPartialPaymentAllowedIndicator()));
 		insertData(document, element, "PaymentFrequencyType", paymentRule.getPaymentFrequencyType());
-		//insertData(document, element, "PaymentOptionIndicator", paymentRule.get);
+		insertData(document, element, "PaymentOptionIndicator", Convertor.booleanToString(paymentRule.isPaymentOptionIndicator()));
 		insertData(document, element, "SeasonalPaymentPeriodEndMonth", paymentRule.getSeasonalPaymentPeriodEndMonth());
 		insertData(document, element, "SeasonalPaymentPeriodStartMonth", paymentRule.getSeasonalPaymentPeriodStartMonth());
 		OtherModel other = new OtherModel();
