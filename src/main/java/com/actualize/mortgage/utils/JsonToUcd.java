@@ -215,11 +215,11 @@ public class JsonToUcd {
 		insertData(document, element, "CashFromSellerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashFromSellerAtClosingAmount()));
 		insertData(document, element, "CashToBorrowerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashToBorrowerAtClosingAmount()));
 		insertData(document, element, "CashToSellerAtClosingAmount", Convertor.checkAmountFormat(closingInformationDetailModel.getCashToSellerAtClosingAmount()));
-		insertData(document, element, "CurrentRateSetDate", closingInformationDetailModel.getCurrentRateSetDate());
-		insertData(document, element, "DocumentOrderClassificationType", closingInformationDetailModel.getDocumentOrderClassificationType()); //TODO: This datapoint is not found in UCD Spec.
 		insertData(document, element, "ClosingAgentOrderNumberIdentifier", closingInformationDetailModel.getClosingAgentOrderNumberIdentifier());
 		insertData(document, element, "ClosingDate", closingInformationDetailModel.getClosingDate());
+		insertData(document, element, "CurrentRateSetDate", closingInformationDetailModel.getCurrentRateSetDate());
 		insertData(document, element, "DisbursementDate", closingInformationDetailModel.getDisbursementDate());
+		insertData(document, element, "DocumentOrderClassificationType", closingInformationDetailModel.getDocumentOrderClassificationType()); //TODO: This datapoint is not found in UCD Spec.
 		
 	}
     /**
@@ -640,16 +640,16 @@ public class JsonToUcd {
      * @param jsonDocument Input JSON Object
      */
 	private void insertIntegratedDisclosureDetail(Document document, Element element, IntegratedDisclosureDetailModel integratedDisclosureDetail) {
+		insertData(document, element, "FiveYearPrincipalReductionComparisonAmount", integratedDisclosureDetail.getFiveYearPrincipalReductionComparisonAmount());
 		insertData(document, element, "FirstYearTotalEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalEscrowPaymentDescription());
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentAmount",  Convertor.checkAmountFormat(integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentAmount()));
 		insertData(document, element, "FirstYearTotalNonEscrowPaymentDescription", integratedDisclosureDetail.getFirstYearTotalNonEscrowPaymentDescription());
+		insertData(document, element, "FiveYearTotalOfPaymentsComparisonAmount", Convertor.checkAmountFormat(integratedDisclosureDetail.getFiveYearTotalOfPaymentsComparisonAmount()));
 		insertData(document, element, "IntegratedDisclosureEstimatedClosingCostsExpirationDatetime", integratedDisclosureDetail.getIntegratedDisclosureEstimatedClosingCostsExpirationDatetime());
 		insertData(document, element, "IntegratedDisclosureHomeEquityLoanIndicator", Boolean.toString(integratedDisclosureDetail.isIntegratedDisclosureHomeEquityLoanIndicator()));
-		insertData(document, element, "IntegratedDisclosureLoanProductDescription", integratedDisclosureDetail.getIntegratedDisclosureLoanProductDescription());
 		insertData(document, element, "IntegratedDisclosureIssuedDate", integratedDisclosureDetail.getIntegratedDisclosureIssuedDate());
-		insertData(document, element, "FiveYearTotalOfPaymentsComparisonAmount", Convertor.checkAmountFormat(integratedDisclosureDetail.getFiveYearTotalOfPaymentsComparisonAmount()));
-		insertData(document, element, "FiveYearPrincipalReductionComparisonAmount", integratedDisclosureDetail.getFiveYearPrincipalReductionComparisonAmount());
+		insertData(document, element, "IntegratedDisclosureLoanProductDescription", integratedDisclosureDetail.getIntegratedDisclosureLoanProductDescription());
 		
 	}
 	/**
