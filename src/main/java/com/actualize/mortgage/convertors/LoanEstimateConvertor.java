@@ -1340,7 +1340,7 @@ public class LoanEstimateConvertor {
     	
     	for(int i=0; i<principalAndInterestPaymentPerChangeAdjustmentRule.length; i++)
     	{
-    		if("First".equalsIgnoreCase(principalAndInterestPaymentPerChangeAdjustmentRule[i].adjustmentRuleType))
+    		if("First".equalsIgnoreCase(principalAndInterestPaymentPerChangeAdjustmentRule[i].adjustmentRuleType) || principalAndInterestPaymentPerChangeAdjustmentRule[i].adjustmentRuleType.isEmpty())
     		{
 	    		principalAndInterestPaymentAdjustmentModel.setFirstAdjustmentRuleType(principalAndInterestPaymentPerChangeAdjustmentRule[i].adjustmentRuleType);
 	        	principalAndInterestPaymentAdjustmentModel.setFirstPerChangeMaximumPrincipalAndInterestPaymentAmount(principalAndInterestPaymentPerChangeAdjustmentRule[i].perChangeMaximumPrincipalAndInterestPaymentAmount);
